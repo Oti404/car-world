@@ -1,43 +1,83 @@
 /**
- * Global Stylesheet
- * Implements base resets and shared utility animations for the Car World application.
+ * GLOBAL STYLESHEET - CAR WORLD
+ * * This file defines the core visual identity, CSS variables,
+ * layout constraints, and shared animations for the entire application.
+ * * Structure:
+ * 1. Root Variables & Theme
+ * 2. Base Resets
+ * 3. Typography & Global Elements
+ * 4. Shared Layout & Containers
+ * 5. Utility Classes
+ * 6. Global Animations
+ * 7. Responsive Breakpoints
  */
 
+/* ==========================================================================
+   1. ROOT VARIABLES & THEME
+   Defining a central source of truth for the application's color palette.
+   ========================================================================== */
 :root {
+  /* Brand Colors */
   --primary-accent: #ff6b35;
   --secondary-accent: #ff8c42;
   --danger-color: #dc3545;
+
+  /* Neutral Palette */
   --background-light: #f8f9fa;
   --text-dark: #1a1a1a;
   --text-muted: #666666;
+  --border-color: #e0e0e0;
+  --placeholder-gray: #f0f0f0;
+
+  /* Transitions */
+  --transition-smooth: 0.3s ease-in-out;
 }
 
+/* ==========================================================================
+   2. BASE RESETS
+   Standardizing box-sizing and removing default browser margins.
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ==========================================================================
+   3. TYPOGRAPHY & GLOBAL ELEMENTS
+   Ensuring consistent font rendering and behavior across browsers.
+   ========================================================================== */
 body {
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-dark);
   background-color: var(--background-light);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- Shared Layout Classes --- */
+/* Icons */
+.favorite i {
+  color: #c21a09;
+  transition: transform var(--transition-smooth);
+}
 
+/* ==========================================================================
+   4. SHARED LAYOUT & CONTAINERS
+   Main architectural wrappers for page content.
+   ========================================================================== */
 .main-content {
   max-width: 1400px;
   margin: 0 auto;
   padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  min-height: calc(100vh - 160px); /* Ensures footer stays at bottom */
+  background: linear-gradient(135deg, var(--background-light) 0%, #e9ecef 100%);
+  /* Ensures footer stays at bottom even with minimal content */
+  min-height: calc(100vh - 160px);
 }
 
-/* Title & Description Utility Block */
+/* Hero & Header Section Utility */
 .title-description-block {
   margin-bottom: 4rem;
   padding: 2rem 0;
@@ -48,6 +88,7 @@ body {
   color: var(--text-dark);
   margin-bottom: 1rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .page-subtitle {
@@ -59,18 +100,47 @@ body {
   margin-right: auto;
 }
 
+/* ==========================================================================
+   5. UTILITY CLASSES
+   Reusable visual patterns for various components.
+   ========================================================================== */
 .dashed-border {
-  border: 2px dashed #e0e0e0;
+  border: 2px dashed var(--border-color);
   border-radius: 12px;
 }
 
-/* --- Global Icons & Components --- */
-
-.favorite i {
-  color: #c21a09;
+/* Image optimization container to prevent Layout Shift (CLS) */
+.car-image-container {
+  background-color: var(--placeholder-gray);
+  position: relative;
+  overflow: hidden;
+  /* Maintains a consistent 16:9 aspect ratio while images load */
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
 }
 
-/* Shared Animation Keyframes */
+/* ==========================================================================
+   6. GLOBAL ANIMATIONS
+   Standard transitions and keyframes used across components.
+   ========================================================================== */
+
+/* Fade-In effect for images to provide a premium loading experience */
+.fade-in {
+  animation: fadeInImage 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInImage {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Standard vertical entrance animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -82,18 +152,22 @@ body {
   }
 }
 
+/* Subtle pulse for badges and interactive elements */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
 
-/* --- Responsive Adjustments --- */
-
+/* ==========================================================================
+   7. RESPONSIVE BREAKPOINTS
+   Adapting the layout for tablets and mobile devices.
+   ========================================================================== */
 @media (max-width: 768px) {
   .main-content {
     padding: 2rem 1rem;
   }
+
   .page-title {
     font-size: 2rem;
   }

@@ -3,7 +3,7 @@
   <h3>{{ title() }}</h3>
 
   @if(imgUrl()) {
-    <img [src]="imgUrl()" alt="Card media content" class="card-image" />
+    <img [src]="imgUrl()" alt="Card media content" class="card-image fade-in" loading="lazy"/>
   }
 
   <p>{{ content() }}</p>

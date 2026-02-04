@@ -13,7 +13,7 @@
     <div class="cart-items-list" *ngIf="cartItems.length > 0">
 
       <div class="cart-item" *ngFor="let car of cartItems">
-        <img [src]="car.image" [alt]="car.title" class="item-image" />
+        <img [src]="car.image" class="item-image fade-in" loading="lazy" alt="{{ car.title }}"/>
 
         <div class="item-details">
           <h3>{{ car.title }}</h3>

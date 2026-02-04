@@ -1,15 +1,16 @@
 <div class="car-item">
   <div class="car-image-container">
-    <img [src]="carItem().image" [alt]="carItem().imageAlt" class="car-image" />
+  <img
+    [src]="carItem().image"
+    [alt]="carItem().imageAlt"
+    class="car-image fade-in"
+    loading="lazy"
+  />
 
-    <div
-      class="favorite-heart"
-      [class.active]="isFavorite"
-      (click)="onToggleFavorite()"
-    >
-      <i class="fas fa-heart"></i>
-    </div>
+  <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()">
+    <i class="fas fa-heart"></i>
   </div>
+</div>
 
   <div class="car-specs-column">
     <h3 class="car-title">{{ carItem().title }}</h3>

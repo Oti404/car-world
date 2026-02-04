@@ -9,8 +9,7 @@
       <article class="review-card">
 
         <div class="card-image-wrapper">
-          <img [src]="review.image" [alt]="review.car" class="card-image">
-        </div>
+<img [src]="review.image" class="card-image fade-in" loading="lazy" alt="{{ review.car }}"/>        </div>
 
         <div class="card-content">
           <h2 class="review-quote">“{{ review.title }}”</h2>

@@ -251,3 +251,9 @@
 .car-item:hover .car-image {
   transform: none; /* Disabling legacy zoom to avoid 3D render conflicts */
 }
+.car-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
