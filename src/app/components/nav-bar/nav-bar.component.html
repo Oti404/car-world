@@ -1,36 +1,35 @@
 <nav class="navbar">
   <div class="nav-container">
 
-    <div class="nav-brand">
-      <a routerLink="/home" class="logo">Car World</a>
-      <span class="collaboration-tag">by Otniel & MHP</span>
-    </div>
-
-    <div class="nav-right">
-      <ul class="nav-menu">
-        <li>
-          <a routerLink="/home" class="nav-link" routerLinkActive="active">Home</a>
-        </li>
-        <li>
-          <a routerLink="/news" class="nav-link" routerLinkActive="active">News</a>
-        </li>
-        <li>
-          <a routerLink="/cars" class="nav-link" routerLinkActive="active">Cars</a>
-        </li>
-      </ul>
-
-      <div class="cart-section" routerLink="/cart">
-        <div class="cart-icon-wrapper">
-          <i class="fas fa-shopping-cart"></i>
-
-          <span
-            class="cart-badge"
-            *ngIf="(cartService.cartItems$ | async)?.length as count"
-          >
-            {{ count }}
-          </span>
-        </div>
+    <a routerLink="/" class="brand-area">
+      <div class="brand-text">
+        <span class="brand-title">CAR</span>
+        <span class="brand-subtitle">WORLD</span>
       </div>
+      <span class="brand-signature">by Otniel & MHP</span>
+    </a>
+
+    <div class="nav-right-side">
+
+      <div class="nav-links" [class.active]="isMenuOpen">
+        <a routerLink="/home" routerLinkActive="active-link" (click)="closeMenu()">Home</a>
+        <a routerLink="/news" routerLinkActive="active-link" (click)="closeMenu()">News</a>
+        <a routerLink="/cars" routerLinkActive="active-link" (click)="closeMenu()">Cars</a>
+        <a routerLink="/reviews" routerLinkActive="active-link" (click)="closeMenu()">Reviews</a>
+      </div>
+
+      <a routerLink="/cart" class="cart-icon" (click)="closeMenu()">
+  <i class="fas fa-shopping-cart"></i>
+
+  @if (cartCount() > 0) {
+    <span class="cart-badge">{{ cartCount() }}</span>
+  }
+</a>
+
+      <button class="hamburger-btn" (click)="toggleMenu()">
+        <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+      </button>
+
     </div>
 
   </div>

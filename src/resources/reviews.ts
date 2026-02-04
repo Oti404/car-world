@@ -2,13 +2,13 @@ import { CarReview } from '../app/data-type/data-type';
 
 /**
  * Expert Editorial Reviews Catalog
- * * Note: Images are mapped to the assets directory.
- * Content is curated from leading automotive publications.
+ * * Note: Assets migrated to .webp for optimized performance.
+ * * Data Integrity: Content sourced from authoritative automotive publications.
  */
 export const REVIEWS_LIST: CarReview[] = [
   {
     car: 'Porsche Taycan',
-    image: './assets/porsche-taycan-001.png',
+    image: 'assets/porsche-taycan-001.webp',
     expert: 'Top Gear',
     rating: 5,
     date: 'Oct 12, 2024',
@@ -17,7 +17,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Mercedes-AMG GT',
-    image: './assets/mercedes-amg-gt-001.png',
+    image: 'assets/mercedes-amg-gt-001.webp',
     expert: 'Car & Driver',
     rating: 4,
     date: 'Nov 05, 2024',
@@ -26,7 +26,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'BMW M4 Competition',
-    image: './assets/bmw-m4-competition-001.png',
+    image: 'assets/bmw-m4-competition-001.webp',
     expert: 'MotorTrend',
     rating: 5,
     date: 'Jan 20, 2025',
@@ -35,7 +35,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Audi RS6 Avant',
-    image: './assets/audi-rs6-avant-001.png',
+    image: 'assets/audi-rs6-avant-001.webp',
     expert: 'Evo Magazine',
     rating: 5,
     date: 'Feb 14, 2025',
@@ -44,7 +44,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Land Rover Range Rover',
-    image: 'assets/land-rover-range-rover-000.png',
+    image: 'assets/land-rover-range-rover-000.webp',
     expert: 'Autocar',
     rating: 5,
     date: 'Mar 02, 2025',
@@ -53,7 +53,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Ferrari 296 GTB',
-    image: './assets/ferrari-296-gtb-000.png',
+    image: 'assets/ferrari-296-gtb-000.webp',
     expert: 'Road & Track',
     rating: 5,
     date: 'Mar 10, 2025',
@@ -62,7 +62,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Tesla Model S Plaid',
-    image: './assets/tesla-model-s-plaid-000.png',
+    image: 'assets/tesla-model-s-plaid-000.webp',
     expert: 'Edmunds',
     rating: 4,
     date: 'Jan 28, 2025',
@@ -71,7 +71,7 @@ export const REVIEWS_LIST: CarReview[] = [
   },
   {
     car: 'Aston Martin DB12',
-    image: './assets/aston-martin-db12-000.png',
+    image: 'assets/aston-martin-db12-000.webp',
     expert: 'GQ',
     rating: 4,
     date: 'Feb 22, 2025',

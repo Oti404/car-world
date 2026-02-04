@@ -6,7 +6,7 @@ import { CarDto } from '../data-type/car-data';
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems: CarDto[] = [];
+  public cartItems: CarDto[] = [];
   private readonly cartItemsSubject = new BehaviorSubject<CarDto[]>([]);
 
   /**

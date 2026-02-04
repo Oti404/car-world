@@ -128,3 +128,38 @@
     grid-template-columns: 1fr;
   }
 }
+/* ... existing styles ... */
+
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* CRITICAL: Allows items to drop to next line */
+  gap: 10px; /* Adds space between items when they wrap */
+}
+
+/* Specific fix for the Expert Badge */
+.expert-badge {
+  /* ... existing ... */
+  white-space: nowrap; /* Prevents text inside badge from wrapping */
+}
+
+/* Mobile specific adjustment for Reviews */
+@media (max-width: 480px) {
+  .review-quote {
+    font-size: 1.5rem; /* Make the big quote slightly smaller on mobile */
+  }
+
+  .review-meta {
+    flex-direction: column; /* Stack logo and car name vertically */
+    align-items: flex-start;
+  }
+
+  .meta-left {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Spread date and badge */
+    align-items: center;
+  }
+}

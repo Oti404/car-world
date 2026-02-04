@@ -20,7 +20,7 @@ export class HomeComponent {
 
   public readonly headerContent =
     'Discover the latest automotive trends, news, and the most exciting cars in the industry';
-  public readonly headerBgUrl = 'header-bg.jpg';
+  public readonly headerBgUrl = 'header-bg.webp';
 
   /**
    * Navigates to a specific application route using the centralized UtilsService.

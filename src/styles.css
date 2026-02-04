@@ -166,6 +166,9 @@ body {
 @media (max-width: 768px) {
   .main-content {
     padding: 2rem 1rem;
+    padding: 2rem 1rem; /* Increase side padding for mobile */
+    width: 100%;
+    overflow-x: hidden; /* Prevents horizontal scrollbar */
   }
 
   .page-title {

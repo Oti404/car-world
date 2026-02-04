@@ -3,14 +3,14 @@ import { CarDto } from "../app/data-type/car-data";
 /**
  * Global Vehicle Catalog
  * * Data Integrity Note:
- * IDs are assigned as unique numbers (representing Long types from the backend).
- * Images are mapped to the local assets directory.
+ * IDs are unique numbers (representing Long types).
+ * Image assets migrated to .webp for high-performance loading.
  */
 export const cars: CarDto[] = [
   {
     id: 1001,
     title: 'Porsche Taycan',
-    image: 'assets/porsche-taycan-000.png',
+    image: 'assets/porsche-taycan-000.webp',
     imageAlt: 'Porsche Taycan',
     price: 89900,
     specifications: {
@@ -31,7 +31,7 @@ export const cars: CarDto[] = [
   {
     id: 1002,
     title: 'Porsche Panamera',
-    image: 'assets/porsche-panamera-000.png',
+    image: 'assets/porsche-panamera-000.webp',
     imageAlt: 'Porsche Panamera',
     price: 112500,
     specifications: {
@@ -52,7 +52,7 @@ export const cars: CarDto[] = [
   {
     id: 1003,
     title: 'Mercedes-AMG GT',
-    image: 'assets/mercedes-amg-gt-000.png',
+    image: 'assets/mercedes-amg-gt-000.webp',
     imageAlt: 'Mercedes-AMG GT',
     price: 138200,
     specifications: {
@@ -73,7 +73,7 @@ export const cars: CarDto[] = [
   {
     id: 1004,
     title: 'BMW M4 Competition',
-    image: 'assets/bmw-m4-competition-000.png',
+    image: 'assets/bmw-m4-competition-000.webp',
     imageAlt: 'BMW M4 Competition',
     price: 95400,
     specifications: {
@@ -94,7 +94,7 @@ export const cars: CarDto[] = [
   {
     id: 1005,
     title: 'Audi RS6 Avant',
-    image: 'assets/audi-rs6-avant-000.png',
+    image: 'assets/audi-rs6-avant-000.webp',
     imageAlt: 'Audi RS6 Avant',
     price: 127800,
     specifications: {
@@ -115,7 +115,7 @@ export const cars: CarDto[] = [
   {
     id: 1006,
     title: 'Ferrari 488 GTB',
-    image: 'assets/ferrari-488-gtb-000.png',
+    image: 'assets/ferrari-488-gtb-000.webp',
     imageAlt: 'Ferrari 488 GTB',
     price: 245900,
     specifications: {
@@ -136,7 +136,7 @@ export const cars: CarDto[] = [
   {
     id: 1007,
     title: 'Porsche 911 GT3 RS',
-    image: 'assets/porsche-911-gt3-rs-000.png',
+    image: 'assets/porsche-911-gt3-rs-000.webp',
     imageAlt: 'Porsche 911 GT3 RS',
     price: 315000,
     specifications: {
@@ -157,7 +157,7 @@ export const cars: CarDto[] = [
   {
     id: 1008,
     title: 'McLaren 765LT',
-    image: 'assets/mclaren-765lt-000.png',
+    image: 'assets/mclaren-765lt-000.webp',
     imageAlt: 'McLaren 765LT',
     price: 485000,
     specifications: {
@@ -178,7 +178,7 @@ export const cars: CarDto[] = [
   {
     id: 1009,
     title: 'Lamborghini Aventador SVJ',
-    image: 'assets/lamborghini-aventador-svj-000.png',
+    image: 'assets/lamborghini-aventador-svj-000.webp',
     imageAlt: 'Lamborghini Aventador SVJ',
     price: 650000,
     specifications: {
@@ -199,7 +199,7 @@ export const cars: CarDto[] = [
   {
     id: 1010,
     title: 'Bugatti Chiron Pur Sport',
-    image: 'assets/bugatti-chiron-pur-sport-000.png',
+    image: 'assets/bugatti-chiron-pur-sport-000.webp',
     imageAlt: 'Bugatti Chiron Pur Sport',
     price: 3800000,
     specifications: {
@@ -220,7 +220,7 @@ export const cars: CarDto[] = [
   {
     id: 1011,
     title: 'Ford GT',
-    image: 'assets/ford-gt-000.png',
+    image: 'assets/ford-gt-000.webp',
     imageAlt: 'Ford GT',
     price: 1100000,
     specifications: {
@@ -241,7 +241,7 @@ export const cars: CarDto[] = [
   {
     id: 1012,
     title: 'Aston Martin Valkyrie',
-    image: 'assets/aston-martin-valkyrie-000.png',
+    image: 'assets/aston-martin-valkyrie-000.webp',
     imageAlt: 'Aston Martin Valkyrie',
     price: 3200000,
     specifications: {
@@ -262,7 +262,7 @@ export const cars: CarDto[] = [
   {
     id: 1013,
     title: 'Koenigsegg Jesko',
-    image: 'assets/koenigsegg-jesko-000.png',
+    image: 'assets/koenigsegg-jesko-000.webp',
     imageAlt: 'Koenigsegg Jesko',
     price: 3400000,
     specifications: {
@@ -283,7 +283,7 @@ export const cars: CarDto[] = [
   {
     id: 1014,
     title: 'Pagani Huayra Roadster BC',
-    image: 'assets/pagani-huayra-roadster-bc-000.png',
+    image: 'assets/pagani-huayra-roadster-bc-000.webp',
     imageAlt: 'Pagani Huayra Roadster BC',
     price: 3700000,
     specifications: {
@@ -304,7 +304,7 @@ export const cars: CarDto[] = [
   {
     id: 1015,
     title: 'Lexus LFA',
-    image: 'assets/lexus-lfa-000.png',
+    image: 'assets/lexus-lfa-000.webp',
     imageAlt: 'Lexus LFA',
     price: 850000,
     specifications: {
@@ -325,7 +325,7 @@ export const cars: CarDto[] = [
   {
     id: 1016,
     title: 'Mercedes-AMG One',
-    image: 'assets/mercedes-amg-one-000.png',
+    image: 'assets/mercedes-amg-one-000.webp',
     imageAlt: 'Mercedes-AMG One',
     price: 2750000,
     specifications: {
@@ -346,7 +346,7 @@ export const cars: CarDto[] = [
   {
     id: 1017,
     title: 'Ferrari LaFerrari',
-    image: 'assets/ferrari-laferrari-000.png',
+    image: 'assets/ferrari-laferrari-000.webp',
     imageAlt: 'Ferrari LaFerrari',
     price: 3200000,
     specifications: {
@@ -367,7 +367,7 @@ export const cars: CarDto[] = [
   {
     id: 1018,
     title: 'Porsche 918 Spyder',
-    image: 'assets/porsche-918-spyder-000.png',
+    image: 'assets/porsche-918-spyder-000.webp',
     imageAlt: 'Porsche 918 Spyder',
     price: 1600000,
     specifications: {
@@ -388,7 +388,7 @@ export const cars: CarDto[] = [
   {
     id: 1019,
     title: 'McLaren P1',
-    image: 'assets/mclaren-p1-000.png',
+    image: 'assets/mclaren-p1-000.webp',
     imageAlt: 'McLaren P1',
     price: 1800000,
     specifications: {
@@ -409,7 +409,7 @@ export const cars: CarDto[] = [
   {
     id: 1020,
     title: 'Nissan GT-R Nismo',
-    image: 'assets/nissan-gt-r-nismo-000.png',
+    image: 'assets/nissan-gt-r-nismo-000.webp',
     imageAlt: 'Nissan GT-R Nismo',
     price: 220000,
     specifications: {
@@ -430,7 +430,7 @@ export const cars: CarDto[] = [
   {
     id: 1021,
     title: 'Lamborghini Huracán STO',
-    image: 'assets/lamborghini-huracan-sto-000.png',
+    image: 'assets/lamborghini-huracan-sto-000.webp',
     imageAlt: 'Lamborghini Huracán STO',
     price: 340000,
     specifications: {
@@ -451,7 +451,7 @@ export const cars: CarDto[] = [
   {
     id: 1022,
     title: 'Maserati MC20',
-    image: 'assets/maserati-mc20-000.png',
+    image: 'assets/maserati-mc20-000.webp',
     imageAlt: 'Maserati MC20',
     price: 215000,
     specifications: {
@@ -472,7 +472,7 @@ export const cars: CarDto[] = [
   {
     id: 1023,
     title: 'Audi R8 V10 GT RWD',
-    image: 'assets/audi-r8-v10-gt-rwd-000.png',
+    image: 'assets/audi-r8-v10-gt-rwd-000.webp',
     imageAlt: 'Audi R8 V10 GT RWD',
     price: 250000,
     specifications: {
@@ -493,7 +493,7 @@ export const cars: CarDto[] = [
   {
     id: 1024,
     title: 'Dodge Viper ACR',
-    image: 'assets/dodge-viper-acr-000.png',
+    image: 'assets/dodge-viper-acr-000.webp',
     imageAlt: 'Dodge Viper ACR',
     price: 280000,
     specifications: {
@@ -514,7 +514,7 @@ export const cars: CarDto[] = [
   {
     id: 1025,
     title: 'Rimac Nevera',
-    image: 'assets/rimac-nevera-000.png',
+    image: 'assets/rimac-nevera-000.webp',
     imageAlt: 'Rimac Nevera',
     price: 2400000,
     specifications: {
@@ -535,7 +535,7 @@ export const cars: CarDto[] = [
   {
     id: 1026,
     title: 'Ferrari SF90 Stradale',
-    image: 'assets/ferrari-sf90-stradale-000.png',
+    image: 'assets/ferrari-sf90-stradale-000.webp',
     imageAlt: 'Ferrari SF90 Stradale',
     price: 550000,
     specifications: {
