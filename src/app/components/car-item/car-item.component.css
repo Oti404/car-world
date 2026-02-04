@@ -1,0 +1,253 @@
+/**
+ * Main Premium Card Container
+ * Implements 3D preserve-3d for advanced interaction effects.
+ */
+.car-item {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 5px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/**
+ * Hover State
+ * Elevation effect and subtle brand-colored border.
+ */
+.car-item:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  border-color: rgba(230, 126, 34, 0.3);
+}
+
+/* --- Section 1: Media Header --- */
+
+.car-image-container {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/**
+ * Interactive Wishlist Icon
+ * Features a glassmorphism effect and spring-based scaling animation.
+ */
+.favorite-heart {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 1.3rem;
+  color: #bdc3c7;
+  z-index: 2;
+}
+
+.favorite-heart:hover {
+  transform: scale(1.15);
+  background: #fff;
+}
+
+.favorite-heart.active {
+  color: #e74c3c;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* --- Section 2: Content & Technical Specifications --- */
+
+.car-specs-column {
+  padding: 24px 24px 10px 24px;
+  flex-grow: 1;
+}
+
+.car-title {
+  font-size: 1.6rem;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transform: translateZ(10px);
+}
+
+/**
+ * Data Grid for Vehicle Specs
+ */
+.car-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 10px;
+  margin-bottom: 20px;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #34495e;
+}
+
+.spec-icon {
+  color: #e67e22; /* Primary Brand Color */
+  margin-right: 10px;
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.spec-value {
+  font-weight: 600;
+}
+
+/**
+ * Truncate long engine naming conventions
+ */
+.spec-engine {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.car-description {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* --- Section 3: Pricing & Action Footer --- */
+
+.car-actions-column {
+  width: 100%;
+  background: linear-gradient(to bottom, #ffffff, #fafafa);
+  border-top: 1px solid #f0f0f0;
+  padding: 20px 24px 24px 24px;
+}
+
+.price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.price {
+  display: block;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #e67e22;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 0.85rem;
+  color: #95a5a6;
+  font-weight: 500;
+}
+
+/**
+ * Optional Equipment Sub-section
+ */
+.options-section {
+  margin-bottom: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed #eee;
+}
+
+.options-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #95a5a6;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  padding: 4px 0;
+}
+
+.option-price {
+  font-weight: 700;
+  color: #27ae60;
+  font-size: 0.9rem;
+}
+
+/* --- Global UI Refinements --- */
+
+.car-actions {
+  margin-top: auto;
+  width: 100%;
+  transform: translateZ(20px);
+}
+
+/**
+ * Button Component Overrides
+ * Enforcing full-width and consistent brand styling across the card.
+ */
+::ng-deep app-button button {
+  width: 100%;
+  justify-content: center;
+  padding: 14px 20px !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3) !important;
+}
+
+::ng-deep app-button button:hover {
+  box-shadow: 0 6px 20px rgba(230, 126, 34, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+/**
+ * Parallax / Depth Elements
+ * Uses Z-axis translation for a 3D "pop-out" effect during interaction.
+ */
+.floating-element {
+  transform: translateZ(30px);
+  transition: transform 0.1s ease-out;
+  filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+}
+
+.car-item:hover .car-image {
+  transform: none; /* Disabling legacy zoom to avoid 3D render conflicts */
+}

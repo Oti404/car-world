@@ -1,0 +1,20 @@
+<main class="main-content">
+  <header class="title-description-block">
+    <h1 class="page-title">Automotive News</h1>
+    <p class="page-subtitle">
+      Stay informed with the latest developments in the automotive world. From
+      industry breakthroughs to new vehicle launches, we've got you covered.
+    </p>
+  </header>
+
+  <section class="news-feed">
+    @for(newsItem of newsArticles; track newsItem.title) {
+      <app-card
+        [title]="newsItem.title"
+        [content]="newsItem.content"
+        [imgUrl]="newsItem.image"
+        [showButton]="false"
+      />
+    }
+  </section>
+</main>

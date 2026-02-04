@@ -1,0 +1,72 @@
+/**
+ * Checkbox Component Container
+ * Provides a responsive flex layout for the input and label pairing.
+ */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex: 1;
+  user-select: none; /* Prevents text selection during rapid toggling */
+}
+
+/**
+ * Custom Checkbox Input Styling
+ * Implements a custom visual state by overriding the default browser 'appearance'.
+ */
+.checkbox-input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  cursor: pointer;
+}
+
+/**
+ * Semantic Label Styling
+ */
+.checkbox-label {
+  font-size: 0.85rem;
+  color: #555555;
+  font-weight: 500;
+}
+
+/* --- Active State Logic --- */
+
+/**
+ * Checked State Visualization
+ * Utilizes a brand-consistent accent color for the background and border.
+ */
+.checkbox-input:checked {
+  background: var(--accent-color, #ff6b35);
+  border-color: var(--accent-color, #ff6b35);
+}
+
+/**
+ * Checkmark Glyph Styling
+ * Rendered using a pseudo-element for optimal performance and styling control.
+ */
+.checkbox-input:checked::before {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Precisely centers the glyph */
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/**
+ * Focus State
+ * Improves accessibility for keyboard navigation.
+ */
+.checkbox-input:focus-visible {
+  outline: 2px solid rgba(255, 107, 53, 0.5);
+  outline-offset: 2px;
+}

@@ -1,0 +1,15 @@
+<div class="cars-container">
+  <header class="page-header">
+    <h1>Available Premium Cars</h1>
+    <p class="subtitle">Explore our curated selection of high-performance vehicles</p>
+  </header>
+
+  <div class="cars-grid">
+    @for (car of carsList; track car.id) {
+      <app-car-item
+        [carItem]="car"
+        (buttonClicked)="onAddToCart(car)"
+      />
+    }
+  </div>
+</div>

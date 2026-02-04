@@ -1,0 +1,85 @@
+<div class="car-item">
+  <div class="car-image-container">
+    <img [src]="carItem().image" [alt]="carItem().imageAlt" class="car-image" />
+
+    <div
+      class="favorite-heart"
+      [class.active]="isFavorite"
+      (click)="onToggleFavorite()"
+    >
+      <i class="fas fa-heart"></i>
+    </div>
+  </div>
+
+  <div class="car-specs-column">
+    <h3 class="car-title">{{ carItem().title }}</h3>
+
+    <div class="car-specs-grid">
+      <div class="spec-item">
+        <i class="fas fa-calendar-alt spec-icon"></i>
+        <span class="spec-value">{{ carItem().specifications.modelYear }}</span>
+      </div>
+
+      <div class="spec-item">
+        <i class="fas fa-tachometer-alt spec-icon"></i>
+        <span class="spec-value">{{ carItem().specifications.mileage }}</span>
+      </div>
+
+      <div class="spec-item">
+        <i class="fas fa-cogs spec-icon"></i>
+        <span class="spec-value spec-engine">{{ carItem().specifications.engine }}</span>
+      </div>
+
+      <div class="spec-item">
+        <i class="fas fa-bolt spec-icon"></i>
+        <span class="spec-value">{{ carItem().specifications.power }}</span>
+      </div>
+    </div>
+
+    <p class="car-description">{{ carItem().description }}</p>
+  </div>
+
+  <div class="car-actions-column">
+    <div class="price-section">
+      <span class="price">
+        {{ totalPrice | currency : "USD" : "symbol" : "1.0-0" }}
+      </span>
+
+      <div class="price-breakdown">
+        <span class="base-price">
+          Base: {{ carItem().price | currency : "USD" : "symbol" : "1.0-0" }}
+        </span>
+        <span class="options-total">
+          Options: +{{ optionsPrice | currency : "USD" : "symbol" : "1.0-0" }}
+        </span>
+      </div>
+    </div>
+
+    <div class="options-section">
+      <h4 class="options-title">Available Options</h4>
+      <div class="options-list">
+        @for(carOption of carItem().options; track carOption.name) {
+        <div class="option-item">
+          <app-checkbox
+            [checked]="carOption.selected"
+            [label]="carOption.name"
+            (checkedChange)="onToggleOption(carOption, $event)"
+          />
+          <span class="option-price">
+            + {{ carOption.price | currency : "USD" : "symbol" : "1.0-0" }}
+          </span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="car-actions">
+      <app-button
+        buttonLabel="Add to Cart"
+        buttonIcon="fa-shopping-cart"
+        [buttonType]="buttonType.Orange"
+        (buttonClicked)="onAddToCart()"
+      />
+    </div>
+  </div>
+</div>

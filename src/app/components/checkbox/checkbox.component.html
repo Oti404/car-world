@@ -1,0 +1,10 @@
+<label class="checkbox">
+  <input
+    type="checkbox"
+    class="checkbox-input"
+    [checked]="checked()"
+    (change)="onCheckedChange($event)"
+  />
+  <span class="checkbox-label">{{ label() }}</span>
+</label>
+

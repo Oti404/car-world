@@ -1,0 +1,6 @@
+<button [class]="'btn btn-' + buttonType()" (click)="onButtonClick()">
+  @if (buttonIcon()) {
+  <i [class]="'fas ' + buttonIcon()"></i>
+  }
+  {{ buttonLabel() }}
+</button>

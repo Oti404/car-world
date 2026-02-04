@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <div class="nav-container">
+
+    <div class="nav-brand">
+      <a routerLink="/home" class="logo">Car World</a>
+      <span class="collaboration-tag">by Otniel & MHP</span>
+    </div>
+
+    <div class="nav-right">
+      <ul class="nav-menu">
+        <li>
+          <a routerLink="/home" class="nav-link" routerLinkActive="active">Home</a>
+        </li>
+        <li>
+          <a routerLink="/news" class="nav-link" routerLinkActive="active">News</a>
+        </li>
+        <li>
+          <a routerLink="/cars" class="nav-link" routerLinkActive="active">Cars</a>
+        </li>
+      </ul>
+
+      <div class="cart-section" routerLink="/cart">
+        <div class="cart-icon-wrapper">
+          <i class="fas fa-shopping-cart"></i>
+
+          <span
+            class="cart-badge"
+            *ngIf="(cartService.cartItems$ | async)?.length as count"
+          >
+            {{ count }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>

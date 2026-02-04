@@ -1,0 +1,45 @@
+<app-header
+  title="Welcome to Car World"
+  [content]="headerContent"
+  [bgImgUrl]="headerBgUrl"
+  buttonLabel="Explore Cars"
+  (headerButtonClicked)="navigateTo(appRoutesEnum.Cars)"
+/>
+
+<main class="main-content">
+  <section class="title-description-block dashed-border">
+    <h2 class="page-title">Your Gateway to Automotive Excellence</h2>
+    <p class="page-subtitle">
+      Stay connected with the automotive world through our comprehensive
+      platform featuring the latest news, detailed car reviews, and everything
+      you need to know about the vehicles that drive our passion.
+    </p>
+  </section>
+
+  <section class="features">
+    <app-card
+      title="Latest News"
+      content="Stay updated with breaking news from the automotive industry, including new releases and market trends."
+      buttonLabel="Read News"
+      buttonIcon="fa-newspaper"
+      (cardButtonClicked)="navigateTo(appRoutesEnum.News)"
+    />
+
+    <app-card
+      title="Car Collection"
+      content="Explore our extensive database of vehicles from classic cars to modern supercars."
+      buttonLabel="Explore Cars"
+      buttonIcon="fa-car"
+      [cardVariant]="cardVariantEnum.Featured"
+      (cardButtonClicked)="navigateTo(appRoutesEnum.Cars)"
+    />
+
+    <app-card
+      title="Expert Reviews"
+      content="Read in-depth reviews and analysis from automotive experts to help you make informed decisions."
+      buttonLabel="Explore Reviews"
+      buttonIcon="fa-star"
+      (cardButtonClicked)="navigateTo(appRoutesEnum.Reviews)"
+    />
+  </section>
+</main>

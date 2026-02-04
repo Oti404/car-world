@@ -1,0 +1,38 @@
+<div class="reviews-page">
+  <header class="header-section">
+    <h1>Expert Reviews</h1>
+    <p class="subtitle">Insights from the world's leading automotive journalists on our exclusive collection.</p>
+  </header>
+
+  <section class="reviews-grid">
+    @for (review of reviewsList; track review.title) {
+      <article class="review-card">
+
+        <div class="card-image-wrapper">
+          <img [src]="review.image" [alt]="review.car" class="card-image">
+        </div>
+
+        <div class="card-content">
+          <h2 class="review-quote">“{{ review.title }}”</h2>
+
+          <div class="review-meta">
+            <div class="meta-left">
+              <span class="expert-badge">{{ review.expert }}</span>
+              <span class="review-date">{{ review.date }}</span>
+            </div>
+            <h3 class="car-name">{{ review.car }}</h3>
+          </div>
+
+          <div class="rating-stars" aria-label="Expert Rating">
+            @for (star of getStarArray(review.rating); track $index) {
+              <i class="fas fa-star" aria-hidden="true"></i>
+            }
+          </div>
+
+          <p class="review-body">{{ review.content }}</p>
+        </div>
+
+      </article>
+    }
+  </section>
+</div>

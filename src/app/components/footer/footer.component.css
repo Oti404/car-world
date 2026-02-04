@@ -1,0 +1,62 @@
+/**
+ * Footer Component Styles
+ * Implements a clean, dark-themed footer with high-contrast typography.
+ */
+.footer {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 3rem 1rem;
+  border-top: 1px solid #333333;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.footer-branding .copyright {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-branding .tagline {
+  font-size: 0.9rem;
+  color: #95a5a6; /* Muted gray for secondary info */
+  font-style: italic;
+}
+
+/**
+ * Attribution Branding
+ * Designed to look professional in a portfolio context.
+ */
+.footer-attribution {
+  font-size: 0.85rem;
+  color: #bdc3c7;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #2c3e50;
+  padding-top: 1.5rem;
+  width: 100%;
+}
+
+.separator {
+  color: #ff6b35; /* Primary brand accent color */
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .footer-attribution {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .separator {
+    display: none;
+  }
+}

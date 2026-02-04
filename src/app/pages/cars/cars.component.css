@@ -1,0 +1,54 @@
+/**
+ * Cars Page Layout
+ * Implements a responsive CSS Grid with auto-fit capabilities.
+ */
+.cars-container {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/**
+ * Responsive Grid System
+ * Business Rule: Maintains a minimum card width of 350px,
+ * expanding to fill available space.
+ */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* Adaptive Breakpoints */
+@media (max-width: 768px) {
+  .cars-container {
+    padding: 2rem 1rem;
+  }
+
+  .cars-grid {
+    grid-template-columns: 1fr; /* Stack cards on mobile */
+    gap: 1.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+}
