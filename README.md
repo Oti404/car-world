@@ -6,11 +6,11 @@
 
 Home Page,Vehicle Catalog,Detailed Card
 
-<img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-000.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-000.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-000.png" />
+<img width="1903" height="719" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-000.png" />, <img width="1901" height="877" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-000.png" />, <img width="1399" height="910" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-000.png" />
 
 Mobile Experience (Responsive Design)
 
-<img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-001.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-001.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-001.png" />
+<img width="378" height="820" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-001.png" />, <img width="374" height="822" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-001.png" />, <img width="380" height="823" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-001.png" />
 
 
 🏗️ Deep Dive: Arhitectură Tehnică
