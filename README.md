@@ -6,13 +6,12 @@
 
 Home Page,Vehicle Catalog,Detailed Card
 
-![main-page-000.png], ![cart-page-000.png[, ![car-page-000.png]
+<img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-000.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-000.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-000.png" />
 
 Mobile Experience (Responsive Design)
 
-Home Mobile,Catalog Mobile,Card Mobile
+<img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-001.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-001.png" />, <img width="398" height="120" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-001.png" />
 
-![main-page-001.png], ![cart-page-001.png], ![car-page-001.png]
 
 🏗️ Deep Dive: Arhitectură Tehnică
 
