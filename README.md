@@ -6,11 +6,15 @@ Vizualizează aplicația aici : https://oti404.github.io/car-world
 Car World este o platformă digitală de înaltă performanță, concepută pentru a simula experiența unui showroom auto de lux. Proiectul a fost dezvoltat pentru a demonstra stăpânirea ecosistemului Angular 18, axându-se pe trei piloni fundamentali: Performanță (LCP/CLS), Reactivitate și Arhitectură Scalabilă.
 
 🖼️ Interface Showcase
+
 Home Page,Vehicle Catalog,Detailed Card
+
 main-page-000.png, cart-page-000.png, car-page-000.png
 
 Mobile Experience (Responsive Design)
+
 Home Mobile,Catalog Mobile,Card Mobile
+
 main-page-001.png, cart-page-001.png, car-page-001.png
 
 🏗️ Deep Dive: Arhitectură Tehnică
@@ -38,15 +42,15 @@ Zero Layout Shift: Implementare aspect-ratio pentru a elimina Cumulative Layout 
 Lazy Loading: Resursele sunt încărcate doar la intrarea în viewport.
 
 📂 Structura Proiectului
-        src/
-        ├── app/
-        │   ├── components/       # Componente reutilizabile (Nav, Card, Item)
-        │   ├── pages/            # View-uri principale (Home, News, Cart, Reviews)
-        │   ├── services/         # Logica de business (Cart, Data Fetching)
-        │   └── data-type/        # Modele de date și Interfețe
-        ├── assets/               # Imagini optimizate WebP și Icons
-        ├── resources/            # Cataloagele de date (mock-backend)
-        └── styles.css            # Variabile globale și reset-uri CSS
+src/
+├── app/
+│   ├── components/       # Componente reutilizabile (Nav, Card, Item)
+│   ├── pages/            # View-uri principale (Home, News, Cart, Reviews)
+│   ├── services/         # Logica de business (Cart, Data Fetching)
+│   └── data-type/        # Modele de date și Interfețe
+├── assets/               # Imagini optimizate WebP și Icons
+├── resources/            # Cataloagele de date (mock-backend)
+└── styles.css            # Variabile globale și reset-uri CSS
 
 
 🛠️ Stack-ul de Dezvoltare
@@ -72,6 +76,7 @@ ng serve
 
 
 📈 Plan de Dezvoltare Viitor (Roadmap)
+
 [ ] Implementarea unui Backend real (Node.js / Java Spring Boot).
 
 [ ] Integrarea unui sistem de plăți (Stripe).
