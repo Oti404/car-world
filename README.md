@@ -10,7 +10,7 @@ Home Page,Vehicle Catalog,Detailed Card
 
 Mobile Experience (Responsive Design)
 
-<img width="378" height="820" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-001.png" />, <img width="374" height="822" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-001.png" />, <img width="380" height="823" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-001.png" />
+<img width="350" height="820" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/main-page-001.png" />, <img width="350" height="822" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/car-page-001.png" />, <img width="350" height="823" alt="image" src="https://github.com/Oti404/car-world/blob/main/screenshots/cart-page-001.png" />
 
 
 🏗️ Deep Dive: Arhitectură Tehnică
