@@ -1,47 +1,100 @@
 <div class="admin-dashboard-container">
-  <div class="admin-header">
-    <h1>Admin Dashboard</h1>
-    <p>Welcome to the control center.</p>
+  <!-- VERSION MARKER TO VERIFY UPDATE -->
+  <div style="background: #2ecc71; color: white; padding: 5px; text-align: center; font-size: 10px; opacity: 0.5;">
+    V2.0 - MODERATION READY
   </div>
+
+  <header class="admin-header">
+    <div class="header-main">
+      <h1>Admin Dashboard</h1>
+      <p>System Overview & Control Panel</p>
+    </div>
+  </header>
   
-  <div class="admin-content">
-    <div class="admin-card">
+  <!-- Management Navigation Cards -->
+  <section class="admin-grid">
+    <div class="nav-card primary-action">
+      <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+      <h3>Review Moderation</h3>
+      <p>Approve or reject customer reviews before they go public.</p>
+      <button class="btn-action" (click)="scrollTo('section-moderation')">Manage Reviews</button>
+    </div>
+
+    <div class="nav-card">
+      <div class="card-icon"><i class="fas fa-car-side"></i></div>
       <h3>Inventory</h3>
-      <p>Add, edit or remove vehicles from the digital showroom.</p>
-      <button class="btn-primary" (click)="scrollTo('car-manager')">Go to Cars</button>
+      <p>Update vehicle details, stock, and pricing in the showroom.</p>
+      <button class="btn-action" (click)="scrollTo('section-inventory')">Manage Cars</button>
     </div>
 
-    <div class="admin-card">
-      <h3>News & Updates</h3>
-      <p>Manage the articles shown on the home and news page.</p>
-      <button class="btn-primary" (click)="scrollTo('news-manager')">Manage News</button>
+    <div class="nav-card">
+      <div class="card-icon"><i class="fas fa-newspaper"></i></div>
+      <h3>News & Media</h3>
+      <p>Publish and edit articles, announcements, and updates.</p>
+      <button class="btn-action" (click)="scrollTo('section-news')">Manage News</button>
     </div>
 
-    <div class="admin-card">
+    <div class="nav-card">
+      <div class="card-icon"><i class="fas fa-headset"></i></div>
       <h3>Customer Support</h3>
-      <p>Review and respond to customer inquiries and messages.</p>
-      <button class="btn-primary" (click)="scrollTo('support-manager')">Go to Support</button>
+      <p>Track and respond to user inquiries and support tickets.</p>
+      <button class="btn-action" (click)="scrollTo('section-support')">Open Support</button>
     </div>
-  </div>
+  </section>
 
-  <div class="admin-workspace">
-    <!-- Car Manager Tool -->
-    <app-car-manager id="car-manager"></app-car-manager>
+  <!-- WORKSPACE SECTIONS -->
+  <main class="admin-workspace">
+    
+    <!-- 1. Review Moderation -->
+    <section id="section-moderation" class="workspace-block">
+      <div class="section-title">
+        <h2><i class="fas fa-gavel"></i> Pending Reviews</h2>
+        <div class="title-line"></div>
+      </div>
+      <app-review-moderator></app-review-moderator>
+    </section>
+
+    <!-- 2. Car Inventory -->
+    <section id="section-inventory" class="workspace-block">
+      <div class="section-title">
+        <h2><i class="fas fa-warehouse"></i> Vehicle Inventory</h2>
+        <div class="title-line"></div>
+      </div>
+      <app-car-manager></app-car-manager>
+    </section>
 
     <hr class="dashboard-divider" />
 
-    <!-- Pending Orders Tool -->
-    <app-pending-orders></app-pending-orders>
+    <!-- 3. Pending Orders -->
+    <section id="section-orders" class="workspace-block">
+      <div class="section-title" id="pending-orders">
+        <h2><i class="fas fa-shopping-bag"></i> Customer Orders</h2>
+        <div class="title-line"></div>
+      </div>
+      <app-pending-orders></app-pending-orders>
+    </section>
 
     <hr class="dashboard-divider" />
 
-    <!-- Support Management Tool -->
-    <app-support-manager id="support-manager"></app-support-manager>
+    <!-- 4. Support Manager -->
+    <section id="section-support" class="workspace-block">
+      <div class="section-title">
+        <h2><i class="fas fa-comments"></i> Inquiries & Support</h2>
+        <div class="title-line"></div>
+      </div>
+      <app-support-manager></app-support-manager>
+    </section>
 
     <hr class="dashboard-divider" />
 
-    <!-- News Management Tool -->
-    <app-news-manager id="news-manager"></app-news-manager>
-  </div>
+    <!-- 5. News Manager -->
+    <section id="section-news" class="workspace-block">
+      <div class="section-title">
+        <h2><i class="fas fa-edit"></i> News Management</h2>
+        <div class="title-line"></div>
+      </div>
+      <app-news-manager></app-news-manager>
+    </section>
 
+  </main>
 </div>

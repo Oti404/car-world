@@ -15,7 +15,6 @@ export enum AppRoutes {
   News = 'news',
   Cars = 'cars',
   Cart = 'cart',
-  Reviews = 'reviews',
   Login = 'login',
   Register = 'register',
   AdminDashboard = 'admin-dashboard',

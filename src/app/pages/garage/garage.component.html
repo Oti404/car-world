@@ -34,8 +34,80 @@
               <h4>{{ order.car.name }}</h4>
               <p>Purchased Price: {{ order.configuredPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
               <p *ngIf="order.vin" class="vin-code"><strong>VIN:</strong> {{ order.vin }}</p>
+
+              <!-- Live Status / Telemetry (Only for Delivered) -->
+              <div class="live-status-card" *ngIf="order.status === 'delivered'">
+                <div class="status-grid">
+                  <div class="status-item">
+                    <span class="label">Odometer</span>
+                    <span class="value">{{ getOdometer(order) }} km</span>
+                  </div>
+                  <div class="status-item">
+                    <span class="label">Status</span>
+                    <span class="value online"><i class="fas fa-signal"></i> Online</span>
+                  </div>
+                  <div class="status-item">
+                    <span class="label">Energy/Fuel</span>
+                    <span class="value pulse">84%</span>
+                  </div>
+                </div>
+                
+                <div class="owner-actions">
+                  <div class="review-status-indicator" *ngIf="hasReview(order.car.id!)">
+                    <span class="status-badge" [ngClass]="existingReviews().get(order.car.id!)?.status">
+                      {{ existingReviews().get(order.car.id!)?.status | titlecase }}
+                    </span>
+                  </div>
+                  <button class="btn-review" (click)="openReviewForm(order)">
+                    <i class="fas fa-star text-orange"></i> {{ hasReview(order.car.id!) ? 'Edit Experience' : 'Share Experience' }}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Review Form Overlay -->
+      <div class="review-overlay" *ngIf="selectedOrderForReview()">
+        <div class="review-modal">
+          <header class="modal-header">
+            <h3>{{ hasReview(selectedOrderForReview()!.car.id!) ? 'Edit' : 'Write' }} Review - {{ selectedOrderForReview()!.car.name }}</h3>
+            <button class="btn-close" (click)="closeReviewForm()">&times;</button>
+          </header>
+          
+          <div class="modal-body">
+            <div class="rating-selector">
+              <span *ngFor="let star of [1,2,3,4,5]" 
+                    (click)="reviewModel.rating = star"
+                    [class.active]="(reviewModel.rating || 0) >= star">
+                <i class="fas fa-star"></i>
+              </span>
+            </div>
+
+            <textarea 
+              [(ngModel)]="reviewModel.content" 
+              placeholder="Tell us about your driving experience, performance, and daily utility..."
+              class="review-textarea"
+            ></textarea>
+
+            <div class="photo-upload">
+              <label class="photo-label">
+                <i class="fas fa-camera"></i> {{ reviewFile() ? reviewFile()!.name : 'Add Owner Photo (Optional)' }}
+                <input type="file" (change)="onReviewFileSelected($event)" accept="image/*" hidden>
+              </label>
+              <small class="upload-hint">If no photo is added, your car's original showroom photo will be used.</small>
+            </div>
+          </div>
+
+          <footer class="modal-footer">
+            <button class="btn-cancel" (click)="closeReviewForm()">Cancel</button>
+            <button class="btn-submit" 
+                    [disabled]="!reviewModel.content || reviewModel.rating === 0 || isSubmittingReview()"
+                    (click)="submitReview()">
+              {{ isSubmittingReview() ? 'Saving...' : 'Post Review' }}
+            </button>
+          </footer>
         </div>
       </div>
     </ng-container>

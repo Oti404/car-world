@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 import { Car, CarService } from '../../services/car.service';
 import { CartService } from '../../services/cart.service';
 import { ComparatorService } from '../../services/comparator.service';
-import { Observable, switchMap } from 'rxjs';
+import { CarReview, ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-car-details',
@@ -17,15 +18,18 @@ export class CarDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private carService = inject(CarService);
   private cartService = inject(CartService);
+  private reviewService = inject(ReviewService);
   public comparatorService = inject(ComparatorService);
 
   public car$!: Observable<Car>;
+  public reviews$!: Observable<CarReview[]>;
   public activeImageIndex = 0;
 
   ngOnInit() {
     this.car$ = this.route.paramMap.pipe(
-      switchMap(params => {
+      switchMap((params: any) => {
         const id = params.get('id')!;
+        this.reviews$ = this.reviewService.getCarReviews(id);
         return this.carService.getCarById(id);
       })
     );

@@ -81,6 +81,10 @@
         <div class="tech-value">{{ car.name }}</div>
       </div>
       <div class="tech-row">
+        <div class="tech-label">Engine & Performance</div>
+        <div class="tech-value">{{ car.engineSpecs }}</div>
+      </div>
+      <div class="tech-row">
         <div class="tech-label">Price Category</div>
         <div class="tech-value">Premium / Exclusive</div>
       </div>
@@ -94,6 +98,38 @@
         <div class="tech-label">Wheel Choices</div>
         <div class="tech-value">
           <span class="option-tag" *ngFor="let w of car.options.wheels">{{ w.name }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verified Reviews Section -->
+  <section class="reviews-section" *ngIf="reviews$ | async as reviews">
+    <div class="reviews-header">
+      <h2>Verified Owner Reviews</h2>
+      <span class="review-count">{{ reviews.length }} Experience{{ reviews.length !== 1 ? 's' : '' }}</span>
+    </div>
+
+    <div class="no-reviews" *ngIf="reviews.length === 0">
+      <p>Be the first owner to share your experience with this model.</p>
+    </div>
+
+    <div class="reviews-grid" *ngIf="reviews.length > 0">
+      <div class="review-card" *ngFor="let review of reviews">
+        <div class="review-image-container">
+          <img [src]="review.ownerPhoto || review.originalPhoto" [alt]="review.userName + ' car photo'" class="review-image">
+          <div class="owner-badge"><i class="fas fa-check-circle"></i> Verified Owner</div>
+        </div>
+        
+        <div class="review-content">
+          <div class="review-meta">
+            <span class="reviewer-name">{{ review.userName }}</span>
+            <div class="star-rating">
+              <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="review.rating >= s"></i>
+            </div>
+          </div>
+          <p class="review-text">"{{ review.content }}"</p>
+          <span class="review-date">{{ review.date?.toDate ? (review.date.toDate() | date:'mediumDate') : (review.date | date:'mediumDate') }}</span>
         </div>
       </div>
     </div>
