@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { take } from 'rxjs';
 import { CartService } from '../../services/cart.service';
-import { CarDto } from '../../data-type/car-data';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,49 +13,31 @@ import { CarDto } from '../../data-type/car-data';
 })
 export class CartComponent {
   public readonly cartService = inject(CartService);
+  public readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  public isOrderComplete = false;
-  public totalTransactionAmount = 0;
-  public finalizedItems: CarDto[] = [];
+  public isCheckoutInProgress = false;
 
   /**
-   * Orchestrates the checkout process.
-   * Captures current cart state for the success modal before clearing the global store.
+   * Orchestrates the checkout process pushing data to Firestore via CartService.
    */
-  public onCheckout(): void {
-    this.cartService.cartItems$.pipe(take(1)).subscribe(items => {
-      if (items.length === 0) return;
+  public async onCheckout(): Promise<void> {
+    if (!this.authService.getCurrentUser()) {
+      alert("Please login or register to place an order.");
+      this.router.navigate(['/login']);
+      return;
+    }
 
-      this.totalTransactionAmount = this.cartService.totalPrice;
-      this.finalizedItems = [...items];
-
-      this.cartService.clearCart();
-      this.isOrderComplete = true;
-    });
-  }
-
-  /**
-   * Navigates the user back to the home view after a successful transaction.
-   */
-  public finalizeOrder(): void {
-    this.isOrderComplete = false;
-    this.router.navigate(['/home']);
-  }
-
-  /**
-   * Extracts active configuration keys from a vehicle options object.
-   */
-  public getSelectedOptions(options: any): string[] {
-    if (!options) return [];
-    return Object.keys(options).filter(key => options[key] === true);
-  }
-
-  /**
-   * Transforms technical keys into human-readable labels.
-   * @example "premiumAudio" -> "Premium Audio"
-   */
-  public formatOptionLabel(key: string): string {
-    return key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+    this.isCheckoutInProgress = true;
+    try {
+      await this.cartService.checkout();
+      alert("Order placed successfully! The car has been sent to your Garage.");
+      this.router.navigate(['/garage']);
+    } catch(err) {
+      console.error(err);
+      alert("There was an error processing your checkout.");
+    } finally {
+      this.isCheckoutInProgress = false;
+    }
   }
 }

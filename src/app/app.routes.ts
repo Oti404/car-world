@@ -8,6 +8,7 @@ import { ReviewsComponent } from './pages/reviews/reviews.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { GarageComponent } from './pages/garage/garage.component';
 import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: AppRoutes.Reviews, component: ReviewsComponent },
   { path: AppRoutes.Login, component: LoginComponent },
   { path: AppRoutes.Register, component: RegisterComponent },
+  { path: AppRoutes.Garage, component: GarageComponent },
   { 
     path: AppRoutes.AdminDashboard, 
     component: AdminDashboardComponent,

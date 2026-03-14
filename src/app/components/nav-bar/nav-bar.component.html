@@ -18,6 +18,7 @@
         <a routerLink="/reviews" routerLinkActive="active-link" (click)="closeMenu()">Reviews</a>
 
         <ng-container *ngIf="authService.user$ | async as user; else guestLinks">
+          <a routerLink="/garage" routerLinkActive="active-link" (click)="closeMenu()">My Garage</a>
           <a *ngIf="authService.isAdmin$ | async" routerLink="/admin-dashboard" routerLinkActive="active-link" class="admin-link" (click)="closeMenu()">Admin DB</a>
           <span class="nav-user-email">{{ user.email }}</span>
           <a class="nav-logout-btn" (click)="logout()">Logout</a>

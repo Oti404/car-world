@@ -1,6 +1,9 @@
 <div class="cart-container">
   <header class="cart-header">
     <h1>Your Shopping Cart</h1>
+    <p *ngIf="!authService.getCurrentUser()" class="auth-warning">
+      <a routerLink="/login">Login</a> to proceed with checkout.
+    </p>
   </header>
 
   <div class="empty-cart" *ngIf="(cartService.cartItems$ | async)?.length === 0">
@@ -12,57 +15,30 @@
   <div class="cart-content" *ngIf="(cartService.cartItems$ | async) as cartItems">
     <div class="cart-items-list" *ngIf="cartItems.length > 0">
 
-      <div class="cart-item" *ngFor="let car of cartItems">
-        <img [src]="car.image" class="item-image fade-in" loading="lazy" alt="{{ car.title }}"/>
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <img [src]="item.images && item.images.length > 0 ? item.images[0] : 'assets/placeholder-car.jpg'" class="item-image fade-in" loading="lazy" alt="{{ item.name }}"/>
 
         <div class="item-details">
-          <h3>{{ car.title }}</h3>
+          <h3>{{ item.name }}</h3>
           <p class="item-specs">
-            {{ car.specifications.modelYear }} • {{ car.specifications.power }}
+            {{ item.engineSpecs }}
           </p>
         </div>
 
         <div class="item-actions">
-          <span class="item-price">{{ car.price | currency:'USD':'symbol':'1.0-0' }}</span>
-          <button class="btn-remove" (click)="cartService.removeFromCart(car)">
+          <span class="item-price">{{ item.configuredPrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+          <button class="btn-remove" (click)="cartService.removeFromCart(item)">
             <i class="fas fa-trash"></i> Remove
           </button>
         </div>
       </div>
 
       <div class="cart-summary">
-        <button class="btn-checkout" (click)="onCheckout()">Proceed to Checkout</button>
+        <button class="btn-checkout" (click)="onCheckout()" [disabled]="isCheckoutInProgress">
+          {{ isCheckoutInProgress ? 'Processing...' : 'Place Order' }}
+        </button>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal-overlay" *ngIf="isOrderComplete">
-  <div class="modal-card">
-    <div class="success-icon-container">
-      <i class="fas fa-check-circle"></i>
-    </div>
-
-    <h2>Transaction Successful!</h2>
-
-    <p class="summary-text">
-      A payment of <span class="price-highlight">{{ totalTransactionAmount | currency:'USD':'symbol':'1.0-0' }}</span> was processed successfully.
-    </p>
-
-    <div class="receipt-details">
-      <p class="receipt-label">Vehicle Summary:</p>
-      <ol class="purchased-list">
-        <li *ngFor="let item of finalizedItems" class="purchased-item">
-          <span class="vehicle-name">{{ item.title }}</span>
-          <div class="badge-container" *ngIf="getSelectedOptions(item.options).length > 0">
-            <span class="option-badge" *ngFor="let opt of getSelectedOptions(item.options)">
-              {{ formatOptionLabel(opt) }}
-            </span>
-          </div>
-        </li>
-      </ol>
-    </div>
-
-    <button class="btn-confirm" (click)="finalizeOrder()">Return to Showroom</button>
-  </div>
 </div>

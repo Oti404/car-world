@@ -1,0 +1,163 @@
+.pending-orders-container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-top: 30px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #2ecc71;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.admin-order-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  background: #f8f9fa;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px 10px 0 0;
+  font-size: 0.85rem;
+}
+
+.user-email {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.card-body {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.car-details h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.price {
+  color: #e67e22;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.options-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  background: #ecf0f1;
+  color: #34495e;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.card-actions {
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 10px 10px;
+}
+
+.vin-input-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.vin-input-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.btn-approve {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-reject {
+  background: #e74c3c;
+  color: white;
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-top-color: #e67e22;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }

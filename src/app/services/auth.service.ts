@@ -53,5 +53,10 @@ export class AuthService {
   logout() {
     return signOut(this.auth);
   }
+
+  // Get current synchronous user
+  getCurrentUser(): User | null {
+    return this.auth.currentUser;
+  }
 }
 

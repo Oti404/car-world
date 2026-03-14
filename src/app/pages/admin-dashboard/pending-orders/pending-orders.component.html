@@ -1,0 +1,51 @@
+<div class="pending-orders-container">
+  <h2>Pending Customer Orders</h2>
+  <p class="subtitle">Review reservations and assign VINs to finalize delivery.</p>
+
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="empty-state" *ngIf="!isLoading && pendingOrders.length === 0">
+    <i class="fas fa-check-circle"></i>
+    <p>All caught up! No pending orders right now.</p>
+  </div>
+
+  <div class="orders-grid" *ngIf="!isLoading && pendingOrders.length > 0">
+    <div class="admin-order-card" *ngFor="let order of pendingOrders">
+      
+      <div class="card-header">
+        <span class="user-email"><i class="fas fa-user"></i> {{ order.userEmail }}</span>
+        <span class="order-date">{{ order.orderDate | date:'short' }}</span>
+      </div>
+
+      <div class="card-body">
+        <div class="car-details">
+          <h4>{{ order.car.name }}</h4>
+          <p class="price">{{ order.configuredPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+          <div class="options-preview" *ngIf="order.car.options">
+             <span class="badge" *ngFor="let color of order.car.options.colors">{{ color.name }}</span>
+             <span class="badge" *ngFor="let wheel of order.car.options.wheels">{{ wheel.name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <div class="vin-input-group">
+          <label>Assign VIN</label>
+          <input type="text" placeholder="WP0ZZZ..." [(ngModel)]="orderVins[order.id!]">
+        </div>
+        
+        <div class="buttons">
+          <button class="btn-approve" (click)="approveOrder(order)">
+            <i class="fas fa-check"></i> Approve
+          </button>
+          <button class="btn-reject" (click)="rejectOrder(order)">
+            <i class="fas fa-times"></i> Reject
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
