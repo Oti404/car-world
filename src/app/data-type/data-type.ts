@@ -22,6 +22,7 @@ export enum AppRoutes {
   Garage = 'garage',
   Comparator = 'compare',
   Contact = 'contact',
+  Profile = 'profile',
 }
 
 

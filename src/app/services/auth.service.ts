@@ -58,5 +58,14 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.auth.currentUser;
   }
+
+  async updateDisplayName(name: string) {
+    const user = this.auth.currentUser;
+    if (user) {
+      const { updateProfile } = await import('@angular/fire/auth');
+      return updateProfile(user, { displayName: name });
+    }
+    throw new Error('No user logged in');
+  }
 }
 

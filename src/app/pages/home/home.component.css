@@ -1,113 +1,248 @@
 /**
- * Home Page Styles
+ * Premium Home Page Styles - Business Redesign
  */
 .main-content {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 0 2rem 6rem 2rem;
 }
 
-.title-description-block {
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 6rem 0 3rem 0;
+  letter-spacing: -1px;
+}
+
+/* --- 1. EXPERTISE SECTION --- */
+.expertise-section {
+  padding: 6rem 0;
+  border-bottom: 1px solid var(--border-primary);
+  margin-top: -3rem; /* Slight overlap with header for flow */
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+}
+
+.expertise-item {
   text-align: center;
-  margin-bottom: 4rem;
-  padding: 3rem;
-  background-color: var(--bg-secondary);
-  border-radius: 12px;
 }
 
-.dashed-border {
-  border: 2px dashed #e0e0e0;
+.icon-box {
+  width: 70px;
+  height: 70px;
+  background: var(--bg-secondary);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  font-size: 1.8rem;
+  color: var(--primary-accent);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.page-title {
-  font-size: 2.5rem;
+.expertise-item:hover .icon-box {
+  transform: translateY(-10px) rotate(5deg);
+  background: var(--primary-accent);
+  color: white;
+}
+
+.expertise-item h3 {
+  font-size: 1.4rem;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
-.page-subtitle {
-  font-size: 1.1rem;
+.expertise-item p {
   color: var(--text-muted);
-  line-height: 1.8;
-  max-width: 800px;
-  margin: 0 auto;
+  line-height: 1.7;
 }
 
-/**
- * Feature Grid System
- */
+/* --- 2. CREDIBILITY BAR --- */
+.credibility-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  margin: 4rem 0;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+}
+
+.stat-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--primary-accent);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* --- 3. FEATURED MODELS --- */
 .features {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
+  margin-bottom: 6rem;
 }
 
 .featured-car-card {
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--card-shadow);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   border: 1px solid var(--border-primary);
+  position: relative;
 }
 
 .featured-car-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--card-shadow);
+  transform: translateY(-12px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.15);
   border-color: var(--primary-accent);
 }
 
 .f-image-wrapper {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
+  position: relative;
   overflow: hidden;
+}
+
+.f-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--primary-accent);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  z-index: 2;
 }
 
 .f-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.featured-car-card:hover .f-image {
-  transform: scale(1.05);
 }
 
 .f-content {
-  padding: 20px;
-  text-align: center;
+  padding: 24px;
 }
 
 .f-content h4 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .f-specs {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
 }
 
 .f-price {
-  display: block;
+  font-weight: 800;
+  color: var(--primary-accent);
+  font-size: 1.3rem;
+  letter-spacing: -0.5px;
+}
+
+/* --- 4. PARTNERS SECTION --- */
+.partners-section {
+  text-align: center;
+  padding: 6rem 0;
+  border-top: 1px solid var(--border-primary);
+}
+
+.partners-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
   font-weight: 700;
-  color: #e67e22;
-  font-size: 1.1rem;
 }
 
-@media (max-width: 968px) {
-  .features {
+.partners-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4rem;
+  opacity: 0.5;
+  filter: grayscale(1);
+  transition: opacity 0.4s;
+}
+
+.partners-grid:hover {
+  opacity: 1;
+}
+
+.logo-placeholder {
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+/* --- 5. UTILITY & UTILS --- */
+.utility-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+/* --- ANIMATIONS --- */
+.reveal-on-scroll {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .expertise-grid, .features, .credibility-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .expertise-grid, .features, .credibility-bar, .utility-features {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
-
-  .title-description-block {
-    padding: 2rem 1rem;
-  }
+  .stat-item { padding: 1rem 0; }
+  .partners-grid { gap: 2rem; }
 }
+

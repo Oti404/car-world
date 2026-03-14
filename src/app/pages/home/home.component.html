@@ -1,5 +1,5 @@
 <app-header
-  title="Welcome to Porsche World"
+  title="Porsche World"
   [content]="headerContent"
   [bgImgUrl]="headerBgUrl"
   buttonLabel="Explore Catalog"
@@ -7,32 +7,77 @@
 />
 
 <main class="main-content">
-  <section class="title-description-block dashed-border">
-    <h2 class="page-title">Precision, Performance, Porsche.</h2>
-    <p class="page-subtitle">
-      Stay connected with the automotive world through our comprehensive
-      platform featuring the latest models, detailed specifications, and everything
-      you need to know about the vehicles that drive our passion.
-    </p>
-  </section>
-
-  <h3 class="section-title text-center" style="margin-top: 40px; margin-bottom: 20px;">Featured Models</h3>
-
-  <section class="features" *ngIf="(featuredCars$ | async) as cars">
-    <!-- Featured Cars Loop -->
-    <div class="featured-car-card" *ngFor="let car of cars" (click)="navigateTo(appRoutesEnum.Cars)">
-      <div class="f-image-wrapper">
-        <img [src]="car.images && car.images.length > 0 ? car.images[0] : 'assets/placeholder-car.jpg'" alt="{{ car.name }}" class="f-image">
+  <!-- Section 1: Porsche Expertise & Values -->
+  <section class="expertise-section reveal-on-scroll">
+    <div class="expertise-grid">
+      <div class="expertise-item">
+        <div class="icon-box"><i class="fas fa-trophy"></i></div>
+        <h3>Racing Heritage</h3>
+        <p>Decades of dominance on the track, translated directly into every production model we offer for the ultimate driving experience.</p>
       </div>
-      <div class="f-content">
-        <h4>{{ car.name }}</h4>
-        <p class="f-specs">{{ car.engineSpecs }}</p>
-        <span class="f-price">Starting from {{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+      <div class="expertise-item">
+        <div class="icon-box"><i class="fas fa-drafting-compass"></i></div>
+        <h3>Precision Engineering</h3>
+        <p>Uncompromising standards of quality and technical perfection, ensuring every component meets the Porsche gold standard.</p>
+      </div>
+      <div class="expertise-item">
+        <div class="icon-box"><i class="fas fa-gem"></i></div>
+        <h3>Timeless Design</h3>
+        <p>Where form meets function in its purest expression, maintaining the iconic silhouette that defines the future of sports cars.</p>
       </div>
     </div>
   </section>
 
-  <section class="features" style="margin-top: 60px;">
+  <!-- Section 2: Credibility Statistics -->
+  <section class="credibility-bar reveal-on-scroll">
+    <div class="stat-item">
+      <span class="stat-number">75+</span>
+      <span class="stat-label">Years of Legend</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">19</span>
+      <span class="stat-label">Le Mans Victories</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Authentic Quality</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Driving Passion</span>
+    </div>
+  </section>
+
+  <h3 class="section-title text-center reveal-on-scroll">Current Performance Lineup</h3>
+
+  <section class="features reveal-on-scroll" *ngIf="(featuredCars$ | async) as cars">
+    <div class="featured-car-card" *ngFor="let car of cars" (click)="navigateTo(appRoutesEnum.Cars)">
+      <div class="f-image-wrapper">
+        <img [src]="car.images && car.images.length > 0 ? car.images[0] : 'assets/placeholder-car.jpg'" alt="{{ car.name }}" class="f-image">
+        <div class="f-badge">Performance</div>
+      </div>
+      <div class="f-content">
+        <h4>{{ car.name }}</h4>
+        <p class="f-specs">{{ car.engineSpecs }}</p>
+        <span class="f-price">{{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Partners & Heritage Showcase -->
+  <section class="partners-section reveal-on-scroll">
+    <h4 class="partners-title">Heritage & Engineering Partners</h4>
+    <div class="partners-grid">
+      <div class="partner-logo"><span class="logo-placeholder">TAG HEUER</span></div>
+      <div class="partner-logo"><span class="logo-placeholder">MICHELIN</span></div>
+      <div class="partner-logo"><span class="logo-placeholder">MOBIL 1</span></div>
+      <div class="partner-logo"><span class="logo-placeholder">PUMA</span></div>
+      <div class="partner-logo"><span class="logo-placeholder">VODAFONE</span></div>
+    </div>
+  </section>
+
+
+  <section class="utility-features reveal-on-scroll">
     <app-card
       title="Latest News"
       content="Stay updated with breaking news from the automotive industry, including new releases and market trends."
@@ -50,3 +95,4 @@
     />
   </section>
 </main>
+

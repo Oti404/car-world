@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   public readonly cardVariantEnum = CardVariant;
 
   public readonly headerContent =
-    'Discover the latest automotive trends, news, and the most exciting cars in the industry';
+    'Connecting extraordinary cars with extraordinary people. Explore our curated selection of high-performance vehicles and industry-leading insights.';
   public readonly headerBgUrl = 'header-bg.webp';
 
   public featuredCars$!: Observable<Car[]>;

@@ -12,6 +12,7 @@ import { GarageComponent } from './pages/garage/garage.component';
 import { ComparatorComponent } from './pages/comparator/comparator.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CarDetailsComponent } from './pages/car-details/car-details.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
@@ -39,6 +40,7 @@ export const routes: Routes = [
   { path: AppRoutes.Garage, component: GarageComponent },
   { path: AppRoutes.Comparator, component: ComparatorComponent },
   { path: AppRoutes.Contact, component: ContactComponent },
+  { path: AppRoutes.Profile, component: ProfileComponent },
   { path: 'cars/:id', component: CarDetailsComponent },
   { 
     path: AppRoutes.AdminDashboard, 

@@ -112,13 +112,23 @@
   color: #ff6b35;
 }
 
-.nav-user-email {
+.nav-profile-link {
   color: #a0a0a0;
   font-size: 0.9rem;
   font-weight: 500;
-  cursor: default;
+  text-decoration: none;
   display: flex;
   align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.nav-profile-link:hover {
+  color: #ff6b35;
+}
+
+.nav-profile-link i {
+  font-size: 1.2rem;
 }
 
 .admin-link {
