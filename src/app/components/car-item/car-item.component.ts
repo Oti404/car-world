@@ -6,6 +6,7 @@ import { CheckboxComponent } from '../checkbox/checkbox.component';
 import { ButtonComponent } from '../button/button.component';
 import { CarService } from '../../services/car.service';
 import { CartService } from '../../services/cart.service';
+import { ComparatorService } from '../../services/comparator.service';
 
 @Component({
   selector: 'app-car-item',
@@ -17,6 +18,7 @@ import { CartService } from '../../services/cart.service';
 export class CarItemComponent implements OnInit {
   private readonly cartService = inject(CartService);
   private readonly carService = inject(CarService);
+  public readonly comparatorService = inject(ComparatorService);
 
   /**
    * Component Inputs using Angular Signals. Expected to be a Firestore Car.

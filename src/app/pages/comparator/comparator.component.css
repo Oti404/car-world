@@ -1,0 +1,212 @@
+.comparator-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.comp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #7f8c8d;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+.btn-back:hover {
+  color: #1a1a1a;
+}
+
+.comp-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  margin: 5px 0 0 0;
+}
+
+.btn-clear {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.btn-clear:hover {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: #fafafa;
+  border-radius: 20px;
+  border: 2px dashed #eee;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: #ddd;
+  margin-bottom: 2rem;
+}
+
+.empty-state h2 {
+  font-size: 2rem;
+  color: #1a1a1a;
+}
+
+.btn-primary {
+  background: #e67e22;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+/* Comparison Matrix */
+.comparison-grid-wrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.comparison-table {
+  display: flex;
+  flex-direction: column;
+  min-width: 800px;
+}
+
+.row {
+  display: flex;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.cell {
+  flex: 1;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.label-cell {
+  background: #fafafa;
+  font-weight: 700;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  max-width: 250px;
+}
+
+.data-cell {
+  text-align: left;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  border-left: 1px solid #f0f0f0;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.highlight {
+  color: #e67e22;
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.car-image-box {
+  width: 100%;
+  position: relative;
+}
+
+.car-image-box img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.btn-remove {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.description-cell {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #7f8c8d;
+}
+
+.btn-buy {
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.btn-buy:hover {
+  background: #e67e22;
+}
+
+@media (max-width: 968px) {
+  .comparator-container {
+    padding: 2rem 1rem;
+  }
+  
+  .comp-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}

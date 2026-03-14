@@ -12,6 +12,7 @@ export class ButtonComponent {
   buttonType = input<ButtonType>(ButtonType.Primary);
   buttonLabel = input<string>();
   buttonIcon = input<string>();
+  disabled = input<boolean>(false);
   buttonClicked = output<void>();
 
   onButtonClick(): void {

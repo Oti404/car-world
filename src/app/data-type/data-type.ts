@@ -20,6 +20,8 @@ export enum AppRoutes {
   Register = 'register',
   AdminDashboard = 'admin-dashboard',
   Garage = 'garage',
+  Comparator = 'compare',
+  Contact = 'contact',
 }
 
 

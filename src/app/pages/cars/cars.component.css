@@ -25,6 +25,39 @@
   font-size: 1.1rem;
 }
 
+.search-bar-container {
+  margin-top: 25px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #95a5a6;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 45px;
+  border-radius: 30px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #e67e22;
+  box-shadow: 0 4px 15px rgba(230, 126, 34, 0.15);
+}
+
 /**
  * Responsive Grid System
  * Business Rule: Maintains a minimum card width of 350px,
@@ -51,4 +84,87 @@
   .page-header h1 {
     font-size: 2rem;
   }
+}
+
+/**
+ * Floating Comparison Bar
+ */
+.comparison-bar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  background: #1a1a1a;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  z-index: 1000;
+  animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selection-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.bar-icon {
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+.bar-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-clear {
+  background: transparent;
+  border: 1px solid #444;
+  color: #999;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-clear:hover {
+  color: white;
+  border-color: white;
+}
+
+.btn-compare-link {
+  background: #e67e22;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-compare-link:hover:not(:disabled) {
+  background: #d35400;
+  transform: translateY(-2px);
+}
+
+.btn-compare-link:disabled {
+  background: #555;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@keyframes slideUp {
+  from { transform: translate(-50%, 100px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }

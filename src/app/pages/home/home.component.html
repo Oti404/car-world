@@ -1,22 +1,38 @@
 <app-header
-  title="Welcome to Car World"
+  title="Welcome to Porsche World"
   [content]="headerContent"
   [bgImgUrl]="headerBgUrl"
-  buttonLabel="Explore Cars"
+  buttonLabel="Explore Catalog"
   (headerButtonClicked)="navigateTo(appRoutesEnum.Cars)"
 />
 
 <main class="main-content">
   <section class="title-description-block dashed-border">
-    <h2 class="page-title">Your Gateway to Automotive Excellence</h2>
+    <h2 class="page-title">Precision, Performance, Porsche.</h2>
     <p class="page-subtitle">
       Stay connected with the automotive world through our comprehensive
-      platform featuring the latest news, detailed car reviews, and everything
+      platform featuring the latest models, detailed specifications, and everything
       you need to know about the vehicles that drive our passion.
     </p>
   </section>
 
-  <section class="features">
+  <h3 class="section-title text-center" style="margin-top: 40px; margin-bottom: 20px;">Featured Models</h3>
+
+  <section class="features" *ngIf="(featuredCars$ | async) as cars">
+    <!-- Featured Cars Loop -->
+    <div class="featured-car-card" *ngFor="let car of cars" (click)="navigateTo(appRoutesEnum.Cars)">
+      <div class="f-image-wrapper">
+        <img [src]="car.images && car.images.length > 0 ? car.images[0] : 'assets/placeholder-car.jpg'" alt="{{ car.name }}" class="f-image">
+      </div>
+      <div class="f-content">
+        <h4>{{ car.name }}</h4>
+        <p class="f-specs">{{ car.engineSpecs }}</p>
+        <span class="f-price">Starting from {{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" style="margin-top: 60px;">
     <app-card
       title="Latest News"
       content="Stay updated with breaking news from the automotive industry, including new releases and market trends."
@@ -26,17 +42,8 @@
     />
 
     <app-card
-      title="Car Collection"
-      content="Explore our extensive database of vehicles from classic cars to modern supercars."
-      buttonLabel="Explore Cars"
-      buttonIcon="fa-car"
-      [cardVariant]="cardVariantEnum.Featured"
-      (cardButtonClicked)="navigateTo(appRoutesEnum.Cars)"
-    />
-
-    <app-card
       title="Expert Reviews"
-      content="Read in-depth reviews and analysis from automotive experts to help you make informed decisions."
+      content="Read in-depth reviews and analysis from automotive experts."
       buttonLabel="Explore Reviews"
       buttonIcon="fa-star"
       (cardButtonClicked)="navigateTo(appRoutesEnum.Reviews)"

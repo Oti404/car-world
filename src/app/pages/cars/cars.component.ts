@@ -1,14 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CarItemComponent } from '../../components/car-item/car-item.component';
 import { Car, CarService } from '../../services/car.service';
 import { CartService } from '../../services/cart.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { SearchFilterPipe } from '../../pipes/search-filter.pipe';
+import { ComparatorService } from '../../services/comparator.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cars',
   standalone: true,
-  imports: [CommonModule, CarItemComponent],
+  imports: [CommonModule, FormsModule, CarItemComponent, SearchFilterPipe, RouterLink],
   templateUrl: './cars.component.html',
   styleUrl: './cars.component.css'
 })
@@ -17,12 +21,16 @@ export class CarsComponent implements OnInit {
    * Data source for the vehicle catalog pushed directly from Firestore.
    */
   public carsList$!: Observable<Car[]>;
+  public searchTerm: string = '';
 
   private readonly carService = inject(CarService);
   private readonly cartService = inject(CartService);
+  public readonly comparatorService = inject(ComparatorService);
 
   ngOnInit() {
-    this.carsList$ = this.carService.getCars();
+    this.carsList$ = this.carService.getCars().pipe(
+      map(cars => cars.filter(car => car.stock !== undefined && car.stock > 0))
+    );
   }
 
   /**

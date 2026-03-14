@@ -1,1 +1,79 @@
-<p>comparator works!</p>
+<div class="comparator-container">
+  <header class="comp-header">
+    <div class="header-content">
+      <button class="btn-back" routerLink="/cars">
+        <i class="fas fa-arrow-left"></i> Back to Catalog
+      </button>
+      <h1>Vehicle Comparison</h1>
+      <p class="subtitle">Side-by-side technical specifications</p>
+    </div>
+    <button *ngIf="comparatorService.getCount() > 0" class="btn-clear" (click)="clearAll()">
+      <i class="fas fa-trash"></i> Clear All
+    </button>
+  </header>
+
+  <div class="empty-state" *ngIf="comparatorService.getCount() === 0">
+    <i class="fas fa-columns empty-icon"></i>
+    <h2>No vehicles selected</h2>
+    <p>Go back to the catalog and select up to 3 cars to compare their features.</p>
+    <button class="btn-primary" routerLink="/cars">Go to Catalog</button>
+  </div>
+
+  <div class="comparison-grid-wrapper" *ngIf="comparatorService.getCount() > 0">
+    <div class="comparison-table">
+      <!-- Image Row -->
+      <div class="row images-row">
+        <div class="cell label-cell"></div>
+        <div class="cell data-cell" *ngFor="let car of comparatorService.selectedCars$()">
+          <div class="car-image-box">
+            <button class="btn-remove" (click)="removeCar(car)">
+              <i class="fas fa-times"></i>
+            </button>
+            <img [src]="car.images && car.images.length > 0 ? car.images[0] : 'assets/placeholder-car.jpg'" [alt]="car.name">
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Row -->
+      <div class="row price-row">
+        <div class="cell label-cell">Price (Starting)</div>
+        <div class="cell data-cell highlight" *ngFor="let car of comparatorService.selectedCars$()">
+          {{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}
+        </div>
+      </div>
+
+      <!-- Engine Row -->
+      <div class="row">
+        <div class="cell label-cell">Engine / Performance</div>
+        <div class="cell data-cell" *ngFor="let car of comparatorService.selectedCars$()">
+          <strong>{{ car.name }}</strong><br>
+          <span class="text-muted">{{ car.engineSpecs }}</span>
+        </div>
+      </div>
+
+      <!-- Features Row -->
+      <div class="row">
+        <div class="cell label-cell">Stock Availability</div>
+        <div class="cell data-cell" *ngFor="let car of comparatorService.selectedCars$()">
+          {{ car.stock }} units
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="row">
+        <div class="cell label-cell">Overview</div>
+        <div class="cell data-cell description-cell" *ngFor="let car of comparatorService.selectedCars$()">
+          {{ car.description }}
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="row actions-row">
+        <div class="cell label-cell"></div>
+        <div class="cell data-cell" *ngFor="let car of comparatorService.selectedCars$()">
+          <button class="btn-buy" routerLink="/cart">Configure & Buy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

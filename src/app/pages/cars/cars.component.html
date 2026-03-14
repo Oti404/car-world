@@ -2,11 +2,16 @@
   <header class="page-header">
     <h1>Available Premium Cars</h1>
     <p class="subtitle">Explore our curated selection of high-performance vehicles</p>
+    
+    <div class="search-bar-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search models, specs, or features..." class="search-input" />
+    </div>
   </header>
 
   <div class="cars-grid">
     <ng-container *ngIf="carsList$ | async as carsList; else loading">
-      @for (car of carsList; track car.id) {
+      @for (car of (carsList | searchFilter: searchTerm); track car.id) {
         <app-car-item
           [carItem]="car"
           (buttonClicked)="onAddToCart(car)"
@@ -16,5 +21,20 @@
     <ng-template #loading>
       <p class="loading-text">Loading premium cars from the garage...</p>
     </ng-template>
+  </div>
+
+  <div class="comparison-bar" *ngIf="comparatorService.getCount() > 0">
+    <div class="bar-content">
+      <div class="selection-info">
+        <i class="fas fa-columns bar-icon"></i>
+        <span><strong>{{ comparatorService.getCount() }}</strong> vehicles selected for comparison</span>
+      </div>
+      <div class="bar-actions">
+        <button class="btn-clear" (click)="comparatorService.clear()">Clear All</button>
+        <button class="btn-compare-link" routerLink="/compare" [disabled]="comparatorService.getCount() < 2">
+          Compare Now ({{ comparatorService.getCount() }}/3)
+        </button>
+      </div>
+    </div>
   </div>
 </div>

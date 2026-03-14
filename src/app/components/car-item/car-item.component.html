@@ -7,8 +7,12 @@
       loading="lazy"
     />
 
-    <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()">
+    <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()" title="Add to Favorites">
       <i class="fas fa-heart"></i>
+    </div>
+
+    <div class="compare-toggle" [class.active]="comparatorService.isSelected(carItem().id!)" (click)="comparatorService.toggleCar(carItem())" title="Add to Compare">
+      <i class="fas fa-columns"></i>
     </div>
   </div>
 

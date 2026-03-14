@@ -1,0 +1,47 @@
+<div class="support-manager">
+  <header class="section-header">
+    <h2><i class="fas fa-headset icon"></i> User Inquiries & Support</h2>
+    <p>Manage questions and messages from users and potential buyers.</p>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading inquiries...</p>
+  </div>
+
+  <div *ngIf="!isLoading && inquiries.length === 0" class="empty-state">
+    <i class="fas fa-inbox empty-icon"></i>
+    <p>No inquiries found. Check back later!</p>
+  </div>
+
+  <div class="inquiry-grid" *ngIf="!isLoading && inquiries.length > 0">
+    <div class="inquiry-card" *ngFor="let item of inquiries" [class]="item.status">
+      <div class="card-header">
+        <span class="status-badge">{{ item.status }}</span>
+        <span class="date">{{ item.date?.toDate() | date:'medium' }}</span>
+      </div>
+      
+      <div class="user-info">
+        <strong>{{ item.name }}</strong>
+        <span class="email"><i class="fas fa-envelope"></i> {{ item.email }}</span>
+      </div>
+
+      <div class="message-content">
+        <h4 *ngIf="item.subject">{{ item.subject }}</h4>
+        <p>{{ item.message }}</p>
+      </div>
+
+      <div class="card-actions">
+        <button *ngIf="item.status === 'new'" class="btn-read" (click)="updateStatus(item.id!, 'read')">
+          <i class="fas fa-eye"></i> Mark as Read
+        </button>
+        <button *ngIf="item.status !== 'resolved'" class="btn-resolve" (click)="updateStatus(item.id!, 'resolved')">
+          <i class="fas fa-check"></i> Resolve
+        </button>
+        <button *ngIf="item.status === 'resolved'" class="btn-reopen" (click)="updateStatus(item.id!, 'read')">
+          <i class="fas fa-undo"></i> Reopen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

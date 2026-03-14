@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, doc, updateDoc, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, updateDoc, query, where, increment } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Car } from './car.service';
 
@@ -46,13 +46,29 @@ export class OrderService {
 
   /**
    * Update the status of an order and optionally attach a VIN (Admin action).
+   * Also deducts stock on delivery.
    */
-  updateOrderStatus(orderId: string, status: 'pending' | 'delivered' | 'cancelled', vin?: string): Promise<void> {
-    const orderDocRef = doc(this.firestore, `orders/${orderId}`);
+  async updateOrderStatus(order: Order, status: 'pending' | 'delivered' | 'cancelled', vin?: string): Promise<void> {
+    if (!order.id) throw new Error("Order ID missing");
+    
+    // 1. Update the Order document itself
+    const orderDocRef = doc(this.firestore, `orders/${order.id}`);
     const updatePayload: any = { status };
     if (vin) {
       updatePayload.vin = vin;
     }
-    return updateDoc(orderDocRef, updatePayload);
+    
+    // 2. We use simple sequential updates here instead of a complex batch 
+    // to reduce dependency overhead, but ideally this would be a transaction.
+    await updateDoc(orderDocRef, updatePayload);
+
+    // 3. If delivered, decrease stock on the corresponding Car
+    if (status === 'delivered' && order.car && order.car.id) {
+       const carDocRef = doc(this.firestore, `cars/${order.car.id}`);
+       await updateDoc(carDocRef, {
+         stock: increment(-1)
+       });
+    }
   }
 }
+

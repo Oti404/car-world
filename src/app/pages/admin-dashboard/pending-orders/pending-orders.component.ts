@@ -40,7 +40,7 @@ export class PendingOrdersComponent implements OnInit {
     }
 
     try {
-      await this.orderService.updateOrderStatus(order.id, 'delivered', vin);
+      await this.orderService.updateOrderStatus(order, 'delivered', vin);
       alert(`Order approved! Vehicle VIN: ${vin} has been registered.`);
       // The observable will auto-update the list, removing it from 'pending'
     } catch (err) {
@@ -54,7 +54,7 @@ export class PendingOrdersComponent implements OnInit {
     
     if(confirm("Are you sure you want to reject and cancel this order?")) {
       try {
-        await this.orderService.updateOrderStatus(order.id, 'cancelled');
+        await this.orderService.updateOrderStatus(order, 'cancelled');
         alert("Order has been cancelled.");
       } catch (err) {
         console.error("Error cancelling order:", err);
