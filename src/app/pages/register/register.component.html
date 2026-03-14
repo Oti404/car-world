@@ -3,6 +3,54 @@
     <h2>Create an Account</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="firstName">First Name</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName" 
+            placeholder="John"
+            [class.is-invalid]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+          >
+          <div class="error-message" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+            Required.
+          </div>
+        </div>
+
+        <div class="form-group half">
+          <label for="lastName">Last Name</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName" 
+            placeholder="Doe"
+            [class.is-invalid]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+          >
+          <div class="error-message" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+            Required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select 
+          id="country" 
+          formControlName="country" 
+          [class.is-invalid]="registerForm.get('country')?.invalid && registerForm.get('country')?.touched"
+        >
+          <option value="">Select Country</option>
+          <option value="Romania">Romania</option>
+          <option value="Germany">Germany</option>
+          <option value="USA">USA</option>
+          <option value="UK">UK</option>
+          <!-- Add more as needed -->
+        </select>
+        <div class="error-message" *ngIf="registerForm.get('country')?.invalid && registerForm.get('country')?.touched">
+          Please select your country.
+        </div>
+      </div>
       <div class="form-group">
         <label for="email">Email address</label>
         <input 

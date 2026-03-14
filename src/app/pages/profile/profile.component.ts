@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, UserProfile } from '../../services/auth.service';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ButtonType } from '../../data-type/data-type';
 
@@ -16,40 +16,61 @@ import { ButtonType } from '../../data-type/data-type';
         <p class="page-subtitle">Gestionează-ți identitatea și setările contului pentru o experiență personalizată.</p>
       </div>
 
-      <div class="profile-card">
+      <div class="profile-card" *ngIf="profile() as userProfile">
         <div class="profile-header">
           <div class="avatar-container">
              <i class="fas fa-user-circle default-avatar"></i>
           </div>
           <div class="user-info">
-            <h2>{{ userEmail() }}</h2>
-            <span class="member-since">Membru Car World</span>
+            <h2>{{ userProfile.firstName }} {{ userProfile.lastName }}</h2>
+            <span class="member-since">Membru Car World din {{ userProfile.createdAt | date:'mediumDate' }}</span>
           </div>
         </div>
 
         <form (ngSubmit)="updateProfile()" class="profile-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Prenume</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                [(ngModel)]="editData.firstName" 
+                name="firstName"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group">
+              <label for="lastName">Nume</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                [(ngModel)]="editData.lastName" 
+                name="lastName"
+                class="form-control"
+              >
+            </div>
+          </div>
+
           <div class="form-group">
-            <label for="displayName">Nume Complet</label>
-            <input 
-              type="text" 
-              id="displayName" 
-              [(ngModel)]="displayName" 
-              name="displayName"
-              placeholder="Ex: Adrian Popescu"
-              class="form-control"
-            >
+            <label for="country">Țară</label>
+            <select id="country" [(ngModel)]="editData.country" name="country" class="form-control">
+              <option value="Romania">Romania</option>
+              <option value="Germany">Germany</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+            </select>
           </div>
 
           <div class="form-actions">
             <app-button 
-              [buttonLabel]="isUpdating ? 'Se salvează...' : 'Salvează Modificările'" 
+              [buttonLabel]="isUpdating() ? 'Se salvează...' : 'Salvează Modificările'" 
               [buttonType]="buttonType.Orange"
-              [disabled]="isUpdating"
+              [disabled]="isUpdating()"
             ></app-button>
           </div>
 
-          <div *ngIf="message" [class.success]="isSuccess" [class.error]="!isSuccess" class="form-message">
-            {{ message }}
+          <div *ngIf="message()" [class.success]="isSuccess()" [class.error]="!isSuccess()" class="form-message">
+            {{ message() }}
           </div>
         </form>
       </div>
@@ -154,9 +175,16 @@ import { ButtonType } from '../../data-type/data-type';
     .success { background: rgba(39, 174, 96, 0.1); color: #27ae60; }
     .error { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
 
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
     @media (max-width: 600px) {
       .profile-card { padding: 2rem 1.5rem; }
       .profile-header { flex-direction: column; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
     }
   `]
 })
@@ -164,35 +192,38 @@ export class ProfileComponent {
   private authService = inject(AuthService);
   public buttonType = ButtonType;
 
-  
-  public userEmail = signal<string>('');
-  public displayName = '';
-  public isUpdating = false;
-  public message = '';
-  public isSuccess = false;
+  public profile = signal<UserProfile | null>(null);
+  public editData: Partial<UserProfile> = {};
+  public isUpdating = signal(false);
+  public message = signal('');
+  public isSuccess = signal(false);
 
   constructor() {
     this.authService.user$.subscribe(user => {
       if (user) {
-        this.userEmail.set(user.email || '');
-        this.displayName = user.displayName || '';
+        this.authService.getUserProfile$(user.uid).subscribe(p => {
+          this.profile.set(p);
+          if (p) {
+            this.editData = { ...p };
+          }
+        });
       }
     });
   }
 
   async updateProfile() {
-    this.isUpdating = true;
-    this.message = '';
+    this.isUpdating.set(true);
+    this.message.set('');
     
     try {
-      await this.authService.updateDisplayName(this.displayName);
-      this.message = 'Profilul a fost actualizat cu succes!';
-      this.isSuccess = true;
+      await this.authService.updateProfileData(this.editData);
+      this.message.set('Profilul a fost actualizat cu succes!');
+      this.isSuccess.set(true);
     } catch (error: any) {
-      this.message = 'Eroare la actualizarea profilului: ' + error.message;
-      this.isSuccess = false;
+      this.message.set('Eroare la actualizarea profilului: ' + error.message);
+      this.isSuccess.set(false);
     } finally {
-      this.isUpdating = false;
+      this.isUpdating.set(false);
     }
   }
 }

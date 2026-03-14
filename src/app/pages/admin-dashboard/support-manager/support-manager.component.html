@@ -15,7 +15,7 @@
   </div>
 
   <div class="inquiry-grid" *ngIf="!isLoading && inquiries.length > 0">
-    <div class="inquiry-card" *ngFor="let item of inquiries" [class]="item.status">
+    <div class="inquiry-card" *ngFor="let item of inquiries; trackBy: trackById" [class]="item.status">
       <div class="card-header">
         <span class="status-badge">{{ item.status }}</span>
         <span class="date">{{ item.date?.toDate() | date:'medium' }}</span>

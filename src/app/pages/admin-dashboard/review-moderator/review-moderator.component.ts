@@ -26,7 +26,6 @@ import { Observable } from 'rxjs';
           <div class="review-info">
             <div class="user-meta">
               <strong>{{ review.userName }}</strong>
-              <small>{{ review.userEmail }}</small>
             </div>
             <div class="rating">
                <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.active]="review.rating >= s"></i>

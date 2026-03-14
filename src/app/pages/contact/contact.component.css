@@ -1,6 +1,6 @@
 .contact-container {
   padding: 6rem 1rem;
-  background: #f8f9fa;
+  background: var(--bg-primary);
   min-height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
@@ -8,12 +8,13 @@
 }
 
 .contact-card {
-  background: white;
+  background: var(--card-bg);
   width: 100%;
   max-width: 600px;
-  padding: 3rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  padding: 3.5rem;
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-primary);
 }
 
 .contact-header {
@@ -22,14 +23,15 @@
 }
 
 .contact-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -1px;
 }
 
 .subtitle {
-  color: #7f8c8d;
+  color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
@@ -46,27 +48,30 @@
 }
 
 .form-group label {
-  font-weight: 700;
-  color: #2c3e50;
-  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .form-group input, 
 .form-group textarea {
-  padding: 12px 15px;
-  border: 1.5px solid #eee;
-  border-radius: 8px;
+  padding: 14px 18px;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 12px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .form-group input:focus, 
 .form-group textarea:focus {
   outline: none;
-  border-color: #e67e22;
-  box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+  background: var(--bg-secondary);
 }
 
 .form-actions {
@@ -93,27 +98,29 @@
 }
 
 .success-message h3 {
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 800;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .success-message p {
-  color: #7f8c8d;
-  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
 }
 
 .btn-reset {
-  background: none;
-  border: 1px solid #ddd;
-  padding: 10px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  padding: 12px 24px;
   border-radius: 30px;
-  color: #666;
+  color: var(--text-secondary);
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-reset:hover {
-  background: #f5f5f5;
-  color: #1a1a1a;
+  background: var(--border-primary);
+  color: var(--text-primary);
 }

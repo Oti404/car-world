@@ -1,31 +1,34 @@
 .manager-container {
-  background: white;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: var(--card-shadow);
   margin-top: 2rem;
+  border: 1px solid var(--border-primary);
 }
 
 h2 {
-  color: #2c3e50;
-  border-bottom: 2px solid #eee;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-primary);
   padding-bottom: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-weight: 800;
 }
 
 .form-section {
   margin-bottom: 3rem;
-  padding: 1.5rem;
-  background: #f8f9fa;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
+  padding: 2rem;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
 }
 
 h3 {
   margin-top: 0;
-  color: #495057;
+  color: var(--text-primary);
   font-size: 1.25rem;
-  margin-bottom: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 }
 
 .form-group {
@@ -43,76 +46,146 @@ h3 {
 
 label {
   display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #333;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 input[type="text"],
 input[type="number"],
 textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  padding: 12px 16px;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 8px;
   font-family: inherit;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
 textarea:focus {
   outline: none;
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+  background: var(--bg-primary);
+}
+
+.drop-zone {
+  border: 2px dashed var(--border-primary);
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-secondary);
+  margin-bottom: 1.5rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.drop-zone.dragging {
+  border-color: var(--primary-accent);
+  background: rgba(255, 107, 53, 0.05);
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.upload-icon {
+  font-size: 3.5rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.dragging .upload-icon {
+  color: var(--primary-accent);
+  animation: bounce 0.6s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.file-label {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.file-label:hover {
+  background: var(--border-primary);
+  border-color: var(--primary-accent);
 }
 
 .file-name {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
   color: #198754;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
 }
 
 /* Dynamic Options Styling */
 .option-category {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 6px;
-  border: 1px solid #dee2e6;
-  margin-bottom: 1.5rem;
+  background: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
+  margin-bottom: 2rem;
 }
 
 .category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 0.75rem;
 }
 
 .category-header h4 {
   margin: 0;
-  color: #dc3545; /* Porsche red hint */
+  color: var(--primary-accent);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .btn-sm {
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #495057;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   transition: all 0.2s;
 }
 
 .btn-sm:hover {
-  background-color: #e2e6ea;
-  border-color: #dae0e5;
+  background-color: var(--border-primary);
+  color: var(--text-primary);
 }
 
 .option-row {
@@ -148,19 +221,23 @@ textarea:focus {
 }
 
 .btn-primary {
-  padding: 1rem 2rem;
-  background-color: #0d6efd;
+  padding: 1.25rem 3rem;
+  background-color: var(--primary-accent);
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: background-color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0b5ed7;
+  background-color: var(--secondary-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
 }
 
 .btn-primary:disabled {

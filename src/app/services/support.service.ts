@@ -35,7 +35,10 @@ export class SupportService {
    * Get all inquiries for the admin dashboard, ordered by date.
    */
   getAllInquiries(): Observable<Inquiry[]> {
-    const q = query(this.inquiriesCollection, orderBy('date', 'desc'));
+    const q = query(
+      this.inquiriesCollection, 
+      orderBy('date', 'desc')
+    );
     return collectionData(q, { idField: 'id' }) as Observable<Inquiry[]>;
   }
 

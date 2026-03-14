@@ -1,5 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, orderBy } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface CarOption {
@@ -39,9 +39,10 @@ export class CarService {
 
   // --- FIRESTORE CRUD OPERATIONS ---
 
-  // Get all cars
+  // Get all cars ordered by price
   getCars(): Observable<Car[]> {
-    return collectionData(this.carsCollection, { idField: 'id' }) as Observable<Car[]>;
+    const q = query(this.carsCollection, orderBy('basePrice', 'desc'));
+    return collectionData(q, { idField: 'id' }) as Observable<Car[]>;
   }
 
   // Get a specific car by ID

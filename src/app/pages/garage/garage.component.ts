@@ -50,9 +50,14 @@ export class GarageComponent implements OnInit {
     }
     
     this.orderService.getUserOrders(user.uid).subscribe(orders => {
-      this.myOrders = orders.sort((a, b) => {
-        const dateA = a.orderDate instanceof Date ? a.orderDate.getTime() : (a.orderDate as any).toMillis();
-        const dateB = b.orderDate instanceof Date ? b.orderDate.getTime() : (b.orderDate as any).toMillis();
+      this.myOrders = orders.map(o => ({
+        ...o,
+        orderDate: o.orderDate && (o.orderDate as any).seconds 
+          ? new Date((o.orderDate as any).seconds * 1000) 
+          : o.orderDate
+      })).sort((a, b) => {
+        const dateA = a.orderDate instanceof Date ? a.orderDate.getTime() : 0;
+        const dateB = b.orderDate instanceof Date ? b.orderDate.getTime() : 0;
         return dateB - dateA;
       });
       this.isLoading = false;

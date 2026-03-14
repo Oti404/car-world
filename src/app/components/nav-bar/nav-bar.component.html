@@ -22,7 +22,7 @@
           <a *ngIf="authService.isAdmin$ | async" routerLink="/admin-dashboard" routerLinkActive="active-link" class="admin-link" (click)="closeMenu()">Admin DB</a>
           <a routerLink="/profile" routerLinkActive="active-link" class="nav-profile-link" (click)="closeMenu()">
             <i class="fas fa-user-circle"></i>
-            <span>{{ user.displayName || user.email }}</span>
+            <span>{{ user.displayName }}</span>
           </a>
           <a class="nav-logout-btn" (click)="logout()">Logout</a>
         </ng-container>

@@ -7,14 +7,17 @@
 }
 
 .section-header h2 {
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: 900;
   display: flex;
   align-items: center;
   gap: 15px;
+  color: var(--text-primary);
+  letter-spacing: -1px;
 }
 
 .icon {
-  color: #e67e22;
+  color: var(--primary-accent);
 }
 
 .inquiry-grid {
@@ -24,15 +27,16 @@
 }
 
 .inquiry-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  border-left: 5px solid #bdc3c7;
-  transition: transform 0.2s ease;
+  gap: 1.5rem;
+  border: 1px solid var(--border-primary);
+  border-left-width: 6px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .inquiry-card:hover {
@@ -52,19 +56,23 @@
 .status-badge {
   text-transform: uppercase;
   font-size: 0.75rem;
-  font-weight: 800;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: #eee;
+  font-weight: 900;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border-primary);
 }
 
-.new .status-badge { background: #ebf5fb; color: #3498db; }
-.read .status-badge { background: #fef5e7; color: #f39c12; }
-.resolved .status-badge { background: #e9f7ef; color: #27ae60; }
+.new .status-badge { background: rgba(52, 152, 219, 0.1); color: #3498db; border-color: #3498db; }
+.read .status-badge { background: rgba(243, 156, 18, 0.1); color: #f39c12; border-color: #f39c12; }
+.resolved .status-badge { background: rgba(39, 174, 96, 0.1); color: #27ae60; border-color: #27ae60; }
 
 .date {
   font-size: 0.85rem;
-  color: #95a5a6;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .user-info {
@@ -73,19 +81,22 @@
 }
 
 .email {
-  font-size: 0.85rem;
-  color: #7f8c8d;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .message-content h4 {
-  margin-bottom: 8px;
-  color: #2c3e50;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 
 .message-content p {
-  color: #34495e;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
 .card-actions {
@@ -96,17 +107,19 @@
 
 .card-actions button {
   flex: 1;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-weight: 700;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-read:hover { background: #f39c12; color: white; border-color: #f39c12; }

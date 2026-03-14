@@ -22,6 +22,9 @@ export class RegisterComponent {
 
   constructor() {
     this.registerForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      country: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
@@ -38,10 +41,10 @@ export class RegisterComponent {
       this.isLoading = true;
       this.errorMessage = null;
       
-      const { email, password } = this.registerForm.value;
+      const { email, password, firstName, lastName, country } = this.registerForm.value;
       
       try {
-        await this.authService.register(email, password);
+        await this.authService.register(email, password, { firstName, lastName, country });
         this.router.navigate(['/']); // Redirect to home on success
       } catch (error: any) {
         this.errorMessage = error.message || 'Registration failed. Please try again.';

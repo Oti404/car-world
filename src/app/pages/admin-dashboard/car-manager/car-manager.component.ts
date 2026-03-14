@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarService, Car, CarOption } from '../../../services/car.service';
@@ -19,6 +19,7 @@ export class CarManagerComponent {
   carForm!: FormGroup;
   selectedFile: File | null = null;
   isUploading = false;
+  isDragging = signal(false);
 
   constructor() {
     this.initForm();
@@ -63,7 +64,38 @@ export class CarManagerComponent {
   // Handle file selection
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
-      this.selectedFile = event.target.files[0];
+      this.processFile(event.target.files[0]);
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging.set(true);
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging.set(false);
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging.set(false);
+    
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      this.processFile(event.dataTransfer.files[0]);
+    }
+  }
+
+  private processFile(file: File) {
+    // Only accept images
+    if (file.type.match(/image\/*/)) {
+      this.selectedFile = file;
+    } else {
+      alert('Please upload an image file (PNG, JPEG, WebP).');
     }
   }
 

@@ -16,10 +16,21 @@ export class SupportManagerComponent implements OnInit {
   public isLoading = true;
 
   ngOnInit() {
-    this.supportService.getAllInquiries().subscribe(data => {
-      this.inquiries = data;
-      this.isLoading = false;
+    this.supportService.getAllInquiries().subscribe({
+      next: (data) => {
+        // Client-side filtering to avoid complex Firestore indexes
+        this.inquiries = data.filter(inquiry => inquiry.status !== 'resolved');
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error("Error loading inquiries:", err);
+        this.isLoading = false;
+      }
     });
+  }
+
+  trackById(index: number, item: Inquiry): string {
+    return item.id || index.toString();
   }
 
   async updateStatus(id: string, status: Inquiry['status']) {
