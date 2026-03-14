@@ -2,9 +2,13 @@
 
   <h3>{{ title() }}</h3>
 
-  @if(imgUrl()) {
-    <img [src]="imgUrl()" alt="Card media content" class="card-image fade-in" loading="lazy"/>
-  }
+  <img 
+    [src]="imgUrl() || DEFAULT_IMAGE" 
+    [alt]="title() || 'Porsche Media'" 
+    class="card-image fade-in" 
+    (error)="handleImageError($event)"
+    loading="lazy"
+  />
 
   <p>{{ content() }}</p>
 

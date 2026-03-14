@@ -5,14 +5,21 @@
       Stay informed with the latest developments in the automotive world. From
       industry breakthroughs to new vehicle launches, we've got you covered.
     </p>
+
+    <div class="admin-quick-actions" *ngIf="authService.isAdmin$ | async">
+      <button class="btn-admin-link" routerLink="/admin-dashboard" [queryParams]="{ scroll: 'news-manager' }">
+        <i class="fas fa-edit"></i> Manage News in Dashboard
+      </button>
+    </div>
   </header>
 
   <section class="news-feed">
-    @for(newsItem of newsArticles; track newsItem.title) {
+    @for(newsItem of (newsArticles$ | async); track newsItem.id) {
       <app-card
         [title]="newsItem.title"
         [content]="newsItem.content"
         [imgUrl]="newsItem.image"
+        [imgAlt]="newsItem.imageAlt"
         [showButton]="false"
       />
     }

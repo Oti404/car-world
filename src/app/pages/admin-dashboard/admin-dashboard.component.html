@@ -6,15 +6,27 @@
   
   <div class="admin-content">
     <div class="admin-card">
-      <h3>Manage Users</h3>
-      <p>View and edit user details.</p>
-      <button class="btn-primary">Go to Users</button>
+      <h3>Inventory</h3>
+      <p>Add, edit or remove vehicles from the digital showroom.</p>
+      <button class="btn-primary" (click)="scrollTo('car-manager')">Go to Cars</button>
+    </div>
+
+    <div class="admin-card">
+      <h3>News & Updates</h3>
+      <p>Manage the articles shown on the home and news page.</p>
+      <button class="btn-primary" (click)="scrollTo('news-manager')">Manage News</button>
+    </div>
+
+    <div class="admin-card">
+      <h3>Customer Support</h3>
+      <p>Review and respond to customer inquiries and messages.</p>
+      <button class="btn-primary" (click)="scrollTo('support-manager')">Go to Support</button>
     </div>
   </div>
 
   <div class="admin-workspace">
     <!-- Car Manager Tool -->
-    <app-car-manager></app-car-manager>
+    <app-car-manager id="car-manager"></app-car-manager>
 
     <hr class="dashboard-divider" />
 
@@ -24,7 +36,12 @@
     <hr class="dashboard-divider" />
 
     <!-- Support Management Tool -->
-    <app-support-manager></app-support-manager>
+    <app-support-manager id="support-manager"></app-support-manager>
+
+    <hr class="dashboard-divider" />
+
+    <!-- News Management Tool -->
+    <app-news-manager id="news-manager"></app-news-manager>
   </div>
 
 </div>

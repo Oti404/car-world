@@ -3,6 +3,7 @@
  * Note: Consider moving this to car-data.ts if it scales with vehicle-specific logic.
  */
 export interface NewsDto {
+  id?: string;
   title: string;
   image: string;
   imageAlt: string;

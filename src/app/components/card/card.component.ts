@@ -16,6 +16,7 @@ export class CardComponent {
   public readonly title = input<string>();
   public readonly content = input<string>();
   public readonly imgUrl = input<string>();
+  public readonly imgAlt = input<string>();
   public readonly showButton = input<boolean>(true);
   public readonly buttonLabel = input<string>();
   public readonly buttonIcon = input<string>();
@@ -43,9 +44,22 @@ export class CardComponent {
   });
 
   /**
+   * Default fallback image if the primary URL fails or is missing.
+   */
+  public readonly DEFAULT_IMAGE = 'assets/images/placeholders/porsche-logo.png';
+
+  /**
    * Handles button interaction by emitting the event to the parent container.
    */
   public onCardButtonClick(): void {
     this.cardButtonClicked.emit();
+  }
+
+  /**
+   * Gracefully handles image load failures by switching to the branded placeholder.
+   */
+  public handleImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.DEFAULT_IMAGE;
   }
 }
