@@ -16,15 +16,26 @@
         <a routerLink="/news" routerLinkActive="active-link" (click)="closeMenu()">News</a>
         <a routerLink="/cars" routerLinkActive="active-link" (click)="closeMenu()">Cars</a>
         <a routerLink="/reviews" routerLinkActive="active-link" (click)="closeMenu()">Reviews</a>
+
+        <ng-container *ngIf="authService.user$ | async as user; else guestLinks">
+          <a *ngIf="authService.isAdmin$ | async" routerLink="/admin-dashboard" routerLinkActive="active-link" class="admin-link" (click)="closeMenu()">Admin DB</a>
+          <span class="nav-user-email">{{ user.email }}</span>
+          <a class="nav-logout-btn" (click)="logout()">Logout</a>
+        </ng-container>
+
+        <ng-template #guestLinks>
+          <a routerLink="/login" routerLinkActive="active-link" (click)="closeMenu()">Login</a>
+          <a routerLink="/register" routerLinkActive="active-link" (click)="closeMenu()">Register</a>
+        </ng-template>
       </div>
 
       <a routerLink="/cart" class="cart-icon" (click)="closeMenu()">
-  <i class="fas fa-shopping-cart"></i>
+        <i class="fas fa-shopping-cart"></i>
 
-  @if (cartCount() > 0) {
-    <span class="cart-badge">{{ cartCount() }}</span>
-  }
-</a>
+        @if (cartCount() > 0) {
+          <span class="cart-badge">{{ cartCount() }}</span>
+        }
+      </a>
 
       <button class="hamburger-btn" (click)="toggleMenu()">
         <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>

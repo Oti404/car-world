@@ -180,15 +180,23 @@
   margin-bottom: 20px;
   padding-top: 15px;
   border-top: 1px dashed #eee;
+  max-height: 250px;
+  overflow-y: auto;
+  /* Custom Scrollbar for sleekness */
+  scrollbar-width: thin;
+  scrollbar-color: #bdc3c7 transparent;
 }
 
 .options-title {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #95a5a6;
+  color: #7f8c8d;
   margin-bottom: 12px;
+  margin-top: 15px;
   font-weight: 700;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 4px;
 }
 
 .options-list {

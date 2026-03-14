@@ -1,0 +1,62 @@
+<div class="register-container">
+  <div class="register-box">
+    <h2>Create an Account</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          placeholder="Enter email"
+          [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+        >
+        <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Please enter a valid email address.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          placeholder="Password"
+          [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+        >
+        <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Password must be at least 6 characters.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          formControlName="confirmPassword" 
+          placeholder="Confirm Password"
+          [class.is-invalid]="(registerForm.get('confirmPassword')?.touched || registerForm.get('password')?.touched) && registerForm.hasError('mismatch')"
+        >
+        <div class="error-message" *ngIf="(registerForm.get('confirmPassword')?.touched || registerForm.get('password')?.touched) && registerForm.hasError('mismatch')">
+          Passwords must match.
+        </div>
+      </div>
+
+      <div class="error-message global-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="registerForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Register</span>
+        <span *ngIf="isLoading">Registering...</span>
+      </button>
+
+      <div class="login-link">
+        Already have an account? <a routerLink="/login">Login here</a>
+      </div>
+    </form>
+  </div>
+</div>

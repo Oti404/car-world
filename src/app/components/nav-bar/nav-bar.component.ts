@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 import { map } from 'rxjs';
 
 /**
@@ -19,6 +20,8 @@ import { map } from 'rxjs';
 export class NavBarComponent {
   // Dependency Injection using the modern inject() function
   private cartService = inject(CartService);
+  public authService = inject(AuthService);
+  private router = inject(Router);
 
   /**
    * REACTIONARY DATA: cartCount
@@ -49,5 +52,14 @@ export class NavBarComponent {
    */
   public closeMenu(): void {
     this.isMenuOpen = false;
+  }
+
+  /**
+   * Logs out the user and redirects to the home page.
+   */
+  public async logout() {
+    await this.authService.logout();
+    this.closeMenu();
+    this.router.navigate(['/']);
   }
 }

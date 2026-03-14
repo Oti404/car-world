@@ -110,6 +110,43 @@
   color: #ff6b35;
 }
 
+.nav-user-email {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: default;
+  display: flex;
+  align-items: center;
+}
+
+.admin-link {
+  color: #dc3545 !important;
+  font-weight: 700 !important;
+}
+
+.admin-link:hover {
+  text-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+}
+
+.nav-logout-btn {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.nav-logout-btn:hover {
+  color: #ff6b35;
+}
+
 /* === 4. CART ICON & REACTIVE BADGE === */
 .cart-icon {
   position: relative; /* REQUIRED for absolute positioning of badge */

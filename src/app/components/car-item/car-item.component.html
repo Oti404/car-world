@@ -1,39 +1,28 @@
 <div class="car-item">
   <div class="car-image-container">
-  <img
-    [src]="carItem().image"
-    [alt]="carItem().imageAlt"
-    class="car-image fade-in"
-    loading="lazy"
-  />
+    <img
+      [src]="carItem().images && carItem().images.length > 0 ? carItem().images[0] : 'assets/placeholder-car.jpg'"
+      [alt]="carItem().name"
+      class="car-image fade-in"
+      loading="lazy"
+    />
 
-  <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()">
-    <i class="fas fa-heart"></i>
+    <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()">
+      <i class="fas fa-heart"></i>
+    </div>
   </div>
-</div>
 
   <div class="car-specs-column">
-    <h3 class="car-title">{{ carItem().title }}</h3>
+    <h3 class="car-title">{{ carItem().name }}</h3>
 
     <div class="car-specs-grid">
       <div class="spec-item">
-        <i class="fas fa-calendar-alt spec-icon"></i>
-        <span class="spec-value">{{ carItem().specifications.modelYear }}</span>
-      </div>
-
-      <div class="spec-item">
-        <i class="fas fa-tachometer-alt spec-icon"></i>
-        <span class="spec-value">{{ carItem().specifications.mileage }}</span>
-      </div>
-
-      <div class="spec-item">
         <i class="fas fa-cogs spec-icon"></i>
-        <span class="spec-value spec-engine">{{ carItem().specifications.engine }}</span>
+        <span class="spec-value spec-engine">{{ carItem().engineSpecs }}</span>
       </div>
-
       <div class="spec-item">
-        <i class="fas fa-bolt spec-icon"></i>
-        <span class="spec-value">{{ carItem().specifications.power }}</span>
+        <i class="fas fa-cubes spec-icon"></i>
+        <span class="spec-value">In Stock: {{ carItem().stock }}</span>
       </div>
     </div>
 
@@ -43,40 +32,84 @@
   <div class="car-actions-column">
     <div class="price-section">
       <span class="price">
-        {{ totalPrice | currency : "USD" : "symbol" : "1.0-0" }}
+        {{ totalPrice | currency : "EUR" : "symbol" : "1.0-0" }}
       </span>
 
       <div class="price-breakdown">
         <span class="base-price">
-          Base: {{ carItem().price | currency : "USD" : "symbol" : "1.0-0" }}
+          Base: {{ carItem().basePrice | currency : "EUR" : "symbol" : "1.0-0" }}
         </span>
         <span class="options-total">
-          Options: +{{ optionsPrice | currency : "USD" : "symbol" : "1.0-0" }}
+          Options: +{{ optionsPrice | currency : "EUR" : "symbol" : "1.0-0" }}
         </span>
       </div>
     </div>
 
     <div class="options-section">
-      <h4 class="options-title">Available Options</h4>
+      <!-- Colors -->
+      <h4 class="options-title" *ngIf="carItem().options.colors.length">Exterior Colors</h4>
       <div class="options-list">
-        @for(carOption of carItem().options; track carOption.name) {
-        <div class="option-item">
-          <app-checkbox
-            [checked]="carOption.selected"
-            [label]="carOption.name"
-            (checkedChange)="onToggleOption(carOption, $event)"
-          />
-          <span class="option-price">
-            + {{ carOption.price | currency : "USD" : "symbol" : "1.0-0" }}
-          </span>
-        </div>
+        @for(color of carItem().options.colors; track color.name) {
+          <div class="option-item">
+            <app-checkbox
+              [checked]="isOptionSelected(color)"
+              [label]="color.name"
+              (checkedChange)="onToggleOption(color, $event)"
+            />
+            <span class="option-price">+ {{ color.price | currency : "EUR" : "symbol" : "1.0-0" }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Wheels -->
+      <h4 class="options-title" *ngIf="carItem().options.wheels.length">Wheels</h4>
+      <div class="options-list">
+        @for(wheel of carItem().options.wheels; track wheel.name) {
+          <div class="option-item">
+            <app-checkbox
+              [checked]="isOptionSelected(wheel)"
+              [label]="wheel.name"
+              (checkedChange)="onToggleOption(wheel, $event)"
+            />
+            <span class="option-price">+ {{ wheel.price | currency : "EUR" : "symbol" : "1.0-0" }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Interior -->
+      <h4 class="options-title" *ngIf="carItem().options.interior.length">Interior</h4>
+      <div class="options-list">
+        @for(interior of carItem().options.interior; track interior.name) {
+          <div class="option-item">
+            <app-checkbox
+              [checked]="isOptionSelected(interior)"
+              [label]="interior.name"
+              (checkedChange)="onToggleOption(interior, $event)"
+            />
+            <span class="option-price">+ {{ interior.price | currency : "EUR" : "symbol" : "1.0-0" }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Extras -->
+      <h4 class="options-title" *ngIf="carItem().options.extras.length">Extras</h4>
+      <div class="options-list">
+        @for(extra of carItem().options.extras; track extra.name) {
+          <div class="option-item">
+            <app-checkbox
+              [checked]="isOptionSelected(extra)"
+              [label]="extra.name"
+              (checkedChange)="onToggleOption(extra, $event)"
+            />
+            <span class="option-price">+ {{ extra.price | currency : "EUR" : "symbol" : "1.0-0" }}</span>
+          </div>
         }
       </div>
     </div>
 
     <div class="car-actions">
       <app-button
-        buttonLabel="Add to Cart"
+        buttonLabel="Buy / Reserve"
         buttonIcon="fa-shopping-cart"
         [buttonType]="buttonType.Orange"
         (buttonClicked)="onAddToCart()"
@@ -84,3 +117,4 @@
     </div>
   </div>
 </div>
+

@@ -5,6 +5,10 @@ import { CarsComponent } from './pages/cars/cars.component';
 import { NewsComponent } from './pages/news/news.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ReviewsComponent } from './pages/reviews/reviews.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   /**
@@ -26,6 +30,14 @@ export const routes: Routes = [
   { path: AppRoutes.Cars, component: CarsComponent },
   { path: AppRoutes.Cart, component: CartComponent },
   { path: AppRoutes.Reviews, component: ReviewsComponent },
+  { path: AppRoutes.Login, component: LoginComponent },
+  { path: AppRoutes.Register, component: RegisterComponent },
+  { 
+    path: AppRoutes.AdminDashboard, 
+    component: AdminDashboardComponent,
+    canActivate: [adminGuard]
+  },
+
 
   /**
    * Wildcard Route

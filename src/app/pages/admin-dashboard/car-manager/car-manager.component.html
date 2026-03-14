@@ -1,0 +1,118 @@
+<div class="manager-container">
+  <h2>Add New Car</h2>
+  
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="car-form">
+    
+    <!-- Basic Details -->
+    <div class="form-section">
+      <h3>Basic Details</h3>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="name" placeholder="e.g. Porsche 911 GT3">
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Base Price (€)</label>
+          <input type="number" formControlName="basePrice">
+        </div>
+        <div class="form-group">
+          <label>Initial Stock</label>
+          <input type="number" formControlName="stock">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Engine Specs</label>
+        <input type="text" formControlName="engineSpecs" placeholder="e.g. 510 HP, 0-100 km/h: 3.4s">
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" rows="3"></textarea>
+      </div>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="form-section">
+      <h3>Primary Image</h3>
+      <div class="form-group">
+        <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/webp">
+        <p *ngIf="selectedFile" class="file-name">Selected: {{ selectedFile.name }}</p>
+      </div>
+    </div>
+
+    <!-- Dynamic Options -->
+    <div class="form-section" formGroupName="options">
+      <h3>Configurable Options</h3>
+
+      <!-- Colors -->
+      <div class="option-category">
+        <div class="category-header">
+          <h4>Exterior Colors</h4>
+          <button type="button" class="btn-sm" (click)="addOption('colors')">+ Add Color</button>
+        </div>
+        <div formArrayName="colors">
+          <div *ngFor="let color of colors.controls; let i=index" [formGroupName]="i" class="option-row">
+            <input type="text" formControlName="name" placeholder="Color Name">
+            <input type="number" formControlName="price" placeholder="Price (€)">
+            <button type="button" class="btn-remove" (click)="removeOption('colors', i)">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wheels -->
+      <div class="option-category">
+        <div class="category-header">
+          <h4>Wheels</h4>
+          <button type="button" class="btn-sm" (click)="addOption('wheels')">+ Add Wheels</button>
+        </div>
+        <div formArrayName="wheels">
+          <div *ngFor="let wheel of wheels.controls; let i=index" [formGroupName]="i" class="option-row">
+            <input type="text" formControlName="name" placeholder="Wheel Type">
+            <input type="number" formControlName="price" placeholder="Price (€)">
+            <button type="button" class="btn-remove" (click)="removeOption('wheels', i)">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interior -->
+      <div class="option-category">
+        <div class="category-header">
+          <h4>Interior</h4>
+          <button type="button" class="btn-sm" (click)="addOption('interior')">+ Add Interior</button>
+        </div>
+        <div formArrayName="interior">
+          <div *ngFor="let item of interior.controls; let i=index" [formGroupName]="i" class="option-row">
+            <input type="text" formControlName="name" placeholder="Interior Material">
+            <input type="number" formControlName="price" placeholder="Price (€)">
+            <button type="button" class="btn-remove" (click)="removeOption('interior', i)">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extras -->
+      <div class="option-category">
+        <div class="category-header">
+          <h4>Extras (Carbon fiber, brakes, etc.)</h4>
+          <button type="button" class="btn-sm" (click)="addOption('extras')">+ Add Extra</button>
+        </div>
+        <div formArrayName="extras">
+          <div *ngFor="let extra of extras.controls; let i=index" [formGroupName]="i" class="option-row">
+            <input type="text" formControlName="name" placeholder="Extra Feature">
+            <input type="number" formControlName="price" placeholder="Price (€)">
+            <button type="button" class="btn-remove" (click)="removeOption('extras', i)">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Action -->
+    <div class="submit-section">
+      <button type="submit" class="btn-primary" [disabled]="carForm.invalid || !selectedFile || isUploading">
+        {{ isUploading ? 'Uploading & Saving...' : 'Save Car to Database' }}
+      </button>
+    </div>
+
+  </form>
+</div>

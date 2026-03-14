@@ -16,7 +16,11 @@ export enum AppRoutes {
   Cars = 'cars',
   Cart = 'cart',
   Reviews = 'reviews',
+  Login = 'login',
+  Register = 'register',
+  AdminDashboard = 'admin-dashboard',
 }
+
 
 /**
  * Design variants for Generic Card components.

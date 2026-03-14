@@ -5,11 +5,16 @@
   </header>
 
   <div class="cars-grid">
-    @for (car of carsList; track car.id) {
-      <app-car-item
-        [carItem]="car"
-        (buttonClicked)="onAddToCart(car)"
-      />
-    }
+    <ng-container *ngIf="carsList$ | async as carsList; else loading">
+      @for (car of carsList; track car.id) {
+        <app-car-item
+          [carItem]="car"
+          (buttonClicked)="onAddToCart(car)"
+        />
+      }
+    </ng-container>
+    <ng-template #loading>
+      <p class="loading-text">Loading premium cars from the garage...</p>
+    </ng-template>
   </div>
 </div>

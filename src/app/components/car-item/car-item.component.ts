@@ -1,6 +1,6 @@
 import { Component, input, OnInit, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { CarDto, CarOptionDto } from '../../data-type/car-data';
+import { Car, CarOption } from '../../services/car.service';
 import { ButtonType } from '../../data-type/data-type';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
 import { ButtonComponent } from '../button/button.component';
@@ -19,9 +19,9 @@ export class CarItemComponent implements OnInit {
   private readonly carService = inject(CarService);
 
   /**
-   * Component Inputs using Angular Signals.
+   * Component Inputs using Angular Signals. Expected to be a Firestore Car.
    */
-  public readonly carItem = input.required<CarDto>();
+  public readonly carItem = input.required<Car>();
   public readonly buttonType = ButtonType;
 
   /**
@@ -29,6 +29,9 @@ export class CarItemComponent implements OnInit {
    */
   public totalPrice = 0;
   public optionsPrice = 0;
+
+  // Track selected options temporarily. In a real app, this should be a robust configured model.
+  public selectedOptions = new Set<CarOption>();
 
   public ngOnInit(): void {
     this.calculateFinancials();
@@ -38,46 +41,54 @@ export class CarItemComponent implements OnInit {
    * Evaluates if the current vehicle is marked as a favorite.
    */
   public get isFavorite(): boolean {
-    return this.carService.isFavorite(this.carItem().title);
+    return this.carService.isFavorite(this.carItem().name);
   }
 
   /**
    * Handles the selection toggle of vehicle optional equipment.
-   * Updates the local state and triggers price recalculation.
    */
-  public onToggleOption(option: CarOptionDto, isSelected: boolean): void {
-    option.selected = isSelected;
+  public onToggleOption(option: CarOption, isSelected: boolean): void {
+    if (isSelected) {
+      this.selectedOptions.add(option);
+    } else {
+      this.selectedOptions.delete(option);
+    }
     this.calculateFinancials();
+  }
+
+  public isOptionSelected(option: CarOption): boolean {
+    return this.selectedOptions.has(option);
   }
 
   /**
    * Updates total price and options summary based on selected equipment.
    */
   private calculateFinancials(): void {
-    this.optionsPrice = this.carItem().options
-      .filter((option) => option.selected)
-      .reduce((accumulator, option) => accumulator + option.price, 0);
+    this.optionsPrice = Array.from(this.selectedOptions)
+      .reduce((acc, option) => acc + option.price, 0);
 
-    this.totalPrice = this.carItem().price + this.optionsPrice;
+    this.totalPrice = this.carItem().basePrice + this.optionsPrice;
   }
 
   /**
    * Toggles the favorite status via the global CarService.
    */
   public onToggleFavorite(): void {
-    this.carService.toggleFavorite(this.carItem().title);
+    this.carService.toggleFavorite(this.carItem().name);
   }
 
   /**
    * Dispatches the current vehicle configuration to the shopping cart.
-   * Business Rule: The cart entry includes the aggregated total price.
    */
   public onAddToCart(): void {
     const configuredVehicle = {
       ...this.carItem(),
-      price: this.totalPrice
+      // Calculate final price locally
+      configuredPrice: this.totalPrice,
+      selectedOptions: Array.from(this.selectedOptions)
     };
 
-    this.cartService.addToCart(configuredVehicle);
+    // Needs fixing on the cart service side down the road to handle the new shape!
+    this.cartService.addToCart(configuredVehicle as any);
   }
 }
