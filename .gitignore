@@ -42,3 +42,11 @@ testem.log
 Thumbs.db
 
 *.zip
+
+# Firebase
+.firebase/
+*-debug.log
+.firebaserc
+
+# Environments (If you want to hide keys, though they are public for Web apps)
+# src/environments/environment.prod.ts
