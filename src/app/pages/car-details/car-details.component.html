@@ -1,0 +1,101 @@
+<div class="details-container" *ngIf="car$ | async as car">
+  
+  <header class="details-header">
+    <button class="btn-back" routerLink="/cars">
+      <i class="fas fa-arrow-left"></i> Back to Catalog
+    </button>
+  </header>
+
+  <div class="details-layout">
+    <!-- Visual Section -->
+    <div class="visual-section">
+      <div class="main-image-preview">
+        <img [src]="car.images && car.images.length > 0 ? car.images[activeImageIndex] : 'assets/placeholder-car.jpg'" [alt]="car.name">
+        <div class="stock-tag" *ngIf="car.stock <= 5">Only {{ car.stock }} left</div>
+      </div>
+      
+      <div class="thumbnail-strip" *ngIf="car.images && car.images.length > 1">
+        <div 
+          class="thumbnail" 
+          *ngFor="let img of car.images; let i = index" 
+          [class.active]="activeImageIndex === i"
+          (click)="setActiveImage(i)"
+        >
+          <img [src]="img" alt="Thumbnail">
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+      <div class="brand-badge">Premium Collection</div>
+      <h1 class="car-name">{{ car.name }}</h1>
+      <p class="car-price">{{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+      
+      <div class="action-buttons">
+        <button class="btn-buy" (click)="onAddToCart(car)">
+          <i class="fas fa-shopping-cart"></i> Order Vehicle
+        </button>
+        <button 
+          class="btn-compare" 
+          (click)="toggleCompare(car)"
+          [class.active]="comparatorService.isSelected(car.id!)"
+        >
+          <i class="fas" [class.fa-check]="comparatorService.isSelected(car.id!)" [class.fa-columns]="!comparatorService.isSelected(car.id!)"></i>
+          {{ comparatorService.isSelected(car.id!) ? 'In Comparison' : 'Add to Compare' }}
+        </button>
+      </div>
+
+      <div class="description-box">
+        <h3>Description</h3>
+        <p>{{ car.description }}</p>
+      </div>
+
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span class="label">Engine</span>
+          <span class="value">{{ car.engineSpecs }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Stock</span>
+          <span class="value">{{ car.stock }} Units</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Warranty</span>
+          <span class="value">5 Years Included</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Delivery</span>
+          <span class="value">Worldwide Shipping</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Table Section -->
+  <section class="technical-details">
+    <h2>Full Specifications</h2>
+    <div class="tech-table">
+      <div class="tech-row">
+        <div class="tech-label">Model</div>
+        <div class="tech-value">{{ car.name }}</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-label">Price Category</div>
+        <div class="tech-value">Premium / Exclusive</div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-label">Available Options</div>
+        <div class="tech-value">
+          <span class="option-tag" *ngFor="let c of car.options.colors">{{ c.name }}</span>
+        </div>
+      </div>
+      <div class="tech-row">
+        <div class="tech-label">Wheel Choices</div>
+        <div class="tech-value">
+          <span class="option-tag" *ngFor="let w of car.options.wheels">{{ w.name }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

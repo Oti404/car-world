@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 import { map } from 'rxjs';
 
 /**
@@ -21,6 +22,7 @@ export class NavBarComponent {
   // Dependency Injection using the modern inject() function
   private cartService = inject(CartService);
   public authService = inject(AuthService);
+  public themeService = inject(ThemeService);
   private router = inject(Router);
 
   /**

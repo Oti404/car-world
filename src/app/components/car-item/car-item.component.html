@@ -1,11 +1,13 @@
 <div class="car-item">
   <div class="car-image-container">
-    <img
-      [src]="carItem().images && carItem().images.length > 0 ? carItem().images[0] : 'assets/placeholder-car.jpg'"
-      [alt]="carItem().name"
-      class="car-image fade-in"
-      loading="lazy"
-    />
+    <a [routerLink]="['/cars', carItem().id]" class="details-link">
+      <img
+        [src]="carItem().images && carItem().images.length > 0 ? carItem().images[0] : 'assets/placeholder-car.jpg'"
+        [alt]="carItem().name"
+        class="car-image fade-in"
+        loading="lazy"
+      />
+    </a>
 
     <div class="favorite-heart" [class.active]="isFavorite" (click)="onToggleFavorite()" title="Add to Favorites">
       <i class="fas fa-heart"></i>
@@ -17,7 +19,9 @@
   </div>
 
   <div class="car-specs-column">
-    <h3 class="car-title">{{ carItem().name }}</h3>
+    <a [routerLink]="['/cars', carItem().id]" class="title-link">
+      <h3 class="car-title">{{ carItem().name }}</h3>
+    </a>
 
     <div class="car-specs-grid">
       <div class="spec-item">

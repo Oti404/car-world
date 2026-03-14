@@ -11,7 +11,7 @@
   text-align: center;
   margin-bottom: 4rem;
   padding: 3rem;
-  background-color: #f9f9f9;
+  background-color: var(--bg-secondary);
   border-radius: 12px;
 }
 
@@ -22,13 +22,13 @@
 .page-title {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .page-subtitle {
   font-size: 1.1rem;
-  color: #7f8c8d;
+  color: var(--text-muted);
   line-height: 1.8;
   max-width: 800px;
   margin: 0 auto;
@@ -44,19 +44,19 @@
 }
 
 .featured-car-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--card-shadow);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid transparent;
+  border: 1px solid var(--border-primary);
 }
 
 .featured-car-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  border-color: rgba(230, 126, 34, 0.3);
+  box-shadow: var(--card-shadow);
+  border-color: var(--primary-accent);
 }
 
 .f-image-wrapper {
@@ -84,12 +84,12 @@
 .f-content h4 {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .f-specs {
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 15px;
 }

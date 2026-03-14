@@ -1,0 +1,294 @@
+.details-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.details-header {
+  margin-bottom: 2rem;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.details-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  margin-bottom: 5rem;
+}
+
+/* Visual Section */
+.visual-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.main-image-preview {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--bg-secondary);
+}
+
+.main-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.stock-tag {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #e74c3c;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.thumbnail-strip {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.thumbnail {
+  width: 100px;
+  aspect-ratio: 16/9;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail.active {
+  border-color: #e67e22;
+  transform: translateY(-3px);
+}
+
+/* Info Section */
+.info-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-badge {
+  display: inline-block;
+  background: rgba(230, 126, 34, 0.1);
+  color: var(--primary-accent);
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+}
+
+.car-name {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.car-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #e67e22;
+  margin-bottom: 2.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 3rem;
+}
+
+.btn-buy {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  padding: 18px 40px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s;
+}
+
+.btn-buy:hover {
+  background: #e67e22;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(230, 126, 34, 0.3);
+}
+
+.btn-compare {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-primary);
+  padding: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.btn-compare:hover {
+  border-color: #3498db;
+  color: #3498db;
+}
+
+.btn-compare.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.description-box {
+  margin-bottom: 3rem;
+}
+
+.description-box h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.description-box p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+}
+
+.spec-item .label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #95a5a6;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.spec-item .value {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Technical Details Section */
+.technical-details {
+  border-top: 1px solid var(--border-primary);
+  padding-top: 4rem;
+}
+
+.technical-details h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+}
+
+.tech-table {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.tech-row {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.tech-row:last-child {
+  border-bottom: none;
+}
+
+.tech-label {
+  width: 250px;
+  font-weight: 700;
+  color: #7f8c8d;
+}
+
+.tech-value {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.option-tag {
+  display: inline-block;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 1024px) {
+  .details-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .car-name {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .details-container {
+    padding: 2rem 1rem;
+  }
+}

@@ -9,14 +9,14 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 3rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-primary);
   padding-bottom: 20px;
 }
 
 .btn-back {
   background: none;
   border: none;
-  color: #7f8c8d;
+  color: var(--text-muted);
   cursor: pointer;
   font-weight: 600;
   display: flex;
@@ -27,30 +27,30 @@
 }
 
 .btn-back:hover {
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .comp-header h1 {
   font-size: 2.5rem;
   font-weight: 900;
-  color: #1a1a1a;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .subtitle {
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-size: 1.1rem;
   margin: 5px 0 0 0;
 }
 
 .btn-clear {
-  background: #f5f5f5;
-  border: 1px solid #ddd;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   transition: all 0.2s;
 }
 
@@ -64,9 +64,9 @@
 .empty-state {
   text-align: center;
   padding: 6rem 2rem;
-  background: #fafafa;
+  background: var(--bg-secondary);
   border-radius: 20px;
-  border: 2px dashed #eee;
+  border: 2px dashed var(--border-primary);
 }
 
 .empty-icon {
@@ -77,7 +77,7 @@
 
 .empty-state h2 {
   font-size: 2rem;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .btn-primary {
@@ -94,9 +94,9 @@
 /* Comparison Matrix */
 .comparison-grid-wrapper {
   overflow-x: auto;
-  background: white;
+  background: var(--card-bg);
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  box-shadow: var(--card-shadow);
 }
 
 .comparison-table {
@@ -107,7 +107,7 @@
 
 .row {
   display: flex;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .row:last-child {
@@ -122,9 +122,9 @@
 }
 
 .label-cell {
-  background: #fafafa;
+  background: var(--bg-secondary);
   font-weight: 700;
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -134,8 +134,8 @@
 .data-cell {
   text-align: left;
   font-size: 1.1rem;
-  color: #2c3e50;
-  border-left: 1px solid #f0f0f0;
+  color: var(--text-primary);
+  border-left: 1px solid var(--border-primary);
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
@@ -180,12 +180,12 @@
 .description-cell {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #7f8c8d;
+  color: var(--text-muted);
 }
 
 .btn-buy {
-  background: #1a1a1a;
-  color: white;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   border: none;
   padding: 12px 25px;
   border-radius: 10px;

@@ -17,21 +17,51 @@
    Defining a central source of truth for the application's color palette.
    ========================================================================== */
 :root {
-  /* Brand Colors */
+  /* Brand Colors (Constant) */
   --primary-accent: #ff6b35;
   --secondary-accent: #ff8c42;
   --danger-color: #dc3545;
+  --success-color: #27ae60;
+  --info-color: #3498db;
 
-  /* Neutral Palette */
-  --background-light: #f8f9fa;
-  --text-dark: #1a1a1a;
-  --text-muted: #666666;
-  --border-color: #e0e0e0;
-  --placeholder-gray: #f0f0f0;
+  /* Thematic Variables (Light - Default) */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #7f8c8d;
+  
+  --border-primary: #e0e0e0;
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --footer-bg: #1a1a1a;
 
   /* Transitions */
-  --transition-smooth: 0.3s ease-in-out;
+  --transition-smooth: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
+/* Dark Theme - Stealth Palette */
+body.dark-theme {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-gradient: radial-gradient(circle at top, #1a1a1a 0%, #0f0f0f 100%);
+  
+  --text-primary: #f5f5f5;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  
+  --border-primary: #333333;
+  --card-bg: #1a1a1a;
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  
+  --nav-bg: rgba(15, 15, 15, 0.9);
+  --footer-bg: #050505;
+}
+
 
 /* ==========================================================================
    2. BASE RESETS
@@ -50,11 +80,12 @@
 body {
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
-  color: var(--text-dark);
-  background-color: var(--background-light);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Icons */
@@ -72,9 +103,10 @@ body {
   margin: 0 auto;
   padding: 4rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, var(--background-light) 0%, #e9ecef 100%);
+  background: var(--bg-gradient);
   /* Ensures footer stays at bottom even with minimal content */
   min-height: calc(100vh - 160px);
+  transition: background 0.4s ease;
 }
 
 /* Hero & Header Section Utility */
@@ -85,7 +117,7 @@ body {
 
 .page-title {
   font-size: 2.5rem;
-  color: var(--text-dark);
+  color: var(--text-primary);
   margin-bottom: 1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -105,7 +137,7 @@ body {
    Reusable visual patterns for various components.
    ========================================================================== */
 .dashed-border {
-  border: 2px dashed var(--border-color);
+  border: 2px dashed var(--border-primary);
   border-radius: 12px;
 }
 

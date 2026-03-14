@@ -1,5 +1,6 @@
 import { Component, input, OnInit, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Car, CarOption } from '../../services/car.service';
 import { ButtonType } from '../../data-type/data-type';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
@@ -11,7 +12,7 @@ import { ComparatorService } from '../../services/comparator.service';
 @Component({
   selector: 'app-car-item',
   standalone: true,
-  imports: [CommonModule, CheckboxComponent, CurrencyPipe, ButtonComponent],
+  imports: [CommonModule, CheckboxComponent, CurrencyPipe, ButtonComponent, RouterLink],
   templateUrl: './car-item.component.html',
   styleUrl: './car-item.component.css',
 })
