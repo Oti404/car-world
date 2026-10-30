@@ -1,5 +1,7 @@
 # Angular Workshop - Student Reference Guide
 
+🔗 **Live Demo:** [https://oti404.github.io/car-world/home](https://oti404.github.io/car-world/home)
+
 ## 📚 Introduction
 
 This project is a hands-on learning application designed to teach the fundamentals of Angular framework. It demonstrates core concepts including component architecture, routing, data binding, services, and component communication patterns. This README serves as a comprehensive reference guide for students to review after the workshop.
