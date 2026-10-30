@@ -1417,30 +1417,47 @@ If you have questions or need help:
 ## Deploy cu Docker
 
 Trei containere: `frontend` (nginx), `backend` (Express + Prisma), `db` (PostgreSQL 15).
-Imaginile sunt construite de GitHub Actions la fiecare push pe `main` și publicate în GHCR;
+Imaginile sunt construite de GitHub Actions la fiecare push pe `main` și publicate în GHCR
+(`ghcr.io/oti404/car-world-frontend`, `car-world-backend`, tag-uri `<sha commit>` și `latest`);
 pe server nu se face build. Porturile sunt descrise în [PORTS.md](PORTS.md).
+
+Pe server proiectul stă în `~/proiecte/carworld` (fără cratimă). Frontend-ul și backend-ul
+intră pe rețeaua `caddy_default` cu alias-urile `carworld-frontend` și `carworld-backend`.
+Configurația Caddy pentru `carworld.otnielcodes.com` se află în repo-ul
+[otnielcodes.com](https://github.com/Oti404/otnielcodes.com), în `infra/caddy/conf/sites/carworld.caddy`.
+
+### Deploy automat
+
+La push pe `main`, workflow-ul `.github/workflows/docker-images.yml`:
+
+1. construiește și publică imaginile;
+2. copiază `docker-compose.yml` în `~/proiecte/carworld/`;
+3. rulează `TAG=<sha> docker compose pull && up -d --wait` și `docker image prune -f`.
+
+Secrete GitHub necesare: `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_KNOWN_HOSTS` (aceleași ca la otnielcodes.com).
 
 ### Pe server (prima dată)
 
 ```bash
-docker network create proxy            # rețeaua comună cu Caddy, dacă nu există
-cp .env.example .env && chmod 600 .env # completează parolele (openssl rand -hex 32)
-docker compose pull && docker compose up -d
+mkdir -p ~/proiecte/carworld && cd ~/proiecte/carworld
+# .env din .env.example, cu parolele completate (openssl rand -hex 32)
+nano .env && chmod 600 .env
 ```
 
-Adaugă în Caddyfile intrarea din [docker/Caddyfile.carworld](docker/Caddyfile.carworld).
+Rețeaua `caddy_default` e creată de stack-ul Caddy (`~/proiecte/caddy`).
 
-### Actualizare
+### Rollback
 
 ```bash
-git pull                               # doar dacă s-au schimbat compose / .env.example
-docker compose pull && docker compose up -d
-docker image prune -f
+cd ~/proiecte/carworld
+TAG=<sha-vechi> docker compose up -d
 ```
 
 ### Local (build din surse)
 
 ```bash
+docker network create caddy_default   # o singură dată (pe server o creează Caddy)
+cp .env.example .env                  # completează parolele
 docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
 ```
 
