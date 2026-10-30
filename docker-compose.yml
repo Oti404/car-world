@@ -1,20 +1,32 @@
 # Car World (MHP) — production stack. Images are built by GitHub Actions and
 # pulled from GHCR; nothing is built on the server.
-# Port range for this project: 10000-10099 (see PORTS.md).
+# Server folder: ~/proiecte/carworld (compose project "carworld" -> volumes carworld_db-data, carworld_uploads).
+# Port range for this project: 10000-10099 (see PORTS.md); ports are bound to 127.0.0.1 for debugging only.
+# Public traffic: Caddy -> caddy_default network -> carworld-frontend:80 / carworld-backend:3000
+# (site config lives in github.com/Oti404/otnielcodes.com: infra/caddy/conf/sites/carworld.caddy).
+#
+# Deploy:   TAG=<commit sha> docker compose pull && TAG=<commit sha> docker compose up -d
+# Rollback: TAG=<older commit sha> docker compose up -d
 
 services:
   frontend:
-    image: ghcr.io/oti404/car-world-frontend:${IMAGE_TAG:-latest}
+    image: ghcr.io/oti404/car-world-frontend:${TAG:-latest}
     restart: unless-stopped
     mem_limit: 128m
     ports:
       - "127.0.0.1:10000:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
-      proxy:
+      caddy_default:
         aliases: [carworld-frontend]
 
   backend:
-    image: ghcr.io/oti404/car-world-backend:${IMAGE_TAG:-latest}
+    image: ghcr.io/oti404/car-world-backend:${TAG:-latest}
     restart: unless-stopped
     mem_limit: 256m
     environment:
@@ -30,13 +42,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      # The image has no wget/curl; Node's fetch hits /api/health, which also checks the DB.
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      # prisma db push + seed run before the API starts
+      start_period: 90s
     networks:
       internal:
-      proxy:
+      caddy_default:
         aliases: [carworld-backend]
 
   db:
-    image: postgres:15-alpine
+    image: postgres:15.19-alpine3.24
     restart: unless-stopped
     mem_limit: 256m
     command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=30"]
@@ -58,9 +78,9 @@ services:
 networks:
   internal:
     internal: true
-  proxy:
+  # Created by the Caddy stack (~/proiecte/caddy); shared by all projects.
+  caddy_default:
     external: true
-    name: ${PROXY_NETWORK:-proxy}
 
 volumes:
   db-data:
