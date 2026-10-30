@@ -1,0 +1,83 @@
+<div class="checkout-container">
+  <div class="checkout-card fade-in">
+    <header class="checkout-header">
+      <h1>Finalize Your Purchase</h1>
+      <p>Please provide your billing and delivery information to complete the order.</p>
+    </header>
+
+    <div class="checkout-layout">
+      <!-- Checkout Form -->
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+        <section class="form-section">
+          <h3><i class="fas fa-user"></i> Personal Details</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input id="firstName" type="text" formControlName="firstName" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" type="text" formControlName="lastName" placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" formControlName="phone" placeholder="+40 7xx xxx xxx">
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><i class="fas fa-truck"></i> Delivery Address</h3>
+          <div class="form-group">
+            <label for="address">Full Address</label>
+            <textarea id="address" formControlName="address" rows="3" placeholder="Str. Porsche Nr. 1..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input id="city" type="text" formControlName="city" placeholder="Bucharest">
+            </div>
+            <div class="form-group">
+              <label for="zipCode">Zip Code</label>
+              <input id="zipCode" type="text" formControlName="zipCode" placeholder="123456">
+            </div>
+          </div>
+        </section>
+
+        <div class="payment-simulation" *ngIf="isPaymentStep">
+          <div class="simulation-badge">External Payment Processor</div>
+          <p>You are now on the simulated payment gateway.</p>
+          <div class="sim-card">
+            <div class="sim-row"><span>Amount:</span> <strong>{{ cartService.totalPrice | currency:'EUR':'symbol':'1.0-0' }}</strong></div>
+            <div class="sim-row"><span>Currency:</span> <strong>EUR</strong></div>
+          </div>
+          <p class="sim-hint">In a real scenario, you would enter credit card details here.</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" routerLink="/cart">Back to Cart</button>
+          <button type="submit" class="btn-primary" [disabled]="checkoutForm.invalid || isProcessing">
+            <span *ngIf="!isProcessing && !isPaymentStep">Continue to Payment</span>
+            <span *ngIf="!isProcessing && isPaymentStep">Authorize & Pay</span>
+            <span *ngIf="isProcessing">Processing...</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Order Summary -->
+      <aside class="order-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-items">
+          <div class="summary-item" *ngFor="let item of cartService.cartItems">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="item-price">{{ item.configuredPrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+        <div class="summary-total">
+          <span>Total to Pay</span>
+          <span class="total-amount">{{ cartService.totalPrice | currency:'EUR':'symbol':'1.0-0' }}</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

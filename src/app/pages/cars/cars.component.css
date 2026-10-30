@@ -73,16 +73,55 @@
 /* Adaptive Breakpoints */
 @media (max-width: 768px) {
   .cars-container {
-    padding: 2rem 1rem;
+    padding: 2.5rem 1.5rem;
   }
 
   .cars-grid {
-    grid-template-columns: 1fr; /* Stack cards on mobile */
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
   .page-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .search-bar-container {
+    max-width: 100%;
+  }
+
+  .comparison-bar {
+    width:calc(100% - 30px);
+    bottom: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px;
+  }
+
+  .bar-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .selection-info {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .bar-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-clear {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .btn-compare-link {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    flex-grow: 1;
+    text-align: center;
   }
 }
 

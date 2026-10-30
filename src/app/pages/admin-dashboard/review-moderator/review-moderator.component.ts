@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReviewService, CarReview } from '../../../services/review.service';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-review-moderator',
@@ -30,18 +30,18 @@ import { Observable } from 'rxjs';
             <div class="rating">
                <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.active]="review.rating >= s"></i>
             </div>
-            <p class="content">"{{ review.content }}"</p>
-            
-            <div class="review-media" *ngIf="review.ownerPhoto">
-              <img [src]="review.ownerPhoto" alt="Owner photo" class="preview-img">
+            <p class="content">"{{ review.comment }}"</p>
+
+            <div class="review-media" *ngIf="review.photo">
+              <img [src]="review.photo" alt="Owner photo" class="preview-img">
             </div>
           </div>
 
           <div class="moderation-actions">
-            <button class="btn-approve" (click)="moderate(review.id!, 'approved')">
+            <button class="btn-approve" (click)="moderate(review.id!, 'APPROVED')">
               <i class="fas fa-check"></i> Approve
             </button>
-            <button class="btn-reject" (click)="moderate(review.id!, 'rejected')">
+            <button class="btn-reject" (click)="moderate(review.id!, 'REJECTED')">
               <i class="fas fa-times"></i> Reject
             </button>
           </div>
@@ -150,9 +150,10 @@ export class ReviewModeratorComponent {
   private reviewService = inject(ReviewService);
   public pendingReviews$ = this.reviewService.getAllPendingReviews();
 
-  async moderate(id: string, status: 'approved' | 'rejected') {
+  async moderate(id: string, status: 'APPROVED' | 'REJECTED') {
     try {
-      await this.reviewService.updateReviewStatus(id, status);
+      await firstValueFrom(this.reviewService.updateReviewStatus(id, status));
+      this.pendingReviews$ = this.reviewService.getAllPendingReviews();
     } catch (e) {
       console.error('Moderation error:', e);
     }

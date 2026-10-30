@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { OrderService, Order } from '../../../services/order.service';
 
 @Component({
@@ -40,9 +41,9 @@ export class PendingOrdersComponent implements OnInit {
     }
 
     try {
-      await this.orderService.updateOrderStatus(order, 'delivered', vin);
+      await firstValueFrom(this.orderService.updateOrderStatus(order.id!, 'DELIVERED', vin));
       alert(`Order approved! Vehicle VIN: ${vin} has been registered.`);
-      // The observable will auto-update the list, removing it from 'pending'
+      this.loadPendingOrders();
     } catch (err) {
       console.error("Error approving order:", err);
       alert("Failed to approve order.");
@@ -54,8 +55,9 @@ export class PendingOrdersComponent implements OnInit {
     
     if(confirm("Are you sure you want to reject and cancel this order?")) {
       try {
-        await this.orderService.updateOrderStatus(order, 'cancelled');
+        await firstValueFrom(this.orderService.updateOrderStatus(order.id!, 'CANCELLED'));
         alert("Order has been cancelled.");
+        this.loadPendingOrders();
       } catch (err) {
         console.error("Error cancelling order:", err);
       }

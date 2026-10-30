@@ -1,29 +1,24 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { Car } from './car.service';
-import { OrderService, Order } from './order.service';
+import { OrderService } from './order.service';
 import { AuthService } from './auth.service';
 
 export interface CartItem extends Car {
   configuredPrice: number;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly orderService = inject(OrderService);
   private readonly authService = inject(AuthService);
 
   public cartItems: CartItem[] = [];
   private readonly cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
-
   public readonly cartItems$: Observable<CartItem[]> = this.cartItemsSubject.asObservable();
 
   public addToCart(carItem: CartItem): void {
-    // Prevent duplicate entries based on the vehicle name.
     const isDuplicate = this.cartItems.some(item => item.name === carItem.name);
-
     if (!isDuplicate) {
       this.cartItems.push(carItem);
       this.cartItemsSubject.next([...this.cartItems]);
@@ -48,36 +43,23 @@ export class CartService {
     return this.cartItems.length;
   }
 
-  /**
-   * Submits all items in the cart as individual pending orders.
-   * Clears the cart upon success.
-   */
-  public async checkout(): Promise<void> {
+  public async checkout(billingDetails: any): Promise<void> {
     if (this.cartItems.length === 0) return;
 
     const user = this.authService.getCurrentUser();
-    if (!user) {
-      throw new Error('User must be logged in to checkout.');
-    }
+    if (!user) throw new Error('User must be logged in to checkout.');
 
-    try {
-      const orderPromises = this.cartItems.map(item => {
-        const order: Order = {
-          userId: user.uid,
-          userEmail: user.email || 'Unknown',
-          car: item, // Store the fully configured car details
-          configuredPrice: item.configuredPrice,
-          status: 'pending',
-          orderDate: new Date()
-        };
-        return this.orderService.placeOrder(order);
-      });
+    const orderPromises = this.cartItems.map(item =>
+      firstValueFrom(this.orderService.placeOrder({
+        userId: user.uid,
+        carId: item.id,
+        totalAmount: item.configuredPrice,
+        status: 'PENDING',
+        billingDetails
+      }))
+    );
 
-      await Promise.all(orderPromises);
-      this.clearCart(); // Empty cart on success
-    } catch (error) {
-      console.error('Error during checkout:', error);
-      throw error;
-    }
+    await Promise.all(orderPromises);
+    this.clearCart();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { CarService, Car, CarOption } from '../../../services/car.service';
 import { StorageService } from '../../../services/storage.service';
 
@@ -134,8 +135,8 @@ export class CarManagerComponent {
         }
       };
 
-      // 3. Save to Firestore
-      await this.carService.addCar(newCar);
+      // 3. Save to PostgreSQL via API
+      await firstValueFrom(this.carService.addCar(newCar));
       
       alert('Car added successfully!');
       this.initForm(); // Reset form

@@ -1,0 +1,17 @@
+services:
+  mhp-workshop:
+    build: .
+    image: mhp-workshop
+    container_name: mhp-workshop
+    ports:
+      - "${HOST_PORT:-8080}:3000"
+    environment:
+      JWT_SECRET: change-this-secret
+      ADMIN_EMAIL: admin@mhp.local
+      ADMIN_PASSWORD: admin123
+    volumes:
+      - mhp-data:/data
+    restart: unless-stopped
+
+volumes:
+  mhp-data:

@@ -13,19 +13,19 @@
 
   <div class="orders-grid" *ngIf="!isLoading && pendingOrders.length > 0">
     <div class="admin-order-card" *ngFor="let order of pendingOrders">
-      
+
       <div class="card-header">
-        <span class="user-email"><i class="fas fa-user"></i> {{ order.userEmail }}</span>
+        <span class="user-email"><i class="fas fa-user"></i> {{ order.userEmail || order.userId }}</span>
         <span class="order-date">{{ order.orderDate | date:'short' }}</span>
       </div>
 
       <div class="card-body">
         <div class="car-details">
-          <h4>{{ order.car.name }}</h4>
-          <p class="price">{{ order.configuredPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
-          <div class="options-preview" *ngIf="order.car.options">
-             <span class="badge" *ngFor="let color of order.car.options.colors">{{ color.name }}</span>
-             <span class="badge" *ngFor="let wheel of order.car.options.wheels">{{ wheel.name }}</span>
+          <h4>{{ order.car?.name }}</h4>
+          <p class="price">{{ (order.configuredPrice || order.totalAmount) | currency:'EUR':'symbol':'1.0-0' }}</p>
+          <div class="options-preview" *ngIf="order.car?.options">
+            <span class="badge" *ngFor="let color of order.car!.options.colors">{{ color.name }}</span>
+            <span class="badge" *ngFor="let wheel of order.car!.options.wheels">{{ wheel.name }}</span>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
           <label>Assign VIN</label>
           <input type="text" placeholder="WP0ZZZ..." [(ngModel)]="orderVins[order.id!]">
         </div>
-        
+
         <div class="buttons">
           <button class="btn-approve" (click)="approveOrder(order)">
             <i class="fas fa-check"></i> Approve

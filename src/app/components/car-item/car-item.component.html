@@ -6,6 +6,7 @@
         [alt]="carItem().name"
         class="car-image fade-in"
         loading="lazy"
+        (error)="handleImageError($event)"
       />
     </a>
 

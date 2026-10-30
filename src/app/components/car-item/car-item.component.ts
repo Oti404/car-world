@@ -94,4 +94,11 @@ export class CarItemComponent implements OnInit {
     // Needs fixing on the cart service side down the road to handle the new shape!
     this.cartService.addToCart(configuredVehicle as any);
   }
+
+  /**
+   * Handles image loading errors by providing a fallback URL.
+   */
+  public handleImageError(event: any, fallback: string = 'assets/placeholder-car.jpg') {
+    event.target.src = fallback;
+  }
 }

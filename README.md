@@ -1411,3 +1411,17 @@ If you have questions or need help:
 - Practice building small projects
 
 **Happy Coding! 🎉**
+
+## Rulare cu Docker (totul într-un singur container)
+
+Imaginea conține PostgreSQL, API-ul Express și aplicația Angular. Nu depinde de servicii externe.
+
+```bash
+docker compose up -d --build
+```
+
+Aplicația pornește la http://localhost:8080 (alt port: `HOST_PORT=9000 docker compose up -d`).
+
+- Cont admin implicit: `admin@mhp.local` / `admin123` (se schimbă din `docker-compose.yml`)
+- Baza de date și imaginile încărcate sunt păstrate în volumul `mhp-data`
+- Reset complet al datelor: `docker compose down -v`

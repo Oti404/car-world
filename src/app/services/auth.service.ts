@@ -1,137 +1,140 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, authState, User } from '@angular/fire/auth';
-import { Firestore, doc, docData, setDoc, updateDoc, getDoc } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject, firstValueFrom, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { API_URL } from '../api.config';
 
 export interface UserProfile {
-  uid: string;
+  id: string;
+  name: string;
   email: string;
+  role: 'GUEST' | 'CUSTOMER' | 'OWNER' | 'ADMIN';
   firstName?: string;
   lastName?: string;
   country?: string;
-  role?: 'user' | 'admin';
   createdAt?: any;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+/** Logged-in user, shaped like the old Firebase User so components keep working. */
+export interface AuthUser {
+  uid: string;
+  email: string;
+  displayName: string;
+}
+
+interface AuthResponse {
+  token: string;
+  user: UserProfile;
+}
+
+const TOKEN_KEY = 'mhp_token';
+const USER_KEY = 'mhp_user';
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Observable for the current user state
-  public readonly user$: Observable<User | null>;
-  
-  // Observable defining if the user is an admin
-  public readonly isAdmin$: Observable<boolean>;
+  private http = inject(HttpClient);
+  private readonly apiUrl = `${API_URL}/users`;
 
-  private firestore = inject(Firestore);
+  private readonly dbUserSubject = new BehaviorSubject<UserProfile | null>(this.readStoredUser());
+  public readonly dbUser$: Observable<UserProfile | null> = this.dbUserSubject.asObservable();
 
-  constructor(private auth: Auth) {
-    this.user$ = authState(this.auth);
+  public readonly user$: Observable<AuthUser | null> = this.dbUser$.pipe(map(u => this.toAuthUser(u)));
+  public readonly isAdmin$: Observable<boolean> = this.dbUser$.pipe(map(u => u?.role === 'ADMIN'));
 
-    // Determine if user is admin based on their Firestore document
-    this.isAdmin$ = this.user$.pipe(
-      switchMap(user => {
-        if (!user) {
-          return of(null);
-        }
-        const userDocRef = doc(this.firestore, `users/${user.uid}`);
-        return docData(userDocRef) as Observable<UserProfile | undefined>;
-      }),
-      switchMap((userProfile) => {
-        return of(userProfile?.role === 'admin');
-      })
-    );
+  constructor() {
+    // Re-validate a stored session (token may have expired or role changed)
+    if (this.getToken()) {
+      this.http.get<UserProfile>(`${this.apiUrl}/me`, { headers: this.authHeaders() }).subscribe({
+        next: user => this.setUser(user),
+        error: () => this.logout()
+      });
+    }
   }
 
-  // Register with email and password and create a Firestore profile
-  async register(email: string, password: string, additionalData: Partial<UserProfile>) {
-    const credential = await createUserWithEmailAndPassword(this.auth, email, password);
-    const user = credential.user;
-    
-    // Create initial profile in Firestore
-    const userDocRef = doc(this.firestore, `users/${user.uid}`);
-    const profile: UserProfile = {
-      uid: user.uid,
-      email: user.email || '',
-      firstName: additionalData.firstName || '',
-      lastName: additionalData.lastName || '',
-      country: additionalData.country || '',
-      role: 'user',
-      createdAt: new Date()
-    };
-    
-    await setDoc(userDocRef, profile);
-    
-    // Also update Firebase Auth displayName for convenience
-    const { updateProfile } = await import('@angular/fire/auth');
-    await updateProfile(user, { 
-      displayName: `${profile.firstName} ${profile.lastName}`.trim() 
-    });
-    
-    return credential;
+  async register(email: string, password: string, additionalData: { firstName?: string; lastName?: string; country?: string }) {
+    const name = `${additionalData.firstName || ''} ${additionalData.lastName || ''}`.trim() || email;
+    const res = await this.request(this.http.post<AuthResponse>(`${this.apiUrl}/register`, { email, password, name }));
+    this.startSession(res);
+    return res.user;
   }
 
-  // Login with email and password
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    const res = await this.request(this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }));
+    this.startSession(res);
+    return res.user;
   }
 
-  // Logout
-  logout() {
-    return signOut(this.auth);
+  async logout() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    this.dbUserSubject.next(null);
   }
 
-  // Get current synchronous user
-  getCurrentUser(): User | null {
-    return this.auth.currentUser;
+  getCurrentUser(): AuthUser | null {
+    return this.toAuthUser(this.dbUserSubject.value);
+  }
+
+  getDbUser(): UserProfile | null {
+    return this.dbUserSubject.value;
   }
 
   async updateDisplayName(name: string) {
-    const user = this.auth.currentUser;
-    if (user) {
-      const { updateProfile } = await import('@angular/fire/auth');
-      return updateProfile(user, { displayName: name });
-    }
-    throw new Error('No user logged in');
+    if (!this.getToken()) throw new Error('No user logged in');
+    const user = await this.request(this.http.put<UserProfile>(`${this.apiUrl}/me`, { name }, { headers: this.authHeaders() }));
+    this.setUser(user);
   }
 
-  /**
-   * Updates the profile data in Firestore for the current user.
-   */
-  async updateProfileData(data: Partial<UserProfile>) {
-    const user = this.auth.currentUser;
-    if (!user) throw new Error('No user logged in');
-    
-    const userDocRef = doc(this.firestore, `users/${user.uid}`);
-    
-    // Update Firestore
-    await updateDoc(userDocRef, data as any);
-    
-    // If names are updated, also update Firebase Auth displayName
-    if (data.firstName || data.lastName) {
-      const { updateProfile } = await import('@angular/fire/auth');
-      const currentProfile = await this.getUserProfile(user.uid);
-      const newName = `${data.firstName || currentProfile?.firstName || ''} ${data.lastName || currentProfile?.lastName || ''}`.trim();
-      await updateProfile(user, { displayName: newName });
-    }
+  async updateProfileData(data: { firstName?: string; lastName?: string; [key: string]: any }) {
+    if (!this.getToken()) throw new Error('No user logged in');
+    const name = `${data.firstName || ''} ${data.lastName || ''}`.trim();
+    if (name) await this.updateDisplayName(name);
   }
 
-  /**
-   * Retrieves the full user profile from Firestore.
-   */
   async getUserProfile(uid: string): Promise<UserProfile | null> {
-    const userDocRef = doc(this.firestore, `users/${uid}`);
-    const snapshot = await getDoc(userDocRef);
-    return snapshot.exists() ? snapshot.data() as UserProfile : null;
+    try {
+      return await firstValueFrom(this.http.get<UserProfile>(`${this.apiUrl}/${uid}`));
+    } catch { return null; }
   }
 
-  /**
-   * Observable version of getUserProfile for reactive UIs.
-   */
   getUserProfile$(uid: string): Observable<UserProfile | null> {
-    const userDocRef = doc(this.firestore, `users/${uid}`);
-    return docData(userDocRef) as Observable<UserProfile | null>;
+    return this.http.get<UserProfile>(`${this.apiUrl}/${uid}`).pipe(catchError(() => of(null)));
+  }
+
+  private startSession(res: AuthResponse) {
+    localStorage.setItem(TOKEN_KEY, res.token);
+    this.setUser(res.user);
+  }
+
+  private setUser(user: UserProfile) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.dbUserSubject.next(user);
+  }
+
+  private getToken(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
+  private authHeaders(): HttpHeaders {
+    return new HttpHeaders({ Authorization: `Bearer ${this.getToken()}` });
+  }
+
+  private readStoredUser(): UserProfile | null {
+    try {
+      return localStorage.getItem(TOKEN_KEY) ? JSON.parse(localStorage.getItem(USER_KEY) || 'null') : null;
+    } catch { return null; }
+  }
+
+  private toAuthUser(u: UserProfile | null): AuthUser | null {
+    return u ? { uid: u.id, email: u.email, displayName: u.name } : null;
+  }
+
+  /** Unwraps API errors into an Error with the server's message, for the login/register forms. */
+  private async request<T>(obs: Observable<T>): Promise<T> {
+    try {
+      return await firstValueFrom(obs);
+    } catch (e) {
+      const err = e as HttpErrorResponse;
+      throw new Error(err.error?.error || err.message || 'Request failed');
+    }
   }
 }
-

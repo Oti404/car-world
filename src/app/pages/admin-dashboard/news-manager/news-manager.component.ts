@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { NewsService } from '../../../services/news.service';
 import { StorageService } from '../../../services/storage.service';
 import { NewsDto } from '../../../data-type/news-data';
@@ -215,9 +216,9 @@ export class NewsManagerComponent {
       }
 
       if (this.editingId()) {
-        await this.newsService.updateNews(this.editingId()!, this.newsModel);
+        await firstValueFrom(this.newsService.updateNews(this.editingId()!, this.newsModel));
       } else {
-        await this.newsService.addNews(this.newsModel);
+        await firstValueFrom(this.newsService.addNews(this.newsModel));
       }
       this.resetForm();
     } catch (error) {
@@ -236,7 +237,7 @@ export class NewsManagerComponent {
 
   async deleteNews(id: string) {
     if (confirm('Are you sure you want to delete this news article?')) {
-      await this.newsService.deleteNews(id);
+      await firstValueFrom(this.newsService.deleteNews(id));
     }
   }
 

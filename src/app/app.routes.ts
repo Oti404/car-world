@@ -12,7 +12,9 @@ import { ComparatorComponent } from './pages/comparator/comparator.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CarDetailsComponent } from './pages/car-details/car-details.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { adminGuard } from './guards/admin.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   /**
@@ -39,6 +41,7 @@ export const routes: Routes = [
   { path: AppRoutes.Comparator, component: ComparatorComponent },
   { path: AppRoutes.Contact, component: ContactComponent },
   { path: AppRoutes.Profile, component: ProfileComponent },
+  { path: AppRoutes.Checkout, component: CheckoutComponent, canActivate: [authGuard] },
   { path: 'cars/:id', component: CarDetailsComponent },
   { 
     path: AppRoutes.AdminDashboard, 

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { SupportService, Inquiry } from '../../services/support.service';
 import { ButtonComponent } from '../../components/button/button.component';
 import { ButtonType } from '../../data-type/data-type';
@@ -34,7 +35,7 @@ export class ContactComponent {
 
     this.isSubmitting = true;
     try {
-      await this.supportService.submitInquiry(this.formData);
+      await firstValueFrom(this.supportService.submitInquiry(this.formData));
       this.isSuccess = true;
       this.formData = { name: '', email: '', subject: '', message: '' };
     } catch (err) {

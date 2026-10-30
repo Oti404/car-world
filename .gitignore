@@ -7,7 +7,7 @@
 /bazel-out
 
 # Node
-/node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -50,3 +50,8 @@ Thumbs.db
 
 # Environments (If you want to hide keys, though they are public for Web apps)
 # src/environments/environment.prod.ts
+server/uploads/
+
+# Environment / secrets
+.env
+**/.env

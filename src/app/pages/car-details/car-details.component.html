@@ -10,7 +10,11 @@
     <!-- Visual Section -->
     <div class="visual-section">
       <div class="main-image-preview">
-        <img [src]="car.images && car.images.length > 0 ? car.images[activeImageIndex] : 'assets/placeholder-car.jpg'" [alt]="car.name">
+        <img 
+          [src]="car.images && car.images.length > 0 ? car.images[activeImageIndex] : 'assets/placeholder-car.jpg'" 
+          [alt]="car.name"
+          (error)="handleImageError($event)"
+        >
         <div class="stock-tag" *ngIf="car.stock <= 5">Only {{ car.stock }} left</div>
       </div>
       
@@ -30,11 +34,65 @@
     <div class="info-section">
       <div class="brand-badge">Premium Collection</div>
       <h1 class="car-name">{{ car.name }}</h1>
-      <p class="car-price">{{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+      
+      <div class="price-container">
+        <p class="car-price">{{ currentTotalPrice | currency:'EUR':'symbol':'1.0-0' }}</p>
+        <span class="base-price-hint" *ngIf="currentTotalPrice > car.basePrice">
+          Base: {{ car.basePrice | currency:'EUR':'symbol':'1.0-0' }}
+        </span>
+      </div>
+
+      <!-- Interactive Configurator -->
+      <section class="configurator-section">
+        <div class="option-group" *ngIf="car.options.colors.length">
+          <h4>Exterior Color</h4>
+          <div class="option-list">
+            <div 
+              class="option-item" 
+              *ngFor="let color of car.options.colors"
+              [class.active]="selectedColor?.name === color.name"
+              (click)="selectColor(car, color)"
+            >
+              <span class="option-name">{{ color.name }}</span>
+              <span class="option-price">+ {{ color.price | currency:'EUR':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group" *ngIf="car.options.wheels.length">
+          <h4>Wheels</h4>
+          <div class="option-list">
+            <div 
+              class="option-item" 
+              *ngFor="let wheel of car.options.wheels"
+              [class.active]="selectedWheels?.name === wheel.name"
+              (click)="selectWheels(car, wheel)"
+            >
+              <span class="option-name">{{ wheel.name }}</span>
+              <span class="option-price">+ {{ wheel.price | currency:'EUR':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group" *ngIf="car.options.interior.length">
+          <h4>Interior</h4>
+          <div class="option-list">
+            <div 
+              class="option-item" 
+              *ngFor="let int of car.options.interior"
+              [class.active]="selectedInterior?.name === int.name"
+              (click)="selectInterior(car, int)"
+            >
+              <span class="option-name">{{ int.name }}</span>
+              <span class="option-price">+ {{ int.price | currency:'EUR':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <div class="action-buttons">
         <button class="btn-buy" (click)="onAddToCart(car)">
-          <i class="fas fa-shopping-cart"></i> Order Vehicle
+          <i class="fas fa-shopping-cart"></i> Add Configured Vehicle to Cart
         </button>
         <button 
           class="btn-compare" 
@@ -49,25 +107,6 @@
       <div class="description-box">
         <h3>Description</h3>
         <p>{{ car.description }}</p>
-      </div>
-
-      <div class="specs-grid">
-        <div class="spec-item">
-          <span class="label">Engine</span>
-          <span class="value">{{ car.engineSpecs }}</span>
-        </div>
-        <div class="spec-item">
-          <span class="label">Stock</span>
-          <span class="value">{{ car.stock }} Units</span>
-        </div>
-        <div class="spec-item">
-          <span class="label">Warranty</span>
-          <span class="value">5 Years Included</span>
-        </div>
-        <div class="spec-item">
-          <span class="label">Delivery</span>
-          <span class="value">Worldwide Shipping</span>
-        </div>
       </div>
     </div>
   </div>
@@ -89,16 +128,8 @@
         <div class="tech-value">Premium / Exclusive</div>
       </div>
       <div class="tech-row">
-        <div class="tech-label">Available Options</div>
-        <div class="tech-value">
-          <span class="option-tag" *ngFor="let c of car.options.colors">{{ c.name }}</span>
-        </div>
-      </div>
-      <div class="tech-row">
-        <div class="tech-label">Wheel Choices</div>
-        <div class="tech-value">
-          <span class="option-tag" *ngFor="let w of car.options.wheels">{{ w.name }}</span>
-        </div>
+        <div class="tech-label">Stock Status</div>
+        <div class="tech-value">{{ car.stock }} Units Remaining</div>
       </div>
     </div>
   </section>
@@ -116,11 +147,16 @@
 
     <div class="reviews-grid" *ngIf="reviews.length > 0">
       <div class="review-card" *ngFor="let review of reviews">
-        <div class="review-image-container">
-          <img [src]="review.ownerPhoto || review.originalPhoto" [alt]="review.userName + ' car photo'" class="review-image">
+        <div class="review-image-container" *ngIf="review.photo">
+          <img
+            [src]="review.photo"
+            [alt]="review.userName + ' car photo'"
+            class="review-image"
+            (error)="handleImageError($event)"
+          >
           <div class="owner-badge"><i class="fas fa-check-circle"></i> Verified Owner</div>
         </div>
-        
+
         <div class="review-content">
           <div class="review-meta">
             <span class="reviewer-name">{{ review.userName }}</span>
@@ -128,8 +164,8 @@
               <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="review.rating >= s"></i>
             </div>
           </div>
-          <p class="review-text">"{{ review.content }}"</p>
-          <span class="review-date">{{ review.date?.toDate ? (review.date.toDate() | date:'mediumDate') : (review.date | date:'mediumDate') }}</span>
+          <p class="review-text">"{{ review.comment }}"</p>
+          <span class="review-date">{{ review.createdAt | date:'mediumDate' }}</span>
         </div>
       </div>
     </div>

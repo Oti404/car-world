@@ -316,3 +316,66 @@
   object-fit: cover;
   display: block;
 }
+/* === 4. RESPONSIVE DESIGN (MOBILE) === */
+@media (max-width: 768px) {
+  .car-image-container {
+    height: 200px;
+  }
+
+  .car-title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .car-specs-column {
+    padding: 15px;
+  }
+
+  .car-specs-grid {
+    gap: 10px;
+  }
+
+  .spec-item {
+    font-size: 0.85rem;
+  }
+
+  .car-description {
+    font-size: 0.85rem;
+  }
+
+  .car-actions-column {
+    padding: 15px;
+  }
+
+  .price {
+    font-size: 1.6rem;
+  }
+
+  .options-section {
+    max-height: 200px;
+  }
+
+  .favorite-heart, .compare-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    top: 10px;
+  }
+
+  .favorite-heart { right: 10px; }
+  .compare-toggle { left: 10px; }
+
+  ::ng-deep app-button button {
+    padding: 12px 15px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Disable 3D transforms on mobile for better touch experience and performance */
+  .car-item {
+    transform: none !important;
+  }
+  
+  .car-item:hover {
+    transform: none !important;
+  }
+}

@@ -1,37 +1,33 @@
 import { Injectable, inject } from '@angular/core';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { API_URL } from '../api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  private storage: Storage = inject(Storage);
+  private http = inject(HttpClient);
 
   /**
-   * Uploads a file to Firebase Storage under the 'cars' folder.
-   * Returns a Promise that resolves with the download URL.
+   * Uploads a car image to the backend (stored on the server's disk).
+   * Returns a Promise that resolves with the public URL.
    */
-  async uploadCarImage(file: File, carName: string): Promise<string> {
-    const sanitizedName = carName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-    const uniqueFileName = `${Date.now()}_${file.name}`;
-    const filePath = `cars/${sanitizedName}/${uniqueFileName}`;
-    
-    const storageRef = ref(this.storage, filePath);
-    const uploadTask = await uploadBytesResumable(storageRef, file);
-    
-    return await getDownloadURL(uploadTask.ref);
+  uploadCarImage(file: File, carName: string): Promise<string> {
+    return this.upload(file, 'cars');
   }
 
   /**
-   * Uploads a file to Firebase Storage under the 'news' folder.
+   * Uploads a news (or review) image to the backend.
    */
-  async uploadNewsImage(file: File): Promise<string> {
-    const uniqueFileName = `${Date.now()}_${file.name}`;
-    const filePath = `news/${uniqueFileName}`;
-    
-    const storageRef = ref(this.storage, filePath);
-    const uploadTask = await uploadBytesResumable(storageRef, file);
-    
-    return await getDownloadURL(uploadTask.ref);
+  uploadNewsImage(file: File): Promise<string> {
+    return this.upload(file, 'news');
+  }
+
+  private async upload(file: File, folder: string): Promise<string> {
+    const params = { folder, filename: file.name };
+    const headers = { 'Content-Type': file.type || 'application/octet-stream' };
+    const res = await firstValueFrom(this.http.post<{ url: string }>(`${API_URL}/uploads`, file, { params, headers }));
+    return res.url;
   }
 }

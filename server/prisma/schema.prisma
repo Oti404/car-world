@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  GUEST
+  CUSTOMER
+  OWNER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+  CANCELLED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  RESOLVED
+}
+
+model User {
+  id           String           @id
+  name         String
+  email        String           @unique
+  passwordHash String           @default("")
+  role         Role             @default(CUSTOMER)
+  orders       Order[]
+  cartItems    CartItem[]
+  reviews      Review[]
+  messages     ContactMessage[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model Car {
+  id          String     @id @default(uuid())
+  name        String
+  basePrice   Float
+  stock       Int        @default(0)
+  description String     @default("")
+  engineSpecs String     @default("")
+  images      String[]
+  options     Json       @default("{}")
+  createdAt   DateTime   @default(now())
+  cartItems   CartItem[]
+  orders      Order[]
+  reviews     Review[]
+}
+
+model CartItem {
+  id              String  @id @default(uuid())
+  configuration   Json    @default("{}")
+  calculatedPrice Float
+  userId          String
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  carId           String
+  car             Car     @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderDate   DateTime    @default(now())
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+  assignedVin String?
+  billingDetails Json?
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  carId       String
+  car         Car         @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String       @id @default(uuid())
+  rating    Int
+  comment   String
+  photo     String       @default("")
+  userName  String       @default("")
+  status    ReviewStatus @default(PENDING)
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  carId     String
+  car       Car          @relation(fields: [carId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+}
+
+model News {
+  id        String   @id @default(uuid())
+  title     String
+  image     String   @default("")
+  imageAlt  String   @default("")
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String        @id @default(uuid())
+  name      String        @default("")
+  email     String        @default("")
+  subject   String
+  message   String
+  status    ContactStatus @default(NEW)
+  userId    String?
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime      @default(now())
+}

@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 import { SupportService, Inquiry } from '../../../services/support.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class SupportManagerComponent implements OnInit {
     this.supportService.getAllInquiries().subscribe({
       next: (data) => {
         // Client-side filtering to avoid complex Firestore indexes
-        this.inquiries = data.filter(inquiry => inquiry.status !== 'resolved');
+        this.inquiries = data.filter(inquiry => inquiry.status !== 'RESOLVED');
         this.isLoading = false;
       },
       error: (err) => {
@@ -35,7 +36,7 @@ export class SupportManagerComponent implements OnInit {
 
   async updateStatus(id: string, status: Inquiry['status']) {
     try {
-      await this.supportService.updateInquiryStatus(id, status);
+      await firstValueFrom(this.supportService.updateInquiryStatus(id, status));
     } catch (err) {
       console.error("Error updating status:", err);
     }

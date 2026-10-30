@@ -19,25 +19,15 @@ export class CartComponent {
   public isCheckoutInProgress = false;
 
   /**
-   * Orchestrates the checkout process pushing data to Firestore via CartService.
+   * Navigates the user to the checkout page if authenticated.
    */
-  public async onCheckout(): Promise<void> {
+  public onCheckout(): void {
     if (!this.authService.getCurrentUser()) {
       alert("Please login or register to place an order.");
       this.router.navigate(['/login']);
       return;
     }
 
-    this.isCheckoutInProgress = true;
-    try {
-      await this.cartService.checkout();
-      alert("Order placed successfully! The car has been sent to your Garage.");
-      this.router.navigate(['/garage']);
-    } catch(err) {
-      console.error(err);
-      alert("There was an error processing your checkout.");
-    } finally {
-      this.isCheckoutInProgress = false;
-    }
+    this.router.navigate(['/checkout']);
   }
 }

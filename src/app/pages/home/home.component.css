@@ -239,10 +239,61 @@
 }
 
 @media (max-width: 768px) {
+  .main-content {
+    padding: 0 1.5rem 4rem 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin: 4rem 0 2rem 0;
+  }
+
+  .expertise-section {
+    padding: 4rem 0;
+  }
+
   .expertise-grid, .features, .credibility-bar, .utility-features {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
-  .stat-item { padding: 1rem 0; }
-  .partners-grid { gap: 2rem; }
+
+  .expertise-item h3 {
+    font-size: 1.25rem;
+  }
+
+  .credibility-bar {
+    padding: 3rem 1.5rem;
+    margin: 3rem 0;
+    gap: 2rem;
+  }
+
+  .stat-item {
+    gap: 0.2rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .featured-car-card:hover {
+    transform: none; /* Disable hover lift on mobile */
+  }
+
+  .f-content h4 {
+    font-size: 1.3rem;
+  }
+
+  .partners-section {
+    padding: 4rem 0;
+  }
+
+  .partners-grid {
+    gap: 2.5rem;
+    opacity: 0.8;
+  }
+
+  .logo-placeholder {
+    font-size: 1.2rem;
+  }
 }
 

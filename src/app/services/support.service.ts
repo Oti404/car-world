@@ -1,52 +1,33 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, doc, updateDoc, query, orderBy, Timestamp } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../api.config';
 
 export interface Inquiry {
   id?: string;
   name: string;
   email: string;
-  message: string;
-  date: any;
-  status: 'new' | 'read' | 'resolved';
   subject?: string;
+  message: string;
+  date?: any;
+  status: 'NEW' | 'READ' | 'RESOLVED';
+  userId?: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class SupportService {
-  private firestore = inject(Firestore);
-  private inquiriesCollection = collection(this.firestore, 'inquiries');
+  private http = inject(HttpClient);
+  private readonly url = `${API_URL}/contact`;
 
-  /**
-   * Submit a new inquiry from the contact form.
-   */
-  submitInquiry(inquiry: Omit<Inquiry, 'id' | 'date' | 'status'>): Promise<any> {
-    const newInquiry: Inquiry = {
-      ...inquiry,
-      date: Timestamp.now(),
-      status: 'new'
-    };
-    return addDoc(this.inquiriesCollection, newInquiry);
+  submitInquiry(inquiry: Omit<Inquiry, 'id' | 'date' | 'status'>): Observable<Inquiry> {
+    return this.http.post<Inquiry>(this.url, inquiry);
   }
 
-  /**
-   * Get all inquiries for the admin dashboard, ordered by date.
-   */
   getAllInquiries(): Observable<Inquiry[]> {
-    const q = query(
-      this.inquiriesCollection, 
-      orderBy('date', 'desc')
-    );
-    return collectionData(q, { idField: 'id' }) as Observable<Inquiry[]>;
+    return this.http.get<Inquiry[]>(this.url);
   }
 
-  /**
-   * Update the status of an inquiry (e.g., mark as read or resolved).
-   */
-  updateInquiryStatus(id: string, status: Inquiry['status']): Promise<void> {
-    const docRef = doc(this.firestore, `inquiries/${id}`);
-    return updateDoc(docRef, { status });
+  updateInquiryStatus(id: string, status: Inquiry['status']): Observable<Inquiry> {
+    return this.http.put<Inquiry>(`${this.url}/${id}/status`, { status });
   }
 }

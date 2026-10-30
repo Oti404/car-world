@@ -1,6 +1,7 @@
-import { Injectable, signal, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, orderBy } from '@angular/fire/firestore';
+import { Injectable, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../api.config';
 
 export interface CarOption {
   name: string;
@@ -25,72 +26,42 @@ export interface Car {
   options: CarOptionsCategory;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CarService {
-  private firestore = inject(Firestore);
-  private carsCollection = collection(this.firestore, 'cars');
+  private http = inject(HttpClient);
+  private readonly url = `${API_URL}/cars`;
 
-  /**
-   * Internal state management using Angular Signals for high-performance reactivity.
-   */
   private readonly favoriteCarsSignal = signal<Set<string>>(new Set());
 
-  // --- FIRESTORE CRUD OPERATIONS ---
-
-  // Get all cars ordered by price
   getCars(): Observable<Car[]> {
-    const q = query(this.carsCollection, orderBy('basePrice', 'desc'));
-    return collectionData(q, { idField: 'id' }) as Observable<Car[]>;
+    return this.http.get<Car[]>(this.url);
   }
 
-  // Get a specific car by ID
   getCarById(id: string): Observable<Car> {
-    const carDocRef = doc(this.firestore, `cars/${id}`);
-    return docData(carDocRef, { idField: 'id' }) as Observable<Car>;
+    return this.http.get<Car>(`${this.url}/${id}`);
   }
 
-  // Add a new car
-  addCar(car: Car): Promise<any> {
-    return addDoc(this.carsCollection, car);
+  addCar(car: Car): Observable<Car> {
+    return this.http.post<Car>(this.url, car);
   }
 
-  // Update an existing car
-  updateCar(id: string, carData: Partial<Car>): Promise<void> {
-    const carDocRef = doc(this.firestore, `cars/${id}`);
-    return updateDoc(carDocRef, carData);
+  updateCar(id: string, carData: Partial<Car>): Observable<Car> {
+    return this.http.put<Car>(`${this.url}/${id}`, carData);
   }
 
-  // Delete a car
-  deleteCar(id: string): Promise<void> {
-    const carDocRef = doc(this.firestore, `cars/${id}`);
-    return deleteDoc(carDocRef);
+  deleteCar(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
   }
 
-  // --- EXISTING SIGNAL LOGIC ---
-
-  /**
-   * Checks if a vehicle is currently marked as a favorite.
-   */
   public isFavorite(carTitle: string): boolean {
     return this.favoriteCarsSignal().has(carTitle);
   }
 
-  /**
-   * Toggles the favorite status for a specific vehicle title.
-   */
   public toggleFavorite(carTitle: string): void {
     this.favoriteCarsSignal.update(favorites => {
-      const updatedFavorites = new Set(favorites);
-
-      if (updatedFavorites.has(carTitle)) {
-        updatedFavorites.delete(carTitle);
-      } else {
-        updatedFavorites.add(carTitle);
-      }
-
-      return updatedFavorites;
+      const updated = new Set(favorites);
+      updated.has(carTitle) ? updated.delete(carTitle) : updated.add(carTitle);
+      return updated;
     });
   }
 }
