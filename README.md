@@ -1412,16 +1412,34 @@ If you have questions or need help:
 
 **Happy Coding! 🎉**
 
-## Rulare cu Docker (totul într-un singur container)
+## Deploy cu Docker
 
-Imaginea conține PostgreSQL, API-ul Express și aplicația Angular. Nu depinde de servicii externe.
+Trei containere: `frontend` (nginx), `backend` (Express + Prisma), `db` (PostgreSQL 15).
+Imaginile sunt construite de GitHub Actions la fiecare push pe `main` și publicate în GHCR;
+pe server nu se face build. Porturile sunt descrise în [PORTS.md](PORTS.md).
+
+### Pe server (prima dată)
 
 ```bash
-docker compose up -d --build
+docker network create proxy            # rețeaua comună cu Caddy, dacă nu există
+cp .env.example .env && chmod 600 .env # completează parolele (openssl rand -hex 32)
+docker compose pull && docker compose up -d
 ```
 
-Aplicația pornește la http://localhost:8080 (alt port: `HOST_PORT=9000 docker compose up -d`).
+Adaugă în Caddyfile intrarea din [docker/Caddyfile.carworld](docker/Caddyfile.carworld).
 
-- Cont admin implicit: `admin@mhp.local` / `admin123` (se schimbă din `docker-compose.yml`)
-- Baza de date și imaginile încărcate sunt păstrate în volumul `mhp-data`
-- Reset complet al datelor: `docker compose down -v`
+### Actualizare
+
+```bash
+git pull                               # doar dacă s-au schimbat compose / .env.example
+docker compose pull && docker compose up -d
+docker image prune -f
+```
+
+### Local (build din surse)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+```
+
+Frontend: http://127.0.0.1:10000, API: http://127.0.0.1:10001/api/health

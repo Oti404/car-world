@@ -1,17 +1,67 @@
+# Car World (MHP) — production stack. Images are built by GitHub Actions and
+# pulled from GHCR; nothing is built on the server.
+# Port range for this project: 10000-10099 (see PORTS.md).
+
 services:
-  mhp-workshop:
-    build: .
-    image: mhp-workshop
-    container_name: mhp-workshop
-    ports:
-      - "${HOST_PORT:-8080}:3000"
-    environment:
-      JWT_SECRET: change-this-secret
-      ADMIN_EMAIL: admin@mhp.local
-      ADMIN_PASSWORD: admin123
-    volumes:
-      - mhp-data:/data
+  frontend:
+    image: ghcr.io/oti404/car-world-frontend:${IMAGE_TAG:-latest}
     restart: unless-stopped
+    mem_limit: 128m
+    ports:
+      - "127.0.0.1:10000:80"
+    networks:
+      proxy:
+        aliases: [carworld-frontend]
+
+  backend:
+    image: ghcr.io/oti404/car-world-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    mem_limit: 256m
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-carworld}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/${POSTGRES_DB:-carworld}
+      DIRECT_URL: postgresql://${POSTGRES_USER:-carworld}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/${POSTGRES_DB:-carworld}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@carworld.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:10001:3000"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      internal:
+      proxy:
+        aliases: [carworld-backend]
+
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    mem_limit: 256m
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=30"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-carworld}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-carworld}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Not published: reachable only as db:5432 on the internal network
+    networks:
+      - internal
+
+networks:
+  internal:
+    internal: true
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:-proxy}
 
 volumes:
-  mhp-data:
+  db-data:
+  uploads:

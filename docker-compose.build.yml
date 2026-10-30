@@ -1,0 +1,7 @@
+# Local use only: build the images from source instead of pulling from GHCR.
+#   docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+services:
+  frontend:
+    build: .
+  backend:
+    build: ./server

@@ -1,0 +1,15 @@
+# Car World — add to the server's Caddyfile.
+# Caddy must be attached to the same Docker network (PROXY_NETWORK, default "proxy").
+carworld.otnielcodes.com {
+	encode gzip
+
+	handle /api/* {
+		reverse_proxy carworld-backend:3000
+	}
+	handle /uploads/* {
+		reverse_proxy carworld-backend:3000
+	}
+	handle {
+		reverse_proxy carworld-frontend:80
+	}
+}

@@ -1,8 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const fs = require('fs');
-const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 
 dotenv.config();
@@ -34,16 +32,6 @@ app.get('/api/health', async (req, res) => {
     res.status(500).json({ status: 'error', message: e.message });
   }
 });
-
-// Serve the built Angular app (used in the Docker image)
-const PUBLIC_DIR = process.env.PUBLIC_DIR;
-if (PUBLIC_DIR && fs.existsSync(PUBLIC_DIR)) {
-  app.use(express.static(PUBLIC_DIR));
-  app.use((req, res, next) => {
-    if (req.method !== 'GET' || req.path.startsWith('/api') || req.path.startsWith('/uploads')) return next();
-    res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
-  });
-}
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
