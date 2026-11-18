@@ -287,7 +287,7 @@
 .option-item {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--card-bg);
   border: 2px solid var(--border-primary);
   padding: 10px 16px;
   border-radius: 12px;
@@ -487,4 +487,219 @@
   .reviews-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==========================================================================
+   MOBILE (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .details-container {
+    padding: 0 0 calc(110px + env(safe-area-inset-bottom));
+  }
+
+  /* Back button floats over a full-bleed image */
+  .details-header {
+    position: relative;
+    margin: 0;
+    height: 0;
+    z-index: 3;
+  }
+
+  .btn-back {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
+  .details-layout {
+    gap: 0;
+    margin-bottom: 2rem;
+  }
+
+  .visual-section { gap: 0.75rem; }
+
+  .main-image-preview {
+    border-radius: 0 0 24px 24px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .stock-tag {
+    top: auto;
+    bottom: 14px;
+    right: 14px;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  .thumbnail-strip {
+    padding: 0 1rem 4px;
+    gap: 10px;
+    scrollbar-width: none;
+  }
+
+  .thumbnail { width: 84px; border-radius: 10px; }
+  .thumbnail.active { transform: none; }
+
+  .info-section { padding: 1.5rem 1.15rem 0; }
+
+  .brand-badge {
+    font-size: 0.68rem;
+    padding: 5px 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .car-name {
+    font-size: clamp(1.9rem, 8.5vw, 2.4rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.4rem;
+  }
+
+  .car-price {
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-container { margin-bottom: 1.75rem; }
+
+  /* Option chips in an even 2-column grid */
+  .option-group { margin-bottom: 1.4rem; }
+
+  .option-group h4 {
+    font-size: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .option-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .option-item {
+    min-width: 0;
+    padding: 10px 12px;
+    background: var(--card-bg);
+  }
+
+  .option-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .option-name {
+    font-size: 0.84rem;
+    line-height: 1.3;
+  }
+
+  /* Sticky purchase bar */
+  .action-buttons {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 900;
+    margin: 0;
+    gap: 10px;
+    padding: 12px 1rem calc(12px + env(safe-area-inset-bottom));
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-primary);
+    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-buy {
+    flex: 1 1 auto;
+    padding: 15px 12px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+    background: var(--primary-accent);
+    color: #fff;
+  }
+
+  .btn-buy:hover { transform: none; box-shadow: none; }
+
+  .hide-sm { display: none; }
+
+  .btn-compare {
+    flex: 0 0 auto;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-size: 0.8rem;
+  }
+
+  .description-box { margin: 0.5rem 0 1rem; }
+
+  .description-box h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+
+  .description-box p { font-size: 0.95rem; line-height: 1.7; }
+
+  /* Specs: label above value */
+  .technical-details {
+    margin: 0 1.15rem;
+    padding-top: 2rem;
+  }
+
+  .technical-details h2,
+  .reviews-header h2 {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .tech-table {
+    padding: 0.25rem 1.1rem;
+    border-radius: 18px;
+    border: 1px solid var(--border-primary);
+  }
+
+  .tech-row {
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 0;
+  }
+
+  .tech-label {
+    width: auto;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .tech-value { font-size: 0.95rem; line-height: 1.5; }
+
+  .reviews-section {
+    margin: 2rem 1.15rem 0;
+    padding: 2rem 0 1rem;
+  }
+
+  .reviews-header {
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .reviews-header h2 { margin: 0; }
+
+  .review-count {
+    white-space: nowrap;
+    font-size: 0.78rem;
+    padding: 6px 12px;
+  }
+
+  .no-reviews {
+    padding: 2rem 1.25rem;
+    border-radius: 18px;
+    font-size: 0.92rem;
+  }
+
+  .reviews-grid { gap: 1rem; }
+
+  .review-card:hover { transform: none; }
+
+  .review-image-container { height: 190px; }
 }

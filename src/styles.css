@@ -207,12 +207,67 @@ body {
 @media (max-width: 768px) {
   .main-content {
     padding: 2rem 1rem;
-    padding: 2rem 1rem; /* Increase side padding for mobile */
     width: 100%;
     overflow-x: hidden; /* Prevents horizontal scrollbar */
   }
 
   .page-title {
     font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   8. MOBILE / TOUCH POLISH
+   ========================================================================== */
+html {
+  /* Nothing may ever widen the page sideways on phones */
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Locked while the mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Form controls use the site font instead of the browser default */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  /* Inputs under 16px make iOS Safari zoom in on focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
