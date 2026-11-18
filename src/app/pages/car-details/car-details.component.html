@@ -92,7 +92,7 @@
       
       <div class="action-buttons">
         <button class="btn-buy" (click)="onAddToCart(car)">
-          <i class="fas fa-shopping-cart"></i> Add Configured Vehicle to Cart
+          <i class="fas fa-shopping-cart"></i> <span>Add <span class="hide-sm">Configured Vehicle</span> to Cart</span>
         </button>
         <button 
           class="btn-compare" 
@@ -100,7 +100,7 @@
           [class.active]="comparatorService.isSelected(car.id!)"
         >
           <i class="fas" [class.fa-check]="comparatorService.isSelected(car.id!)" [class.fa-columns]="!comparatorService.isSelected(car.id!)"></i>
-          {{ comparatorService.isSelected(car.id!) ? 'In Comparison' : 'Add to Compare' }}
+          <span>{{ comparatorService.isSelected(car.id!) ? 'Comparing' : 'Compare' }}</span>
         </button>
       </div>
 

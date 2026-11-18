@@ -35,7 +35,6 @@
       </div>
     </div>
 
-    <p class="car-description">{{ carItem().description }}</p>
   </div>
 
   <div class="car-actions-column">
@@ -54,7 +53,15 @@
       </div>
     </div>
 
-    <div class="options-section">
+    <button type="button" class="options-toggle" [class.open]="optionsOpen" (click)="optionsOpen = !optionsOpen" [attr.aria-expanded]="optionsOpen">
+      <span><i class="fas fa-sliders-h"></i> Customize</span>
+      <span class="options-toggle-meta">
+        @if (selectedOptions.size) { {{ selectedOptions.size }} selected }
+        <i class="fas fa-chevron-down"></i>
+      </span>
+    </button>
+
+    <div class="options-section" [class.open]="optionsOpen">
       <!-- Colors -->
       <h4 class="options-title" *ngIf="carItem().options.colors.length">Exterior Colors</h4>
       <div class="options-list">

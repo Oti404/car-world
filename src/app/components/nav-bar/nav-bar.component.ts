@@ -45,7 +45,7 @@ export class NavBarComponent {
    * Toggles the visibility of the mobile navigation links.
    */
   public toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.setMenuOpen(!this.isMenuOpen);
   }
 
   /**
@@ -53,7 +53,13 @@ export class NavBarComponent {
    * to ensure the menu closes on mobile navigation.
    */
   public closeMenu(): void {
-    this.isMenuOpen = false;
+    this.setMenuOpen(false);
+  }
+
+  /** Opens/closes the mobile drawer and locks page scroll while it is open. */
+  private setMenuOpen(open: boolean): void {
+    this.isMenuOpen = open;
+    document.body.classList.toggle('menu-open', open);
   }
 
   /**

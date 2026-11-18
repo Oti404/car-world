@@ -36,6 +36,9 @@ export class CarItemComponent implements OnInit {
   // Track selected options temporarily. In a real app, this should be a robust configured model.
   public selectedOptions = new Set<CarOption>();
 
+  /** Mobile only: options list is collapsed until the user taps "Customize". */
+  public optionsOpen = false;
+
   public ngOnInit(): void {
     this.calculateFinancials();
   }

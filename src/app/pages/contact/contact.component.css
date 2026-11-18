@@ -78,7 +78,7 @@
   margin-top: 1rem;
 }
 
-::ng-deep app-button button {
+.form-actions ::ng-deep app-button button {
   width: 100%;
   justify-content: center;
   padding: 14px !important;
@@ -123,4 +123,39 @@
 .btn-reset:hover {
   background: var(--border-primary);
   color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    align-items: flex-start;
+    min-height: auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .contact-card {
+    padding: 2rem 1.25rem;
+    border-radius: 22px;
+  }
+
+  .contact-header {
+    text-align: left;
+    margin-bottom: 1.75rem;
+  }
+
+  .contact-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .subtitle { font-size: 0.98rem; }
+
+  .contact-form { gap: 1.1rem; }
+
+  .form-group textarea { font-family: inherit; }
+
+  .form-actions ::ng-deep app-button button {
+    border-radius: 14px !important;
+    padding: 16px !important;
+    font-size: 1rem !important;
+  }
 }

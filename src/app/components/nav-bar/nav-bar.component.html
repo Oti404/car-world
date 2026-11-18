@@ -12,28 +12,43 @@
     <div class="nav-right-side">
 
       <div class="nav-links" [class.active]="isMenuOpen">
-        <a routerLink="/home" routerLinkActive="active-link" (click)="closeMenu()">Home</a>
-        <a routerLink="/news" routerLinkActive="active-link" (click)="closeMenu()">News</a>
-        <a routerLink="/cars" routerLinkActive="active-link" (click)="closeMenu()">Cars</a>
-        <a routerLink="/contact" routerLinkActive="active-link" (click)="closeMenu()">Contact</a>
+        <ng-container *ngIf="authService.user$ | async as user">
+          <!-- Mobile drawer: account card -->
+          <a routerLink="/profile" class="drawer-user mobile-only" (click)="closeMenu()">
+            <span class="drawer-avatar">{{ (user.displayName || user.email || '?').charAt(0) | uppercase }}</span>
+            <span class="drawer-user-text">
+              <strong>{{ user.displayName || 'My account' }}</strong>
+              <small>View profile</small>
+            </span>
+            <i class="fas fa-chevron-right drawer-user-chevron"></i>
+          </a>
+        </ng-container>
+
+        <span class="drawer-label mobile-only">Explore</span>
+        <a routerLink="/home" routerLinkActive="active-link" (click)="closeMenu()"><i class="fas fa-house nav-ico"></i><span>Home</span></a>
+        <a routerLink="/news" routerLinkActive="active-link" (click)="closeMenu()"><i class="fas fa-newspaper nav-ico"></i><span>News</span></a>
+        <a routerLink="/cars" routerLinkActive="active-link" (click)="closeMenu()"><i class="fas fa-car-side nav-ico"></i><span>Cars</span></a>
+        <a routerLink="/contact" routerLinkActive="active-link" (click)="closeMenu()"><i class="fas fa-envelope nav-ico"></i><span>Contact</span></a>
 
         <ng-container *ngIf="authService.user$ | async as user; else guestLinks">
-          <a routerLink="/garage" routerLinkActive="active-link" (click)="closeMenu()">My Garage</a>
-          <a *ngIf="authService.isAdmin$ | async" routerLink="/admin-dashboard" routerLinkActive="active-link" class="admin-link" (click)="closeMenu()">Admin DB</a>
-          <a routerLink="/profile" routerLinkActive="active-link" class="nav-profile-link" (click)="closeMenu()">
+          <a routerLink="/garage" routerLinkActive="active-link" (click)="closeMenu()"><i class="fas fa-warehouse nav-ico"></i><span>My Garage</span></a>
+          <a *ngIf="authService.isAdmin$ | async" routerLink="/admin-dashboard" routerLinkActive="active-link" class="admin-link" (click)="closeMenu()"><i class="fas fa-gauge-high nav-ico"></i><span>Admin DB</span></a>
+          <a routerLink="/profile" routerLinkActive="active-link" class="nav-profile-link desktop-only" (click)="closeMenu()">
             <i class="fas fa-user-circle"></i>
             <span>{{ user.displayName }}</span>
           </a>
-          <a class="nav-logout-btn" (click)="logout()">Logout</a>
+          <a class="nav-logout-btn" (click)="logout()"><i class="fas fa-right-from-bracket nav-ico"></i><span>Logout</span></a>
         </ng-container>
 
         <ng-template #guestLinks>
-          <a routerLink="/login" routerLinkActive="active-link" (click)="closeMenu()">Login</a>
-          <a routerLink="/register" routerLinkActive="active-link" (click)="closeMenu()">Register</a>
+          <div class="nav-auth-row">
+            <a routerLink="/login" routerLinkActive="active-link" class="nav-auth-login" (click)="closeMenu()"><span>Login</span></a>
+            <a routerLink="/register" routerLinkActive="active-link" class="nav-auth-register" (click)="closeMenu()"><span>Register</span></a>
+          </div>
         </ng-template>
       </div>
 
-      <a routerLink="/cart" class="cart-icon" (click)="closeMenu()">
+      <a routerLink="/cart" class="cart-icon" (click)="closeMenu()" aria-label="Cart">
         <i class="fas fa-shopping-cart"></i>
 
         @if (cartCount() > 0) {
@@ -45,7 +60,7 @@
         <i class="fas" [class.fa-sun]="themeService.isDarkMode()" [class.fa-moon]="!themeService.isDarkMode()"></i>
       </button>
 
-      <button class="hamburger-btn" (click)="toggleMenu()">
+      <button class="hamburger-btn" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen" aria-label="Menu">
         <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
       </button>
 
